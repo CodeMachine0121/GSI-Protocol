@@ -12,22 +12,75 @@ This workflow isolates business logic, technical architecture, and coding into t
 
 ## Installation
 
+> ⚠️ **重要提醒**: 不要直接 clone 整個 repo 到你的專案！這會把 `examples/` 也複製進去。
+>
+> 📖 **請參考 [INSTALL.md](INSTALL.md) 查看詳細安裝說明**
+
+### 方法一：全域安裝（推薦）✅
+
+所有專案共用，最乾淨的方式：
+
 ```bash
-# Clone the repository
-git clone <your-repo-url> ~/.claude/workflows/sdd-workflow
-# Or clone to your project directory
-git clone <your-repo-url> .claude-sdd
-
-# Install Python dependencies (for Python examples)
-pip install -r requirements.txt
-
-# Or for TypeScript examples
-# npm install (if package.json provided)
+mkdir -p ~/.claude/workflows
+cd ~/.claude/workflows
+git clone <your-repo-url> sdd-workflow
 ```
 
-Once installed, Claude Code will automatically detect the slash commands in the `.claude/commands/` directory.
+完成！現在在任何專案都能使用 `/sdd-auto` 等指令。
 
-> 📖 **See [COMMANDS.md](COMMANDS.md) for complete command reference and usage guide**
+### 方法二：使用安裝腳本
+
+自動安裝，只複製需要的 commands 檔案：
+
+```bash
+# 下載並執行安裝腳本
+curl -sSL <your-repo-url>/raw/main/install.sh | bash
+
+# 或手動執行
+wget <your-repo-url>/raw/main/install.sh
+chmod +x install.sh
+./install.sh
+```
+
+### 方法三：手動複製（專案內安裝）
+
+只複製 commands，不包含 examples：
+
+```bash
+# 在專案外臨時下載
+cd /tmp
+git clone <your-repo-url> sdd-temp
+
+# 進入你的專案
+cd ~/your-project
+
+# 只複製 commands
+mkdir -p .claude/commands
+cp /tmp/sdd-temp/.claude/commands/* .claude/commands/
+
+# 清理
+rm -rf /tmp/sdd-temp
+```
+
+### 驗證安裝
+
+```bash
+# 檢查檔案
+ls .claude/commands/
+# 應該看到: sdd-auto.md, sdd-spec.md, sdd-arch.md, sdd-impl.md, sdd-verify.md
+
+# 確認沒有 examples 目錄
+ls examples/
+# 應該不存在（或是你自己的 examples）
+```
+
+---
+
+> 📖 **完整安裝指南**: [INSTALL.md](INSTALL.md)
+>
+> 📖 **指令參考**: [COMMANDS.md](COMMANDS.md)
+>
+> 📖 **快速入門**: [QUICKSTART.md](QUICKSTART.md)
 
 ## Usage
 

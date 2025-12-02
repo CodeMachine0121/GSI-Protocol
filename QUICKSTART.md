@@ -4,37 +4,49 @@ Get started with Specification-Driven Development in 5 minutes!
 
 ## Installation
 
-### Option 1: Clone to Claude Code global directory
+> ⚠️ **不要把整個 repo clone 到專案裡！** 這會複製 examples 到你的專案。
+
+### 推薦方式：全域安裝
+
 ```bash
+mkdir -p ~/.claude/workflows
 cd ~/.claude/workflows
 git clone <repo-url> sdd-workflow
 ```
 
-### Option 2: Clone to your project
-```bash
-cd your-project
-git clone <repo-url> .sdd-workflow
-# Or add as git submodule
-git submodule add <repo-url> .sdd-workflow
-```
+現在在任何專案都能用！
 
-### Option 3: Copy commands only
+### 專案內安裝（只複製 commands）
+
 ```bash
+# 在專案外臨時下載
+cd /tmp && git clone <repo-url> sdd-temp
+
+# 進入你的專案並複製
+cd ~/your-project
 mkdir -p .claude/commands
-cp path/to/sdd-workflow/.claude/commands/* .claude/commands/
+cp /tmp/sdd-temp/.claude/commands/* .claude/commands/
+
+# 清理臨時檔案
+rm -rf /tmp/sdd-temp
 ```
 
-### Install Dependencies
+### 或使用安裝腳本
 
-For Python examples:
 ```bash
-pip install -r requirements.txt
+curl -sSL <repo-url>/raw/main/install.sh | bash
 ```
 
-For TypeScript examples (if available):
+### 驗證安裝
+
 ```bash
-npm install
+ls .claude/commands/
+# 應該看到: sdd-auto.md, sdd-spec.md, sdd-arch.md, sdd-impl.md, sdd-verify.md
+
+# 確認沒有 examples/（除非是你自己的）
 ```
+
+> 📖 詳細安裝說明請參考 [INSTALL.md](INSTALL.md)
 
 ## Your First SDD Feature
 

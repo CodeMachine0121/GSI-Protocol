@@ -1,0 +1,62 @@
+# SDD Workflow - 建議的 .gitignore 設定
+#
+# 這個檔案展示在使用 SDD workflow 的專案中，
+# 應該如何設定 .gitignore
+#
+# 使用方式：將需要的規則複製到你的 .gitignore
+
+# === SDD Workflow 生成的檔案 ===
+
+# 驗證報告（通常不需要 commit）
+verification/
+
+# 臨時生成的檔案
+*.feature.tmp
+*_structure.tmp.*
+*_impl.tmp.*
+
+# === 根據需求選擇性忽略 ===
+
+# 如果你的 features/ 只是用來生成程式碼，不需要保留
+# features/
+
+# 如果 structure/ 只是過渡階段，最終程式碼在別處
+# structure/
+
+# 如果 implementation/ 會整合到 src/ 等目錄
+# implementation/
+
+# === 建議保留（commit 到 Git）===
+
+# .claude/commands/    → 團隊共用的 SDD 指令
+# features/*.feature   → 需求規格文檔（BDD spec）
+# structure/          → 技術設計文檔
+
+# === Python 專案 ===
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+venv/
+env/
+.venv
+
+# === TypeScript/JavaScript 專案 ===
+node_modules/
+dist/
+build/
+*.tsbuildinfo
+
+# === Go 專案 ===
+# 如果使用 Go
+# *.exe
+# *.test
+# *.out
+
+# === 通用 ===
+.DS_Store
+*.swp
+*.swo
+.idea/
+.vscode/
