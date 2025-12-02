@@ -45,33 +45,39 @@ echo ""
 
 # Global installation
 if [ "$INSTALL_TYPE" = "global" ]; then
-    TARGET_DIR="$HOME/.claude/workflows/sdd-workflow"
+    TARGET_DIR="$HOME/.claude/commands"
 
     echo "Installing globally to: $TARGET_DIR"
     echo ""
 
     # Create directory
-    mkdir -p "$HOME/.claude/workflows"
+    mkdir -p "$TARGET_DIR"
 
-    # Clone or update
-    if [ -d "$TARGET_DIR" ]; then
-        echo "⚠️  SDD Workflow already installed. Updating..."
-        cd "$TARGET_DIR"
-        git pull
-    else
-        echo "📦 Cloning repository..."
-        git clone "$REPO_URL" "$TARGET_DIR"
-    fi
+    # Create temp directory for cloning
+    TEMP_DIR=$(mktemp -d)
+    trap "rm -rf $TEMP_DIR" EXIT
+
+    echo "📦 Downloading SDD Workflow..."
+    git clone --depth 1 "$REPO_URL" "$TEMP_DIR/sdd-workflow"
+
+    echo "📋 Copying command files to global commands directory..."
+    cp "$TEMP_DIR/sdd-workflow/.claude/commands"/*.md "$TARGET_DIR/"
+
+    # Count files
+    FILE_COUNT=$(ls -1 "$TARGET_DIR"/sdd-*.md 2>/dev/null | wc -l)
 
     echo ""
     echo "✅ Global installation complete!"
+    echo ""
+    echo "Installed $FILE_COUNT command files to $TARGET_DIR:"
+    ls -1 "$TARGET_DIR"/sdd-*.md
     echo ""
     echo "You can now use SDD commands in any project:"
     echo "  /sdd-auto <requirement>"
     echo "  /sdd-spec <requirement>"
     echo "  /sdd-arch <feature.feature>"
-    echo "  /sdd-impl <feature.feature> <structure>"
-    echo "  /sdd-verify <feature.feature> <implementation>"
+    echo "  /sdd-impl <feature.feature>"
+    echo "  /sdd-verify <feature.feature>"
     echo ""
     exit 0
 fi

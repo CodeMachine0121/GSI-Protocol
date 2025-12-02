@@ -29,36 +29,33 @@ GSI-Protocol 是一個 Claude Code 工作流程插件，實作了**規格驅動�
 
 ## 📦 快速開始
 
-### 安裝（30 秒）
+### 安裝
 
-**選項 1：一鍵安裝（如果 repo 為 public）：**
+**選項 1：一鍵安裝（推薦）：**
 
 ```bash
 curl -sSL https://raw.githubusercontent.com/CodeMachine0121/GSI-Protocol/main/install.sh | bash
 ```
 
-**選項 2：全域安裝（推薦）：**
+安裝腳本會詢問是否進行全域安裝或專案安裝。
+
+**選項 2：手動全域安裝：**
+
+將指令檔案複製到 Claude Code 全域指令目錄：
 
 ```bash
-mkdir -p ~/.claude/workflows
-cd ~/.claude/workflows
-git clone https://github.com/CodeMachine0121/GSI-Protocol.git gsi-protocol
+mkdir -p ~/.claude/commands
+cd ~/.claude/commands
+curl -sSL https://raw.githubusercontent.com/CodeMachine0121/GSI-Protocol/main/.claude/commands/sdd-auto.md -o sdd-auto.md
+curl -sSL https://raw.githubusercontent.com/CodeMachine0121/GSI-Protocol/main/.claude/commands/sdd-spec.md -o sdd-spec.md
+curl -sSL https://raw.githubusercontent.com/CodeMachine0121/GSI-Protocol/main/.claude/commands/sdd-arch.md -o sdd-arch.md
+curl -sSL https://raw.githubusercontent.com/CodeMachine0121/GSI-Protocol/main/.claude/commands/sdd-impl.md -o sdd-impl.md
+curl -sSL https://raw.githubusercontent.com/CodeMachine0121/GSI-Protocol/main/.claude/commands/sdd-verify.md -o sdd-verify.md
 ```
 
-現在可以在任何專案中使用！
+完成後，可在任何專案中使用 `/sdd-auto`、`/sdd-spec` 等全域指令。
 
-**選項 3：專案專用安裝：**
-
-```bash
-cd /tmp
-git clone https://github.com/CodeMachine0121/GSI-Protocol.git gsi-temp
-cd ~/your-project
-mkdir -p .claude/commands
-cp /tmp/gsi-temp/.claude/commands/* .claude/commands/
-rm -rf /tmp/gsi-temp
-```
-
-> 📖 查看 [安裝指南](docs/INSTALL.md) 了解更多選項
+> 📖 查看 [安裝指南](docs/INSTALL.md) 了解詳細說明
 
 ### 第一次使用（2 分鐘）
 
