@@ -1,4 +1,4 @@
-# SDD Workflow - Specification-Driven Development
+# GSI-Protocol, Gherkin-Structure-Implementation
 
 A Claude Code workflow plugin that implements a strict **Specification-Driven Development (SDD)** process for building new software features using AI Agents.
 
@@ -122,30 +122,35 @@ For more control, run each phase separately:
 ```
 
 **When to use Auto vs Manual:**
+
 - **Auto Mode (`/sdd-auto`)**: Quick prototyping, simple features, one-shot development
 - **Manual Mode**: Production code, complex features, need to review each phase before proceeding
 
 ## Workflow Phases
 
 ### Phase 1: Specification (The Soul)
+
 - **Role:** Product Manager
 - **Input:** User's natural language requirement
 - **Output:** Gherkin `.feature` file with BDD scenarios
 - **Goal:** Translate vague requirements into strict behavioral specifications
 
 ### Phase 2: Structure (The Skeleton)
+
 - **Role:** System Architect
 - **Input:** Gherkin specification from Phase 1
 - **Output:** Data models and interface definitions (Python/TypeScript)
 - **Goal:** Design the technical skeleton required to support the Gherkin scenarios
 
 ### Phase 3: Implementation (The Flesh)
+
 - **Role:** Senior Engineer
 - **Input:** Gherkin specification + Structure design
 - **Output:** Fully functional code implementing the interfaces
 - **Goal:** Implement the logic within the defined structure to satisfy the specs
 
 ### Phase 4: Verification (The Check)
+
 - **Role:** QA Automation
 - **Input:** Gherkin specification + Implementation
 - **Output:** Test results and feedback
@@ -158,6 +163,7 @@ The workflow adapts to your chosen language while maintaining the same SDD princ
 ### Example: VIP Discount System
 
 **Phase 1 - Gherkin (Language-Independent)**
+
 ```gherkin
 Feature: VIP Discount
   Scenario: Apply discount
@@ -167,6 +173,7 @@ Feature: VIP Discount
 ```
 
 **Phase 2 & 3 - Python**
+
 ```python
 from dataclasses import dataclass
 from enum import Enum
@@ -189,10 +196,11 @@ def calculate_discount(amount: float, user_type: UserType) -> DiscountResult:
 ```
 
 **Phase 2 & 3 - TypeScript**
+
 ```typescript
 enum UserType {
   VIP = "VIP",
-  NORMAL = "NORMAL"
+  NORMAL = "NORMAL",
 }
 
 interface DiscountResult {
@@ -211,6 +219,7 @@ function calculateDiscount(amount: number, userType: UserType): DiscountResult {
 ```
 
 **Phase 2 & 3 - Go**
+
 ```go
 type UserType string
 
