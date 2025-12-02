@@ -23,7 +23,7 @@ This workflow isolates business logic, technical architecture, and coding into t
 ```bash
 mkdir -p ~/.claude/workflows
 cd ~/.claude/workflows
-git clone <your-repo-url> sdd-workflow
+git clone https://github.com/CodeMachine0121/GSI-Protocol.git sdd-workflow
 ```
 
 完成！現在在任何專案都能使用 `/sdd-auto` 等指令。
@@ -34,10 +34,10 @@ git clone <your-repo-url> sdd-workflow
 
 ```bash
 # 下載並執行安裝腳本
-curl -sSL <your-repo-url>/raw/main/install.sh | bash
+curl -sSL https://github.com/CodeMachine0121/GSI-Protocol.git/raw/main/install.sh | bash
 
 # 或手動執行
-wget <your-repo-url>/raw/main/install.sh
+wget https://github.com/CodeMachine0121/GSI-Protocol.git/raw/main/install.sh
 chmod +x install.sh
 ./install.sh
 ```
@@ -49,7 +49,7 @@ chmod +x install.sh
 ```bash
 # 在專案外臨時下載
 cd /tmp
-git clone <your-repo-url> sdd-temp
+git clone https://github.com/CodeMachine0121/GSI-Protocol.git sdd-temp
 
 # 進入你的專案
 cd ~/your-project
