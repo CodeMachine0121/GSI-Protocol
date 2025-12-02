@@ -5,11 +5,11 @@
 ## 指令概覽
 
 ```
-/sdd-auto           → 自動模式：自動執行全部 4 個階段
-/sdd-spec           → 階段 1：生成 Gherkin 規格
-/sdd-arch           → 階段 2：設計資料模型與介面
-/sdd-impl           → 階段 3：實作邏輯
-/sdd-verify         → 階段 4：驗證實作
+/sdd-auto           → 自動模式：自動執行全部 4 個 Phase
+/sdd-spec           → Phase 1：生成 Gherkin 規格
+/sdd-arch           → Phase 2：設計架構（繁中文件）
+/sdd-impl           → Phase 3：實作邏輯
+/sdd-verify         → Phase 4：驗證實作
 ```
 
 ---
@@ -33,10 +33,10 @@
 ```
 
 **它會做什麼：**
-1. ✅ 生成 Gherkin 規格（階段 1）
-2. ✅ 設計資料模型和介面（階段 2）
-3. ✅ 實作邏輯（階段 3）
-4. ✅ 根據規格驗證（階段 4）
+1. ✅ 生成 Gherkin 規格（Phase 1）
+2. ✅ 設計架構文件（Phase 2）
+3. ✅ 實作程式碼（Phase 3）
+4. ✅ 驗證並生成結論（Phase 4）
 
 **何時使用：**
 - ✅ 快速原型製作
@@ -53,7 +53,7 @@
 
 ---
 
-## `/sdd-spec` - 階段 1：規格
+## `/sdd-spec` - Phase 1：規格
 
 **目的：** 從自然語言需求生成 Gherkin 規格。
 
@@ -80,9 +80,9 @@
 
 ---
 
-## `/sdd-arch` - 階段 2：架構
+## `/sdd-arch` - Phase 2：架構
 
-**目的：** 從 Gherkin 規格設計資料模型和服務介面。
+**目的：** 從 Gherkin 規格設計語言無關的架構文件。
 
 **用法：**
 ```bash
@@ -95,69 +95,70 @@
 ```
 
 **輸出：**
-- 建立 `structure/<feature>_structure.<ext>`（語言特定）
+- 建立 `docs/features/<feature>/architecture.md`（繁體中文 Markdown）
+- 掃描專案上下文（技術棧、架構、命名慣例）
 - 定義資料模型（從 Gherkin 中的名詞）
 - 定義服務介面（從 Gherkin 中的動詞）
-- 無實作邏輯，只有結構
+- 語言無關的高階設計
 
 **何時使用：**
-- ✅ 完成階段 1 後
+- ✅ 完成 Phase 1 後
 - ✅ 您想審查技術架構
 - ✅ 需要與團隊驗證資料模型
-- ✅ 想確保結構與系統設計一致
+- ✅ 想確保架構與系統設計一致
 
 ---
 
-## `/sdd-impl` - 階段 3：實作
+## `/sdd-impl` - Phase 3：實作
 
-**目的：** 在定義的結構內實作邏輯以滿足 Gherkin 情境。
+**目的：** 根據架構文件實作程式碼。
 
 **用法：**
 ```bash
-/sdd-impl <.feature 檔案路徑> <結構檔案路徑>
+/sdd-impl <.feature 檔案路徑>
 ```
 
 **範例：**
 ```bash
-/sdd-impl features/user_authentication.feature structure/user_authentication_structure.py
+/sdd-impl features/user_authentication.feature
 ```
 
 **輸出：**
-- 建立 `implementation/<feature>_impl.<ext>`（語言特定）
-- 實作階段 2 的所有介面
+- 實作檔案放置於專案既有目錄結構（依 architecture.md 定義）
+- 實作所有定義的資料模型與服務介面
 - 將每個 Gherkin 情境對應到程式碼邏輯
-- 包含基本自我驗證
+- 遵循專案技術棧與命名慣例
 
 **何時使用：**
-- ✅ 完成階段 2 後
-- ✅ 結構已審查並批准
+- ✅ 完成 Phase 2 後
+- ✅ 架構已審查並批准
 - ✅ 準備好撰寫實際業務邏輯
 - ✅ 想看到可運作的程式碼
 
 ---
 
-## `/sdd-verify` - 階段 4：驗證
+## `/sdd-verify` - Phase 4：驗證
 
-**目的：** 根據 Gherkin 規格驗證實作。
+**目的：** 根據 Gherkin 規格與架構設計驗證實作。
 
 **用法：**
 ```bash
-/sdd-verify <.feature 檔案路徑> <實作檔案路徑>
+/sdd-verify <.feature 檔案路徑>
 ```
 
 **範例：**
 ```bash
-/sdd-verify features/user_authentication.feature implementation/user_authentication_impl.py
+/sdd-verify features/user_authentication.feature
 ```
 
 **輸出：**
-- 建立 `verification/<feature>_verification_report.md`
-- 測試每個 Gherkin 情境
-- 報告通過/失敗並附證據
-- 為失敗提供回饋
+- 建立 `docs/features/<feature>/conclusion.md`
+- 驗證架構符合性（資料模型、服務介面、檔案結構）
+- 驗證每個 Gherkin 情境
+- 提供通過/失敗報告與改善建議
 
 **何時使用：**
-- ✅ 完成階段 3 後
+- ✅ 完成 Phase 3 後
 - ✅ 提交程式碼前
 - ✅ 需要正式驗證報告
 - ✅ 想確保涵蓋所有情境

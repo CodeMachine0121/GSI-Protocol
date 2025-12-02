@@ -1,6 +1,6 @@
 # GSI-Protocol（中文）
 
-> **Gherkin → 結構 → 實作**
+> **Gherkin → 架構 → 實作**
 >
 > 一個語言無關的工作流程，使用 AI 代理和 BDD 原則建立可驗證的軟體功能。
 
@@ -12,15 +12,16 @@ GSI-Protocol 是一個 Claude Code 工作流程插件，實作了**規格驅動�
 
 ### 核心理念
 
-**"規格 → 結構 → 實作"**
+**"規格 → 架構 → 實作 → 驗證"**
 
-將業務邏輯、技術架構和程式撰寫分離到不同階段，以最小化 AI 幻覺並最大化精確度。
+將業務邏輯、技術架構、程式撰寫和品質保證分離到不同階段，以最小化 AI 幻覺並最大化精確度。
 
 ### 主要特性
 
 - 🌍 **語言無關**：支援 Python、TypeScript、Go、Java、Rust、C# 等等
 - 🎯 **框架獨立**：不綁定任何特定函式庫或框架
 - 📝 **基於 BDD**：使用 Gherkin 撰寫清晰、可測試的規格
+- 🏗️ **專案感知**：自動掃描並遵循既有專案架構
 - ✅ **可驗證**：自動根據規格進行驗證
 - 🔄 **模組化**：可獨立執行各階段或完整工作流程
 
@@ -70,8 +71,8 @@ cd your-project
 # 手動模式 - 逐步執行
 /sdd-spec Create a shopping cart with add, remove, checkout
 /sdd-arch features/shopping_cart.feature
-/sdd-impl features/shopping_cart.feature structure/shopping_cart_structure.ts
-/sdd-verify features/shopping_cart.feature implementation/shopping_cart_impl.ts
+/sdd-impl features/shopping_cart.feature
+/sdd-verify features/shopping_cart.feature
 ```
 
 ---
@@ -94,21 +95,21 @@ cd your-project
 ### 四個階段
 
 ```
-階段 1：規格（PM）
+Phase 1：規格（PM）
     ↓
     Gherkin .feature 檔案
     ↓
-階段 2：結構（架構師）
+Phase 2：架構（架構師）
     ↓
-    資料模型 + 介面
+    架構設計文件（繁中 Markdown）
     ↓
-階段 3：實作（工程師）
+Phase 3：實作（工程師）
     ↓
-    可運行的程式碼
+    可運行的程式碼（依專案架構）
     ↓
-階段 4：驗證（QA）
+Phase 4：驗證（QA）
     ↓
-    ✅ 已驗證功能
+    ✅ 驗證結論報告
 ```
 
 ### 指令
@@ -142,23 +143,25 @@ Feature: VIP Discount
     Then final price should be 800 USD
 ```
 
-**階段 2：結構** (`structure/vip_discount_structure.py`)
-```python
-from dataclasses import dataclass
-from enum import Enum
+**Phase 2：架構** (`docs/features/vip_discount/architecture.md`)
+```markdown
+# VIP 折扣系統 - 架構設計
 
-class UserType(str, Enum):
-    VIP = "VIP"
-    NORMAL = "NORMAL"
+## 1. 專案上下文
+- 程式語言：Python
+- 架構模式：Service Layer
 
-@dataclass
-class DiscountResult:
-    final_price: float
-    discount: float
+## 3. 資料模型
+- UserType（列舉）：VIP, NORMAL
+- DiscountResult（實體）：final_price, discount
+
+## 4. 服務介面
+- calculate_discount(amount, user_type) → DiscountResult
 ```
 
-**階段 3：實作** (`implementation/vip_discount_impl.py`)
+**Phase 3：實作** （依 architecture.md 指定位置）
 ```python
+# src/services/discount_service.py
 def calculate_discount(amount: float, user_type: UserType) -> DiscountResult:
     if user_type == UserType.VIP and amount >= 100:
         discount = amount * 0.2
@@ -166,10 +169,12 @@ def calculate_discount(amount: float, user_type: UserType) -> DiscountResult:
     return DiscountResult(amount, 0)
 ```
 
-**階段 4：驗證**
-```
-✅ 所有情境通過
-✅ 功能完成
+**Phase 4：驗證結論** (`docs/features/vip_discount/conclusion.md`)
+```markdown
+## 3. 摘要
+- 架構：2/2 通過
+- 情境：2/2 通過
+- **狀態：** ✅ 完成
 ```
 
 ---
@@ -261,15 +266,35 @@ type UserService interface {
 /sdd-arch features/user_registration.feature
 
 # 工程師：實作
-/sdd-impl features/user_registration.feature structure/user_registration_structure.py
+/sdd-impl features/user_registration.feature
 
 # QA：驗證
-/sdd-verify features/user_registration.feature implementation/user_registration_impl.py
+/sdd-verify features/user_registration.feature
 ```
 
 ---
 
 ## 📁 專案結構
+
+執行 SDD 工作流程後的輸出：
+
+```
+your-project/
+├── features/                    # Phase 1: Gherkin 規格
+│   └── {feature}.feature
+├── docs/
+│   └── features/
+│       └── {feature}/
+│           ├── architecture.md  # Phase 2: 架構設計（繁中）
+│           └── conclusion.md    # Phase 4: 驗證結論
+└── src/                         # Phase 3: 實作程式碼
+    ├── models/                  # 依專案既有架構
+    │   └── {Feature}Model.{ext}
+    └── services/
+        └── {Feature}Service.{ext}
+```
+
+GSI-Protocol 儲存庫結構：
 
 ```
 GSI-Protocol/
@@ -279,25 +304,22 @@ GSI-Protocol/
 ├── install.sh                   # 安裝腳本
 ├── .claude/
 │   └── commands/                # Claude Code slash 指令
-│       ├── gsi-auto.md         # 自動工作流程
-│       ├── gsi-spec.md         # 階段 1
-│       ├── gsi-arch.md         # 階段 2
-│       ├── gsi-impl.md         # 階段 3
-│       └── gsi-verify.md       # 階段 4
+│       ├── sdd-auto.md         # 自動工作流程
+│       ├── sdd-spec.md         # Phase 1
+│       ├── sdd-arch.md         # Phase 2
+│       ├── sdd-impl.md         # Phase 3
+│       └── sdd-verify.md       # Phase 4
 ├── docs/                        # 文件
 │   ├── QUICKSTART.md           # 快速入門指南
 │   ├── INSTALL.md              # 安裝指南
 │   ├── COMMANDS.md             # 指令參考
 │   ├── LANGUAGE_GUIDE.md       # 語言支援
 │   └── expected_workflow.md    # 工作流程細節
-├── prompts/                     # 代理提示
-│   ├── pm_agent.md
-│   ├── architect_agent.md
-│   ├── engineer_agent.md
-│   └── qa_agent.md
-└── examples/                    # 實作範例
-    ├── referral_bonus/         # Python 範例
-    └── vip_discount_typescript/ # TypeScript 範例
+└── prompts/                     # 代理提示（參考）
+    ├── pm_agent.md
+    ├── architect_agent.md
+    ├── engineer_agent.md
+    └── qa_agent.md
 ```
 
 ---

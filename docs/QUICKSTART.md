@@ -71,18 +71,18 @@ ls .claude/commands/
 
 代理會自動：
 1. 生成 Gherkin 規格（`features/discount.feature`）
-2. 設計資料模型和介面（`structure/discount_structure.py`）
-3. 實作邏輯（`implementation/discount_impl.py`）
-4. 根據規格驗證
+2. 設計架構文件（`docs/features/discount/architecture.md`）
+3. 實作程式碼（依 architecture.md 定義的位置）
+4. 驗證並生成結論（`docs/features/discount/conclusion.md`）
 
-一次完成，階段之間不會停止！
+一次完成，Phase 之間不會停止！
 
 ### 步驟 3：審查輸出
 
 檢查生成的檔案：
 - `features/` - 您的行為規格
-- `structure/` - 您的資料模型和介面
-- `implementation/` - 您的可運作程式碼
+- `docs/features/` - 架構設計與驗證結論
+- `src/` (或您的專案目錄) - 實作程式碼
 
 ### 步驟 4：執行和測試
 
@@ -95,51 +95,33 @@ python implementation/discount_impl.py
 
 ---
 
-## 使用個別階段
+## 使用個別 Phase
 
-您也可以分別執行每個階段：
+您也可以分別執行每個 Phase：
 
-### 階段 1：僅規格
+### Phase 1：僅規格
 ```
 /sdd-spec I need a user authentication system
 ```
 這只生成 Gherkin `.feature` 檔案。
 
-### 階段 2：結構設計
+### Phase 2：架構設計
 ```
 /sdd-arch features/authentication.feature
 ```
-這讀取您的 Gherkin 並生成資料模型和介面。
+這讀取您的 Gherkin 並生成語言無關的架構文件（繁中）。
 
-### 階段 3：實作
+### Phase 3：實作
 ```
-/sdd-impl features/authentication.feature structure/authentication_structure.py
+/sdd-impl features/authentication.feature
 ```
-這生成實際的程式碼實作。
+這依據 architecture.md 生成實際的程式碼實作。
 
-### 階段 4：驗證
+### Phase 4：驗證
 ```
-/sdd-verify features/authentication.feature implementation/authentication_impl.py
+/sdd-verify features/authentication.feature
 ```
-這根據規格驗證您的實作。
-
----
-
-## 包含的範例
-
-查看 `examples/` 目錄：
-
-### 推薦獎金系統
-```bash
-cd examples/referral_bonus
-python implementation.py
-```
-
-這展示了一個完整範例，包含：
-- 4 個 Gherkin 情境（正常路徑、邊界案例、錯誤）
-- 完全型別化的資料模型
-- 乾淨的實作
-- 內建驗證
+這根據規格與架構驗證您的實作。
 
 ---
 
@@ -158,10 +140,10 @@ python implementation.py
 /sdd-spec <需求>
 # 審查並細化 Gherkin
 /sdd-arch features/<feature>.feature
-# 審查結構，視需要調整
-/sdd-impl features/<feature>.feature structure/<feature>_structure.py
+# 審查架構，視需要調整
+/sdd-impl features/<feature>.feature
 # 仔細審查實作
-/sdd-verify features/<feature>.feature implementation/<feature>_impl.py
+/sdd-verify features/<feature>.feature
 ```
 
 **最適合：** 生產程式碼、複雜功能、團隊協作
@@ -170,7 +152,7 @@ python implementation.py
 ```
 # 手動撰寫您自己的 .feature 檔案
 /sdd-arch features/my_feature.feature
-/sdd-impl features/my_feature.feature structure/my_feature_structure.py
+/sdd-impl features/my_feature.feature
 ```
 
 **最適合：** 明確定義的需求、API 契約、既有規格
@@ -192,11 +174,11 @@ python implementation.py
 
 ### 理解輸出
 
-每個階段建立在前一個之上：
-- **階段 1** = 什麼（業務行為）
-- **階段 2** = 結構（資料和介面）
-- **階段 3** = 如何（實作邏輯）
-- **階段 4** = 驗證（它能運作嗎？）
+每個 Phase 建立在前一個之上：
+- **Phase 1** = 什麼（業務行為）
+- **Phase 2** = 架構（資料模型和服務介面 - 繁中文件）
+- **Phase 3** = 如何（實作邏輯 - 依專案架構）
+- **Phase 4** = 驗證（它能運作嗎？- 結論報告）
 
 ### 何時使用各種方法
 
