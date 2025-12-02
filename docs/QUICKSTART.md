@@ -6,48 +6,35 @@
 
 > ⚠️ **不要把整個 repo clone 到專案裡！** 這會複製 examples 到您的專案。
 
-### 方式 1：一鍵安裝（最快）⚡
-
-⚠️ 只在 repo 為 public 時可用
+### 最簡單：一鍵安裝（推薦）⚡
 
 ```bash
 curl -sSL https://raw.githubusercontent.com/CodeMachine0121/GSI-Protocol/main/install.sh | bash
 ```
 
-腳本會詢問您要全域安裝還是專案內安裝。
+腳本會詢問您要全域安裝還是專案內安裝，然後自動完成設定。
 
-### 方式 2：全域安裝（推薦）✅
+### 或者：手動全域安裝
 
 ```bash
-mkdir -p ~/.claude/workflows
-cd ~/.claude/workflows
-git clone https://github.com/CodeMachine0121/GSI-Protocol.git gsi-protocol
+mkdir -p ~/.claude/commands
+
+curl -sSL https://raw.githubusercontent.com/CodeMachine0121/GSI-Protocol/main/.claude/commands/sdd-auto.md -o ~/.claude/commands/sdd-auto.md
+curl -sSL https://raw.githubusercontent.com/CodeMachine0121/GSI-Protocol/main/.claude/commands/sdd-spec.md -o ~/.claude/commands/sdd-spec.md
+curl -sSL https://raw.githubusercontent.com/CodeMachine0121/GSI-Protocol/main/.claude/commands/sdd-arch.md -o ~/.claude/commands/sdd-arch.md
+curl -sSL https://raw.githubusercontent.com/CodeMachine0121/GSI-Protocol/main/.claude/commands/sdd-impl.md -o ~/.claude/commands/sdd-impl.md
+curl -sSL https://raw.githubusercontent.com/CodeMachine0121/GSI-Protocol/main/.claude/commands/sdd-verify.md -o ~/.claude/commands/sdd-verify.md
 ```
 
 現在在任何專案都能用！
 
-### 方式 3：專案內安裝（只複製 commands）
-
-```bash
-# 在專案外臨時下載
-cd /tmp && git clone https://github.com/CodeMachine0121/GSI-Protocol.git gsi-temp
-
-# 進入您的專案並複製
-cd ~/your-project
-mkdir -p .claude/commands
-cp /tmp/gsi-temp/.claude/commands/* .claude/commands/
-
-# 清理臨時檔案
-rm -rf /tmp/gsi-temp
-```
-
 ### 驗證安裝
 
 ```bash
-ls .claude/commands/
-# 應該看到: sdd-auto.md, sdd-spec.md, sdd-arch.md, sdd-impl.md, sdd-verify.md
+# 全域安裝驗證
+ls ~/.claude/commands/ | grep sdd
 
-# 確認沒有 examples/（除非是您自己的）
+# 應該看到: sdd-auto.md, sdd-spec.md, sdd-arch.md, sdd-impl.md, sdd-verify.md
 ```
 
 > 📖 詳細安裝說明請參考 [INSTALL.md](INSTALL.md)

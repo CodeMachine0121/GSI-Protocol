@@ -1,6 +1,6 @@
 # 安裝指南
 
-本文件說明如何在您的專案中安裝和使用 SDD Workflow 工具。
+本文件說明如何在您的專案中安裝和使用 GSI-Protocol 工作流程。
 
 ---
 
@@ -12,17 +12,32 @@
 
 ---
 
-## 方法一：全域安裝（強烈推薦）✅
+## 方法一：一鍵安裝（最推薦）✅
+
+這是最簡單的方式，會自動詢問您是要全域安裝還是專案內安裝。
+
+```bash
+curl -sSL https://raw.githubusercontent.com/CodeMachine0121/GSI-Protocol/main/install.sh | bash
+```
+
+安裝腳本會詢問您的偏好，然後自動完成設定。
+
+---
+
+## 方法二：手動全域安裝
 
 這是最乾淨的方式，安裝一次後所有專案都能使用，不會污染任何專案目錄。
 
 ```bash
-# 1. 創建全域 workflows 目錄
-mkdir -p ~/.claude/workflows
+# 1. 創建全域指令目錄
+mkdir -p ~/.claude/commands
 
-# 2. Clone 到全域目錄
-cd ~/.claude/workflows
-git clone https://github.com/CodeMachine0121/GSI-Protocol.git sdd-workflow
+# 2. 下載 SDD 指令檔案
+curl -sSL https://raw.githubusercontent.com/CodeMachine0121/GSI-Protocol/main/.claude/commands/sdd-auto.md -o ~/.claude/commands/sdd-auto.md
+curl -sSL https://raw.githubusercontent.com/CodeMachine0121/GSI-Protocol/main/.claude/commands/sdd-spec.md -o ~/.claude/commands/sdd-spec.md
+curl -sSL https://raw.githubusercontent.com/CodeMachine0121/GSI-Protocol/main/.claude/commands/sdd-arch.md -o ~/.claude/commands/sdd-arch.md
+curl -sSL https://raw.githubusercontent.com/CodeMachine0121/GSI-Protocol/main/.claude/commands/sdd-impl.md -o ~/.claude/commands/sdd-impl.md
+curl -sSL https://raw.githubusercontent.com/CodeMachine0121/GSI-Protocol/main/.claude/commands/sdd-verify.md -o ~/.claude/commands/sdd-verify.md
 
 # 3. 完成！現在在任何專案都能使用
 cd ~/your-project
@@ -44,13 +59,13 @@ cd ~/your-project
 # 在任何專案目錄中
 cd ~/projects/my-python-api
 
-# 使用 SDD workflow
+# 使用 GSI-Protocol 工作流程
 /sdd-auto Create a user authentication system in Python with JWT tokens
 ```
 
 ---
 
-## 方法二：專案內安裝（只複製指令）
+## 方法三：手動專案內安裝
 
 如果您只想在特定專案使用，或需要團隊共享這些指令。
 
@@ -73,24 +88,12 @@ rm -rf /tmp/sdd-temp
 
 # 5. 提交到 Git（可選）
 git add .claude/commands/
-git commit -m "Add SDD workflow commands"
+git commit -m "Add GSI-Protocol workflow commands"
 ```
 
-### 使用腳本安裝
+### 使用腳本安裝（Clone 方式）
 
-#### 選項 A：一鍵 curl 安裝（推薦，需要 Public Repo）
-
-⚠️ **注意**：此方式只在 repo 為 public 時可用
-
-```bash
-# 下載並執行安裝腳本
-curl -sSL https://raw.githubusercontent.com/CodeMachine0121/GSI-Protocol/main/install.sh | bash
-
-# 或使用 wget
-wget -qO- https://raw.githubusercontent.com/CodeMachine0121/GSI-Protocol/main/install.sh | bash
-```
-
-#### 選項 B：Clone 後安裝（Private Repo 也可用）
+對於 private repo 或需要更多控制的情況：
 
 ```bash
 # 1. Clone repo（private repo 會要求 GitHub 認證）
@@ -104,38 +107,6 @@ cd /tmp/gsi-temp
 cd ~ && rm -rf /tmp/gsi-temp
 ```
 
-**如何選擇**：
-- ✅ Repo 是 **public** → 使用選項 A（最快最方便）
-- ✅ Repo 是 **private** → 使用選項 B 或「手動複製」方式
-
----
-
-## 方法三：使用 Git Sparse Checkout（進階）
-
-只 checkout 需要的目錄，不下載 examples。
-
-```bash
-cd ~/your-project
-
-# 初始化 sparse checkout
-git clone --no-checkout https://github.com/CodeMachine0121/GSI-Protocol.git .sdd-tools
-cd .sdd-tools
-
-# 設定只 checkout .claude/commands
-git sparse-checkout init --cone
-git sparse-checkout set .claude/commands
-
-# checkout
-git checkout main
-
-# 複製到專案根目錄
-cd ..
-cp -r .sdd-tools/.claude .
-
-# 清理
-rm -rf .sdd-tools
-```
-
 ---
 
 ## 驗證安裝成功
@@ -143,8 +114,11 @@ rm -rf .sdd-tools
 ### 檢查檔案
 
 ```bash
-# 在專案目錄中
-ls .claude/commands/
+# 全域安裝
+ls ~/.claude/commands/ | grep sdd
+
+# 或專案內安裝
+ls .claude/commands/ | grep sdd
 
 # 應該看到：
 # sdd-auto.md
@@ -166,33 +140,58 @@ ls .claude/commands/
 
 ## 第一次使用
 
-### 快速模式
+### 快速模式（推薦）
 
 ```bash
 /sdd-auto Create a shopping cart in TypeScript with add, remove, and checkout functions
 ```
 
-### 手動模式
+### 手動模式（逐步執行）
 
 ```bash
-# 步驟 1
+# 步驟 1：定義規格
 /sdd-spec Create a shopping cart with add, remove, checkout
 
-# 步驟 2（審查 features/shopping_cart.feature 後）
+# 步驟 2：設計架構（審查 features/shopping_cart.feature 後）
 /sdd-arch features/shopping_cart.feature
 
-# 步驟 3（審查 structure/ 後）
-/sdd-impl features/shopping_cart.feature structure/shopping_cart_structure.ts
+# 步驟 3：實作程式碼（審查 docs/ 後）
+/sdd-impl features/shopping_cart.feature
 
-# 步驟 4（審查 implementation/ 後）
-/sdd-verify features/shopping_cart.feature implementation/shopping_cart_impl.ts
+# 步驟 4：驗證實作（審查 src/ 後）
+/sdd-verify features/shopping_cart.feature
 ```
 
 ---
 
 ## 專案結構
 
-使用 SDD workflow 後，您的專案會新增這些目錄：
+使用 GSI-Protocol 工作流程後，您的專案會新增這些內容：
+
+### 全域安裝
+
+```
+~/.claude/commands/
+├── sdd-auto.md
+├── sdd-spec.md
+├── sdd-arch.md
+├── sdd-impl.md
+└── sdd-verify.md
+
+# 您的專案保持乾淨，只有生成的程式碼
+your-project/
+├── features/
+│   └── *.feature
+├── docs/
+│   └── features/
+│       └── {feature}/
+│           ├── architecture.md
+│           └── conclusion.md
+└── src/
+    └── （您的實作程式碼）
+```
+
+### 專案內安裝
 
 ```
 your-project/
@@ -203,15 +202,18 @@ your-project/
 │       ├── sdd-arch.md
 │       ├── sdd-impl.md
 │       └── sdd-verify.md
-├── features/               # 階段 1：Gherkin 規格（自動生成）
+├── features/               # 階段 1：Gherkin 規格
 │   └── *.feature
-├── structure/              # 階段 2：資料模型（自動生成）
-│   └── *_structure.*
-└── implementation/         # 階段 3：實作程式碼（自動生成）
-    └── *_impl.*
+├── docs/
+│   └── features/           # 階段 2：架構設計
+│       └── {feature}/
+│           ├── architecture.md
+│           └── conclusion.md
+└── src/                    # 階段 3：實作程式碼
+    └── （您的程式碼）
 ```
 
-**不會有 examples/ 或 prompts/ 目錄** - 這些只存在於 SDD workflow repo 本身。
+**不會有 examples/ 或 prompts/ 目錄** - 這些只存在於 GSI-Protocol repo 本身。
 
 ---
 
@@ -219,9 +221,9 @@ your-project/
 
 ### 推薦配置
 
-- ✅ **全域安裝**：`~/.claude/workflows/sdd-workflow`（所有專案共用）
-- ✅ **專案目錄**：只有 `features/`、`structure/`、`implementation/`（生成的程式碼）
-- ❌ **不要**：把整個 SDD repo clone 到專案裡
+- ✅ **全域安裝**：`~/.claude/commands/sdd-*.md`（所有專案共用）
+- ✅ **專案目錄**：只有 `features/`、`docs/features/`、`src/`（生成的程式碼）
+- ❌ **不要**：把整個 GSI-Protocol repo clone 到專案裡
 
 ### 團隊協作
 
@@ -229,7 +231,7 @@ your-project/
 
 ```bash
 # 方式 1：每個開發者自己全域安裝
-每人執行：mkdir -p ~/.claude/workflows && cd ~/.claude/workflows && git clone https://github.com/CodeMachine0121/GSI-Protocol.git
+每人執行：curl -sSL https://raw.githubusercontent.com/CodeMachine0121/GSI-Protocol/main/install.sh | bash
 
 # 方式 2：專案內只包含 commands（Git 管理）
 在專案內：mkdir -p .claude/commands && cp <commands>
@@ -238,13 +240,15 @@ your-project/
 
 ---
 
-## 更新 SDD Workflow
+## 更新 GSI-Protocol
 
 ### 全域安裝的更新
 
+如果您是從 GitHub repo 直接下載的指令檔案，只需重新執行 curl 命令下載最新版本即可。
+
 ```bash
-cd ~/.claude/workflows/sdd-workflow
-git pull
+# 或簡單方式：重新執行一鍵安裝
+curl -sSL https://raw.githubusercontent.com/CodeMachine0121/GSI-Protocol/main/install.sh | bash
 ```
 
 ### 專案內安裝的更新
@@ -258,7 +262,7 @@ git pull
 ### 全域安裝
 
 ```bash
-rm -rf ~/.claude/workflows/sdd-workflow
+rm -f ~/.claude/commands/sdd-*.md
 ```
 
 ### 專案內安裝
@@ -271,42 +275,49 @@ rm -rf .claude/commands/sdd-*.md
 
 ## 常見問題
 
+### Q：推薦用全域安裝還是專案內安裝？
+
+**A：** 全域安裝更方便：
+- ✅ 一次安裝，所有專案都能用
+- ✅ 專案目錄保持乾淨
+- ✅ 容易更新
+- 唯一缺點：團隊成員需要各自安裝
+
+如果整個團隊需要使用，建議全域安裝 + 在文檔中說明安裝步驟。
+
 ### Q：我的專案裡出現了 examples/ 目錄怎麼辦？
 
 **A：** 這表示您錯誤地 clone 了整個 repo 到專案裡。請：
-1. 刪除：`rm -rf .sdd-workflow` 或類似目錄
-2. 重新按照「方法二」只複製 commands
+1. 刪除：`rm -rf .claude/gsi-protocol` 或類似目錄
+2. 改為只複製 `.claude/commands/`
 3. 確認 `git status` 沒有 examples 相關檔案
 
 ### Q：全域安裝和專案內安裝有什麼區別？
 
 **A：**
-- **全域**：安裝一次，所有專案都能用，專案目錄保持乾淨
-- **專案內**：指令隨專案走，團隊成員 clone 後就有，但需要手動複製
+- **全域**：`~/.claude/commands/sdd-*.md`，所有專案共用，專案保持乾淨
+- **專案內**：`.claude/commands/sdd-*.md`，指令隨專案走，團隊成員 clone 後就有
 
 ### Q：團隊成員需要每個人都安裝嗎？
 
 **A：**
-- 如果用全域安裝：是，每人自己裝
+- 如果用全域安裝：是，每人自己執行一遍安裝
 - 如果用專案內安裝並 commit 到 Git：不用，clone 專案就有
-
-### Q：如何查看 examples 範例？
-
-**A：**
-```bash
-# 訪問 SDD workflow repo
-cd ~/.claude/workflows/sdd-workflow/examples
-
-# 或直接在 GitHub 上查看
-```
 
 ### Q：生成的檔案要 commit 到 Git 嗎？
 
 **A：**
-- ✅ `features/*.feature` - 建議 commit（需求文件）
-- ✅ `structure/*` - 建議 commit（技術設計）
-- ⚠️ `implementation/*` - 視情況（如果是最終程式碼則 commit）
-- ❌ `verification/*` - 不建議（臨時驗證報告）
+- ✅ `features/*.feature` - 建議 commit（需求文件，重要）
+- ✅ `docs/features/*/architecture.md` - 建議 commit（技術設計）
+- ✅ `src/` - 建議 commit（實作程式碼）
+- ❌ `docs/features/*/conclusion.md` - 不建議（臨時驗證報告）
+
+### Q：如何查看 examples 範例？
+
+**A：** 直接訪問 GitHub repo：
+```
+https://github.com/CodeMachine0121/GSI-Protocol/tree/main/examples
+```
 
 ---
 
@@ -317,18 +328,23 @@ cd ~/.claude/workflows/sdd-workflow/examples
 1. 📖 閱讀 [QUICKSTART.md](QUICKSTART.md) - 5 分鐘快速入門
 2. 📖 閱讀 [COMMANDS.md](COMMANDS.md) - 完整指令參考
 3. 📖 閱讀 [LANGUAGE_GUIDE.md](LANGUAGE_GUIDE.md) - 多語言支援
-4. 🔍 查看 examples（在 SDD repo 裡，不在您的專案）
+4. 🔍 查看 [expected_workflow.md](expected_workflow.md) - 詳細工作流程說明
 
 ---
 
 **快速安裝指令：**
 
 ```bash
-# 全域安裝（推薦）
-mkdir -p ~/.claude/workflows && cd ~/.claude/workflows && git clone https://github.com/CodeMachine0121/GSI-Protocol.git sdd-workflow
+# 最簡單：一鍵安裝（推薦）
+curl -sSL https://raw.githubusercontent.com/CodeMachine0121/GSI-Protocol/main/install.sh | bash
 
-# 專案內安裝（只複製 commands）
-mkdir -p .claude/commands && cd /tmp && git clone https://github.com/CodeMachine0121/GSI-Protocol.git sdd-temp && cp sdd-temp/.claude/commands/* <your-project>/.claude/commands/ && rm -rf sdd-temp
+# 或手動全域安裝
+mkdir -p ~/.claude/commands
+curl -sSL https://raw.githubusercontent.com/CodeMachine0121/GSI-Protocol/main/.claude/commands/sdd-auto.md -o ~/.claude/commands/sdd-auto.md
+curl -sSL https://raw.githubusercontent.com/CodeMachine0121/GSI-Protocol/main/.claude/commands/sdd-spec.md -o ~/.claude/commands/sdd-spec.md
+curl -sSL https://raw.githubusercontent.com/CodeMachine0121/GSI-Protocol/main/.claude/commands/sdd-arch.md -o ~/.claude/commands/sdd-arch.md
+curl -sSL https://raw.githubusercontent.com/CodeMachine0121/GSI-Protocol/main/.claude/commands/sdd-impl.md -o ~/.claude/commands/sdd-impl.md
+curl -sSL https://raw.githubusercontent.com/CodeMachine0121/GSI-Protocol/main/.claude/commands/sdd-verify.md -o ~/.claude/commands/sdd-verify.md
 ```
 
-開始使用 SDD Workflow，讓 AI 幫您寫結構化的程式碼！🚀
+開始使用 GSI-Protocol，讓 AI 幫您寫結構化的程式碼！🚀
