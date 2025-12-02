@@ -96,17 +96,17 @@ Feature: {功能名稱}
 ## Phase 4: 驗證（QA）
 
 **角色：** QA - 驗證架構與情境符合性  
-**輸出：** `docs/features/{feature_name}/verification_report.md`
+**輸出：** `docs/features/{feature_name}/conclusion.md`
 
 **動作：**
 1. 讀取 Gherkin + architecture.md + 實作
 2. 驗證架構符合性（模型、介面、檔案位置）
 3. 驗證每個 Gherkin 情境（Given→When→Then）
-4. 生成報告：✅ 完成 / ❌ 需修正（提供具體回饋）
+4. 生成結論至 `docs/features/{feature_name}/conclusion.md`
 
 **報告格式：**
 ```markdown
-# 驗證報告
+# {功能} - 驗證結論
 
 ## 1. 架構符合性
 | 元件 | 定義 | 實作 | 狀態 |
@@ -118,6 +118,7 @@ Feature: {功能名稱}
 ## 3. 摘要
 - 架構：{通過}/{總數}
 - 情境：{通過}/{總數}
+- **狀態：** ✅ 完成 / ❌ 需修正
 
 ## 4. 失敗回饋（如有）
 ```
@@ -128,7 +129,7 @@ Feature: {功能名稱}
 2. Phase 1 → `features/{feature}.feature`
 3. Phase 2 → `docs/features/{feature}/architecture.md`
 4. Phase 3 → 實作檔案（依 architecture.md）
-5. Phase 4 → `docs/features/{feature}/verification_report.md`
+5. Phase 4 → `docs/features/{feature}/conclusion.md`
 6. 失敗時返回 Phase 3 重試
 
 **輸出結構：**
@@ -137,7 +138,7 @@ project_root/
 ├── features/{feature}.feature
 ├── docs/features/{feature}/
 │   ├── architecture.md
-│   └── verification_report.md
+│   └── conclusion.md
 └── {專案目錄}/
     ├── {模型檔案}
     └── {服務檔案}

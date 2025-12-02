@@ -18,16 +18,14 @@ description: Phase 4 - 驗證實作（QA 角色）
 1. 讀取三個輸入（Gherkin, architecture.md, 實作程式碼）
 2. **驗證架構符合性**：資料模型、服務介面、檔案位置、命名慣例
 3. **驗證情境**：對每個 Gherkin 情境執行 Given→When→Then
-4. 生成報告至 `docs/features/{feature_name}/verification_report.md`
-
-
+4. 生成結論報告至 `docs/features/{feature_name}/conclusion.md`
 
 ## 報告格式
 
-輸出至：`docs/features/{feature_name}/verification_report.md`
+**唯一輸出：** `docs/features/{feature_name}/conclusion.md`
 
 ```markdown
-# 驗證報告：{功能名稱}
+# {功能名稱} - 驗證結論
 
 ## 1. 架構符合性
 | 元件 | 定義 | 實作 | 狀態 |
