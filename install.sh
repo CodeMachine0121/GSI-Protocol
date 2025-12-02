@@ -37,7 +37,7 @@ else
 fi
 
 # Set repository URL
-REPO_URL="${SDD_REPO_URL:-https://github.com/your-org/sdd-workflow}"
+REPO_URL="${SDD_REPO_URL:-https://github.com/CodeMachine0121/GSI-Protocol.git}"
 echo ""
 echo "Repository: $REPO_URL"
 echo "(Set SDD_REPO_URL environment variable to override)"

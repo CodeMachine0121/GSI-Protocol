@@ -28,21 +28,7 @@ git clone https://github.com/CodeMachine0121/GSI-Protocol.git sdd-workflow
 
 完成！現在在任何專案都能使用 `/sdd-auto` 等指令。
 
-### 方法二：使用安裝腳本
-
-自動安裝，只複製需要的 commands 檔案：
-
-```bash
-# 下載並執行安裝腳本
-curl -sSL https://raw.githubusercontent.com/CodeMachine0121/GSI-Protocol/main/install.sh | bash
-
-# 或手動執行
-wget https://raw.githubusercontent.com/CodeMachine0121/GSI-Protocol/main/install.sh
-chmod +x install.sh
-./install.sh
-```
-
-### 方法三：手動複製（專案內安裝）
+### 方法二：手動複製（專案內安裝）
 
 只複製 commands，不包含 examples：
 
@@ -139,7 +125,7 @@ For more control, run each phase separately:
 
 - **Role:** System Architect
 - **Input:** Gherkin specification from Phase 1
-- **Output:** Data models and interface definitions (Python/TypeScript)
+- **Output:** Data models and interface definitions (Python/TypeScript/Go/etc.)
 - **Goal:** Design the technical skeleton required to support the Gherkin scenarios
 
 ### Phase 3: Implementation (The Flesh)
@@ -249,6 +235,9 @@ func CalculateDiscount(amount float64, userType UserType) DiscountResult {
 .
 ├── README.md                           # This file
 ├── QUICKSTART.md                       # Quick start guide
+├── INSTALL.md                          # Detailed installation guide
+├── COMMANDS.md                         # Complete command reference
+├── LANGUAGE_GUIDE.md                   # Multi-language support guide
 ├── expected_workflow.md                # Detailed workflow definition
 ├── .claude/
 │   └── commands/
@@ -300,3 +289,5 @@ MIT
 ## Contributing
 
 Contributions are welcome! Please feel free to submit a Pull Request.
+
+See [CONTRIBUTING.md](CONTRIBUTING.md) for details.

@@ -31,11 +31,6 @@ cp /tmp/sdd-temp/.claude/commands/* .claude/commands/
 rm -rf /tmp/sdd-temp
 ```
 
-### 或使用安裝腳本
-
-```bash
-curl -sSL <repo-url>/raw/main/install.sh | bash
-```
 
 ### 驗證安裝
 

@@ -76,18 +76,22 @@ git add .claude/commands/
 git commit -m "Add SDD workflow commands"
 ```
 
-### 使用腳本安裝
+### 使用腳本安裝（僅限 Public Repo）
 
-我們提供了一個安裝腳本，自動只複製需要的檔案：
+⚠️ **注意**: 如果 repo 是 private，curl/wget 會要求認證。請使用「手動複製」方式。
+
+如果 repo 是 public，可以使用安裝腳本：
 
 ```bash
-# 下載並執行安裝腳本
-curl -sSL <your-repo-url>/raw/main/install.sh | bash
+# 先 clone repo
+git clone https://github.com/CodeMachine0121/GSI-Protocol.git /tmp/gsi-temp
+cd /tmp/gsi-temp
 
-# 或手動下載後執行
-wget <your-repo-url>/raw/main/install.sh
-chmod +x install.sh
+# 執行安裝腳本
 ./install.sh
+
+# 清理
+cd ~ && rm -rf /tmp/gsi-temp
 ```
 
 ---
