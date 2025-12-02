@@ -54,56 +54,230 @@ Feature: <功能名稱>
     Then <預期結果>
 ```
 
-### 階段 2：結構（骨架）
+### 階段 2：架構設計（骨架）
 **角色：** 系統架構師
 **約束：**
 - 您是架構師。讀取階段 1 的 Gherkin。
-- 只定義資料模型和介面。
-- 不允許業務邏輯實作。
+- **首先掃描專案上下文**，理解現有技術棧和架構模式。
+- 定義功能架構：服務介面與資料模型。
+- 不包含業務邏輯實作，只做架構規劃。
 - 從 Gherkin 提取名詞 → 資料模型
 - 從 Gherkin 提取動詞 → 服務介面
+- **遵循專案既有架構風格**（若專案為新建，則使用最佳實踐）
+- **輸出為中文的結構化 Markdown 文件**
+
+**核心原則：**
+- ✅ **語言無關**：不預設特定程式語言，根據專案上下文判斷
+- ✅ **專案感知**：掃描現有專案結構、技術棧、架構模式
+- ✅ **架構一致**：遵循專案既有的設計模式和命名慣例
+- ✅ **靈活適應**：支援 prompt 指定或自動偵測架構風格
 
 **動作：**
-1. 讀取階段 1 建立的 Gherkin 檔案
-2. 執行名詞分析以建立資料模型（Pydantic/TypeScript 介面）
-3. 執行動詞分析以建立服務介面（抽象類別）
-4. 儲存為 `structure/<feature_name>_structure.py`（或 `.ts`）
+1. **掃描專案上下文**（必須執行）：
+   - 偵測技術棧（package.json, requirements.txt, go.mod 等）
+   - 分析現有架構模式（controllers/, services/, repositories/ 等）
+   - 識別命名慣例（camelCase, snake_case 等）
+   - 檢查配置檔案和依賴
 
-**輸出格式（根據目標語言調整）：**
+2. 讀取階段 1 建立的 Gherkin 檔案
 
-語言無關原則：
-- 提取名詞 → 建立型別化資料結構
-- 提取動詞 → 建立介面/協定定義
-- 盡可能使用強型別
-- 記錄每個元素滿足哪個 Gherkin 情境
+3. 執行名詞分析以建立資料模型設計
 
-為目標語言選擇適當的慣用語：
-- **Python：** dataclasses、Pydantic 或 TypedDict + ABC
-- **TypeScript：** interfaces 和 types
-- **Go：** structs 和 interfaces
-- **Java：** interfaces 和 POJO
-- **Rust：** structs 和 traits
-- **C#：** interfaces 和 classes
+4. 執行動詞分析以建立服務介面設計
 
-範例結構（Python 使用 dataclasses）：
-```python
-from dataclasses import dataclass
-from abc import ABC, abstractmethod
-from enum import Enum
+5. 生成架構決策說明
 
-class EntityType(str, Enum):
-    VALUE_1 = "VALUE_1"
+6. 儲存為 `docs/features/{feature_name}/architecture.md`（中文 Markdown）
 
-@dataclass
-class Entity:
-    field1: str
-    field2: float
+**輸出格式：**
 
-class IServiceInterface(ABC):
-    @abstractmethod
-    def method_name(self, param: Entity) -> Result:
-        """來自情境：'<名稱>'"""
-        pass
+檔案位置：`docs/features/{feature_name}/architecture.md`（中文文件）
+
+文件必須包含：
+
+```markdown
+# {功能名稱} - 架構設計
+
+> 來源：features/{feature_name}.feature
+> 建立日期：{日期}
+
+## 0. 專案上下文
+
+### 技術棧資訊
+- **程式語言**：{偵測或指定的語言}
+- **框架**：{偵測或指定的框架}
+- **資料庫**：{偵測或指定的資料庫}
+- **ORM/ODM**：{偵測或指定的 ORM}
+- **架構模式**：{偵測或指定的架構模式}
+
+### 現有專案結構
+```
+{顯示掃描到的專案目錄結構}
+```
+
+### 命名慣例
+- 檔案命名：{snake_case / camelCase / PascalCase}
+- 類別命名：{PascalCase / camelCase}
+- 方法命名：{camelCase / snake_case}
+
+### 設計模式偵測
+- [ ] Repository Pattern
+- [ ] Service Layer
+- [ ] MVC
+- [ ] Clean Architecture
+- [ ] DDD
+
+## 1. 功能概述
+
+本功能提供 {功能簡述}。
+
+**核心需求：**
+- {需求 1}
+- {需求 2}
+
+## 2. 資料模型設計
+
+### 2.1 列舉與常數
+
+#### {EnumName}（{描述}）
+**來源情境：** "{Gherkin 語句}" (第 X 行)
+
+| 值 | 說明 | 用途 |
+|---|---|---|
+| {VALUE_1} | {說明} | {用途} |
+
+**實作建議（基於 {語言}）：**
+```{language}
+{語言特定的列舉實作範例}
+```
+
+### 2.2 核心實體
+
+#### {EntityName}（{描述}）
+**來源情境：** "{Gherkin 語句}" (第 X 行)
+
+| 欄位名稱 | 資料型別 | 必填 | 預設值 | 說明 |
+|---|---|---|---|---|
+| {field1} | {type} | ✅/- | {default} | {說明} |
+
+**實作範例（基於 {language} + {orm}）：**
+```{language}
+{語言和 ORM 特定的模型定義}
+```
+
+## 3. 服務介面設計
+
+### 3.1 {ServiceName}（{服務描述}）
+
+**在專案架構中的位置：**
+```
+src/{path}/{ServiceName}.{ext}
+```
+
+#### 方法：{methodName}()
+
+**來源情境：**
+- "{Gherkin 語句}" (第 X-Y 行)
+
+**方法簽名（基於 {language}）：**
+```{language}
+{語言特定的方法簽名}
+```
+
+**輸入參數：**
+
+| 參數名稱 | 型別 | 說明 |
+|---|---|---|
+| {param1} | {type} | {說明} |
+
+**回傳值：**
+
+| 型別 | 說明 |
+|---|---|
+| {returnType} | {說明} |
+
+**業務規則：**
+1. {規則 1}
+2. {規則 2}
+
+**與現有服務的整合：**
+- 依賴服務：{依賴的現有服務}
+- 被依賴於：{可能依賴此服務的其他服務}
+
+## 4. 架構決策
+
+### 4.1 為什麼選擇此架構模式？
+
+**基於專案分析：**
+- ✅ 專案現有架構：{偵測到的架構}
+- ✅ 保持一致性：{說明如何保持一致}
+- ✅ 整合考量：{與現有元件的整合方式}
+
+### 4.2 資料模型設計理由
+
+**與現有模型的關聯：**
+- 關聯模型：{現有的相關模型}
+- 關聯方式：{One-to-Many, Many-to-Many 等}
+
+### 4.3 技術考量
+
+#### 型別定義（{language}）
+{語言特定的型別定義建議}
+
+#### 資料驗證（{framework}）
+{框架特定的驗證建議}
+
+#### 錯誤處理（{language}）
+{語言特定的錯誤處理模式}
+
+## 5. 情境對應關係
+
+| Gherkin 情境 | 行數 | 相關資料模型 | 相關服務方法 | 驗證重點 |
+|---|---|---|---|---|
+| {情境描述} | {行號} | {Model} | {method()} | {驗證重點} |
+
+## 6. 檔案結構規劃
+
+**基於專案既有結構，新增以下檔案：**
+
+```
+{project_root}/
+├── src/
+│   ├── {模型目錄}/
+│   │   └── {FeatureName}Model.{ext}
+│   ├── {服務目錄}/
+│   │   └── {FeatureName}Service.{ext}
+│   └── {介面目錄}/
+│       └── I{FeatureName}Service.{ext}
+└── docs/
+    └── features/{feature_name}/
+        └── architecture.md
+```
+
+## 7. 下一步行動
+
+### 階段 3：程式碼實作
+
+**需要實作的元件（基於 {language} + {framework}）：**
+
+1. ✅ 定義列舉/常數
+2. ✅ 建立資料模型
+3. ✅ 實作服務介面/類別
+4. ✅ 整合現有架構
+5. ✅ 撰寫單元測試
+```
+
+**專案上下文掃描命令：**
+```bash
+# 1. 檢測技術棧
+ls -la | grep -E "package.json|requirements.txt|go.mod|pom.xml|Cargo.toml"
+
+# 2. 分析目錄結構
+find src -type d -maxdepth 2 2>/dev/null || find . -type d -maxdepth 2
+
+# 3. 掃描現有程式碼模式
+find . -name "*.service.*" -o -name "*Service.*" 2>/dev/null | head -5
+find . -name "*.repository.*" -o -name "*Repository.*" 2>/dev/null | head -5
 ```
 
 ### 階段 3：實作（血肉）
