@@ -1,29 +1,29 @@
-# SDD Workflow Commands Reference
+# SDD Workflow 指令參考
 
-This document explains all available SDD workflow commands and when to use them.
+本文件說明所有可用的 SDD 工作流程指令以及何時使用它們。
 
-## Command Overview
+## 指令概覽
 
 ```
-/sdd-auto           → Auto mode: Run all 4 phases automatically
-/sdd-spec           → Phase 1: Generate Gherkin specification
-/sdd-arch           → Phase 2: Design data models & interfaces
-/sdd-impl           → Phase 3: Implement the logic
-/sdd-verify         → Phase 4: Verify implementation
+/sdd-auto           → 自動模式：自動執行全部 4 個階段
+/sdd-spec           → 階段 1：生成 Gherkin 規格
+/sdd-arch           → 階段 2：設計資料模型與介面
+/sdd-impl           → 階段 3：實作邏輯
+/sdd-verify         → 階段 4：驗證實作
 ```
 
 ---
 
-## `/sdd-auto` - Auto Mode
+## `/sdd-auto` - 自動模式
 
-**Purpose:** Automatically execute all 4 phases of the SDD workflow from requirement to verified implementation.
+**目的：** 從需求到經驗證的實作，自動執行 SDD 工作流程的全部 4 個階段。
 
-**Usage:**
+**用法：**
 ```bash
-/sdd-auto <your complete requirement in any language>
+/sdd-auto <您的完整需求，任何語言>
 ```
 
-**Examples:**
+**範例：**
 ```bash
 /sdd-auto Implement a VIP discount system in Python where VIP users get 20% off purchases over $100
 
@@ -32,212 +32,212 @@ This document explains all available SDD workflow commands and when to use them.
 /sdd-auto Build a task manager in Go with create, update, delete, and list operations
 ```
 
-**What it does:**
-1. ✅ Generates Gherkin specification (Phase 1)
-2. ✅ Designs data models and interfaces (Phase 2)
-3. ✅ Implements the logic (Phase 3)
-4. ✅ Verifies against specification (Phase 4)
+**它會做什麼：**
+1. ✅ 生成 Gherkin 規格（階段 1）
+2. ✅ 設計資料模型和介面（階段 2）
+3. ✅ 實作邏輯（階段 3）
+4. ✅ 根據規格驗證（階段 4）
 
-**When to use:**
-- ✅ Quick prototyping
-- ✅ Simple, well-defined features
-- ✅ Exploring ideas rapidly
-- ✅ Learning the SDD methodology
-- ✅ When you trust AI to handle the full flow
+**何時使用：**
+- ✅ 快速原型製作
+- ✅ 簡單、明確定義的功能
+- ✅ 快速探索想法
+- ✅ 學習 SDD 方法論
+- ✅ 當您信任 AI 處理完整流程時
 
-**When NOT to use:**
-- ❌ Complex enterprise features requiring review
-- ❌ Production-critical code
-- ❌ When you need to manually adjust each phase
-- ❌ When working with legacy code constraints
+**何時不使用：**
+- ❌ 需要審查的複雜企業功能
+- ❌ 生產環境關鍵程式碼
+- ❌ 當您需要手動調整每個階段時
+- ❌ 當處理遺留程式碼約束時
 
 ---
 
-## `/sdd-spec` - Phase 1: Specification
+## `/sdd-spec` - 階段 1：規格
 
-**Purpose:** Generate a Gherkin specification from natural language requirements.
+**目的：** 從自然語言需求生成 Gherkin 規格。
 
-**Usage:**
+**用法：**
 ```bash
-/sdd-spec <your requirement description>
+/sdd-spec <您的需求描述>
 ```
 
-**Example:**
+**範例：**
 ```bash
 /sdd-spec I need a user authentication system with login, logout, and password reset
 ```
 
-**Output:**
-- Creates `features/<feature_name>.feature` with Gherkin scenarios
-- Includes happy paths, edge cases, and error scenarios
-- Pure behavioral specification (no technical details)
+**輸出：**
+- 建立 `features/<feature_name>.feature` 包含 Gherkin 情境
+- 包含正常路徑、邊界案例和錯誤情境
+- 純行為規格（無技術細節）
 
-**When to use:**
-- ✅ You want to define requirements clearly before coding
-- ✅ You need stakeholder approval on behavior
-- ✅ Starting with requirements documentation
-- ✅ Want to review/refine specification before proceeding
+**何時使用：**
+- ✅ 您想在編碼前清楚定義需求
+- ✅ 您需要利害關係人批准行為
+- ✅ 從需求文件開始
+- ✅ 想在繼續之前審查/細化規格
 
 ---
 
-## `/sdd-arch` - Phase 2: Architecture
+## `/sdd-arch` - 階段 2：架構
 
-**Purpose:** Design data models and service interfaces from Gherkin specification.
+**目的：** 從 Gherkin 規格設計資料模型和服務介面。
 
-**Usage:**
+**用法：**
 ```bash
-/sdd-arch <path to .feature file>
+/sdd-arch <.feature 檔案路徑>
 ```
 
-**Example:**
+**範例：**
 ```bash
 /sdd-arch features/user_authentication.feature
 ```
 
-**Output:**
-- Creates `structure/<feature>_structure.<ext>` (language-specific)
-- Defines data models (from nouns in Gherkin)
-- Defines service interfaces (from verbs in Gherkin)
-- No implementation logic, only structure
+**輸出：**
+- 建立 `structure/<feature>_structure.<ext>`（語言特定）
+- 定義資料模型（從 Gherkin 中的名詞）
+- 定義服務介面（從 Gherkin 中的動詞）
+- 無實作邏輯，只有結構
 
-**When to use:**
-- ✅ After Phase 1 completion
-- ✅ You want to review the technical architecture
-- ✅ Need to validate data models with team
-- ✅ Want to ensure structure aligns with system design
+**何時使用：**
+- ✅ 完成階段 1 後
+- ✅ 您想審查技術架構
+- ✅ 需要與團隊驗證資料模型
+- ✅ 想確保結構與系統設計一致
 
 ---
 
-## `/sdd-impl` - Phase 3: Implementation
+## `/sdd-impl` - 階段 3：實作
 
-**Purpose:** Implement the logic within the defined structure to satisfy Gherkin scenarios.
+**目的：** 在定義的結構內實作邏輯以滿足 Gherkin 情境。
 
-**Usage:**
+**用法：**
 ```bash
-/sdd-impl <path to .feature file> <path to structure file>
+/sdd-impl <.feature 檔案路徑> <結構檔案路徑>
 ```
 
-**Example:**
+**範例：**
 ```bash
 /sdd-impl features/user_authentication.feature structure/user_authentication_structure.py
 ```
 
-**Output:**
-- Creates `implementation/<feature>_impl.<ext>` (language-specific)
-- Implements all interfaces from Phase 2
-- Maps each Gherkin scenario to code logic
-- Includes basic self-verification
+**輸出：**
+- 建立 `implementation/<feature>_impl.<ext>`（語言特定）
+- 實作階段 2 的所有介面
+- 將每個 Gherkin 情境對應到程式碼邏輯
+- 包含基本自我驗證
 
-**When to use:**
-- ✅ After Phase 2 completion
-- ✅ Structure has been reviewed and approved
-- ✅ Ready to write actual business logic
-- ✅ Want to see working code
+**何時使用：**
+- ✅ 完成階段 2 後
+- ✅ 結構已審查並批准
+- ✅ 準備好撰寫實際業務邏輯
+- ✅ 想看到可運作的程式碼
 
 ---
 
-## `/sdd-verify` - Phase 4: Verification
+## `/sdd-verify` - 階段 4：驗證
 
-**Purpose:** Verify implementation against Gherkin specification.
+**目的：** 根據 Gherkin 規格驗證實作。
 
-**Usage:**
+**用法：**
 ```bash
-/sdd-verify <path to .feature file> <path to implementation file>
+/sdd-verify <.feature 檔案路徑> <實作檔案路徑>
 ```
 
-**Example:**
+**範例：**
 ```bash
 /sdd-verify features/user_authentication.feature implementation/user_authentication_impl.py
 ```
 
-**Output:**
-- Creates `verification/<feature>_verification_report.md`
-- Tests each Gherkin scenario
-- Reports Pass/Fail with evidence
-- Provides feedback for failures
+**輸出：**
+- 建立 `verification/<feature>_verification_report.md`
+- 測試每個 Gherkin 情境
+- 報告通過/失敗並附證據
+- 為失敗提供回饋
 
-**When to use:**
-- ✅ After Phase 3 completion
-- ✅ Before committing code
-- ✅ Need formal verification report
-- ✅ Want to ensure all scenarios are covered
-
----
-
-## Workflow Comparison
-
-### Auto Mode Flow
-```
-User Request
-     ↓
-/sdd-auto <requirement>
-     ↓
-[All 4 Phases Execute Automatically]
-     ↓
-Complete Feature
-```
-
-**Pros:**
-- ⚡ Fastest way to working code
-- 🎯 Single command
-- 🔄 Good for iterations
-
-**Cons:**
-- 🚫 No manual review between phases
-- 🚫 May need rework if complex
+**何時使用：**
+- ✅ 完成階段 3 後
+- ✅ 提交程式碼前
+- ✅ 需要正式驗證報告
+- ✅ 想確保涵蓋所有情境
 
 ---
 
-### Manual Mode Flow
+## 工作流程比較
+
+### 自動模式流程
 ```
-User Request
+使用者需求
      ↓
-/sdd-spec <requirement>
+/sdd-auto <需求>
      ↓
-[Review Gherkin]
+[全部 4 個階段自動執行]
+     ↓
+完整功能
+```
+
+**優點：**
+- ⚡ 最快獲得可運作程式碼的方式
+- 🎯 單一指令
+- 🔄 適合迭代
+
+**缺點：**
+- 🚫 階段之間無手動審查
+- 🚫 如果複雜可能需要重做
+
+---
+
+### 手動模式流程
+```
+使用者需求
+     ↓
+/sdd-spec <需求>
+     ↓
+[審查 Gherkin]
      ↓
 /sdd-arch features/spec.feature
      ↓
-[Review Structure]
+[審查結構]
      ↓
 /sdd-impl features/spec.feature structure/struct.py
      ↓
-[Review Implementation]
+[審查實作]
      ↓
 /sdd-verify features/spec.feature implementation/impl.py
      ↓
-Complete Feature
+完整功能
 ```
 
-**Pros:**
-- 🎯 Full control at each phase
-- 📋 Manual review checkpoints
-- 🔍 Better for complex features
+**優點：**
+- 🎯 每個階段完全控制
+- 📋 手動審查檢查點
+- 🔍 更適合複雜功能
 
-**Cons:**
-- ⏱️ More time-consuming
-- 🔢 Multiple commands needed
+**缺點：**
+- ⏱️ 更耗時
+- 🔢 需要多個指令
 
 ---
 
-## Decision Matrix
+## 決策矩陣
 
-| Scenario | Recommended Command |
+| 情境 | 建議指令 |
 |----------|-------------------|
-| "Quick prototype for demo" | `/sdd-auto` |
-| "Production feature with team review" | Manual phases |
-| "Learning SDD methodology" | `/sdd-auto` first, then try manual |
-| "API contract design" | `/sdd-spec` + `/sdd-arch` |
-| "Complex business logic" | Manual phases |
-| "Testing an idea" | `/sdd-auto` |
-| "Migrating existing code" | `/sdd-spec` first |
-| "Need stakeholder approval" | Manual phases |
+| "快速原型展示" | `/sdd-auto` |
+| "需要團隊審查的生產功能" | 手動階段 |
+| "學習 SDD 方法論" | 先使用 `/sdd-auto`，然後嘗試手動 |
+| "API 契約設計" | `/sdd-spec` + `/sdd-arch` |
+| "複雜業務邏輯" | 手動階段 |
+| "測試想法" | `/sdd-auto` |
+| "遷移現有程式碼" | 先使用 `/sdd-spec` |
+| "需要利害關係人批准" | 手動階段 |
 
 ---
 
-## Language Support
+## 語言支援
 
-All commands are **language-agnostic**. Specify your target language in the requirement:
+所有指令都是**語言無關的**。在需求中指定您的目標語言：
 
 ```bash
 # Python
@@ -252,59 +252,59 @@ All commands are **language-agnostic**. Specify your target language in the requ
 # Rust
 /sdd-auto Create a parser in Rust
 
-# Or let it auto-detect from project context
+# 或讓它從專案上下文自動偵測
 /sdd-auto Add authentication
 ```
 
 ---
 
-## Tips for Success
+## 成功秘訣
 
-### For Auto Mode (`/sdd-auto`)
-1. **Be specific:** "Create a VIP discount system with 20% off for purchases over $100"
-2. **Include edge cases:** "...and reject negative amounts"
-3. **Specify language:** "...in TypeScript" (or let it detect)
-4. **Keep it focused:** One feature at a time
+### 對於自動模式（`/sdd-auto`）
+1. **要具體：** "Create a VIP discount system with 20% off for purchases over $100"
+2. **包含邊界案例：** "...and reject negative amounts"
+3. **指定語言：** "...in TypeScript"（或讓它偵測）
+4. **保持聚焦：** 一次一個功能
 
-### For Manual Mode
-1. **Review each output:** Don't blindly proceed to next phase
-2. **Refine as needed:** Edit generated files before next phase
-3. **Verify early:** Don't wait until Phase 4 to test
-4. **Document changes:** If you modify structure, update Gherkin
-
----
-
-## Common Pitfalls
-
-❌ **Using `/sdd-auto` for production-critical code without review**
-✅ Use manual phases for important features
-
-❌ **Skipping Phase 4 verification**
-✅ Always verify, even if Phase 3 looks correct
-
-❌ **Not specifying language for multi-language projects**
-✅ Explicitly state target language
-
-❌ **Running phases out of order**
-✅ Follow the sequence: Spec → Arch → Impl → Verify
+### 對於手動模式
+1. **審查每個輸出：** 不要盲目進入下一階段
+2. **視需要細化：** 在下一階段前編輯生成的檔案
+3. **提早驗證：** 不要等到階段 4 才測試
+4. **記錄變更：** 如果修改結構，更新 Gherkin
 
 ---
 
-## Getting Help
+## 常見陷阱
 
-- See [QUICKSTART.md](QUICKSTART.md) for hands-on guide
-- See [LANGUAGE_GUIDE.md](LANGUAGE_GUIDE.md) for language-specific patterns
-- See [README.md](README.md) for full documentation
+❌ **在生產環境關鍵程式碼使用 `/sdd-auto` 而不審查**
+✅ 對重要功能使用手動階段
+
+❌ **跳過階段 4 驗證**
+✅ 始終驗證，即使階段 3 看起來正確
+
+❌ **多語言專案未指定語言**
+✅ 明確說明目標語言
+
+❌ **不按順序執行階段**
+✅ 遵循序列：規格 → 架構 → 實作 → 驗證
 
 ---
 
-**Quick Reference Card:**
+## 獲取幫助
+
+- 查看 [QUICKSTART.md](QUICKSTART.md) 了解實作指南
+- 查看 [LANGUAGE_GUIDE.md](LANGUAGE_GUIDE.md) 了解特定語言模式
+- 查看 [README.md](README.md) 了解完整文件
+
+---
+
+**快速參考卡：**
 
 ```
-Fast Prototype    → /sdd-auto <requirement>
-Production Code   → /sdd-spec → /sdd-arch → /sdd-impl → /sdd-verify
-Just Spec        → /sdd-spec <requirement>
-Just Structure   → /sdd-arch <spec.feature>
-Just Code        → /sdd-impl <spec> <structure>
-Just Verify      → /sdd-verify <spec> <impl>
+快速原型      → /sdd-auto <需求>
+生產程式碼    → /sdd-spec → /sdd-arch → /sdd-impl → /sdd-verify
+只要規格      → /sdd-spec <需求>
+只要結構      → /sdd-arch <spec.feature>
+只要程式碼    → /sdd-impl <spec> <structure>
+只要驗證      → /sdd-verify <spec> <impl>
 ```

@@ -1,147 +1,147 @@
-# Contributing to SDD Workflow
+# 為 SDD Workflow 做出貢獻
 
-Thank you for your interest in contributing to the SDD Workflow project! This document provides guidelines for contributing.
+感謝您有興趣為 SDD Workflow 專案做出貢獻！本文件提供了貢獻指南。
 
-## How to Contribute
+## 如何貢獻
 
-### Reporting Issues
+### 回報問題
 
-If you find a bug or have a suggestion:
-1. Check if the issue already exists in the issue tracker
-2. Create a new issue with:
-   - Clear title and description
-   - Steps to reproduce (for bugs)
-   - Expected vs actual behavior
-   - Example Gherkin/code if applicable
+如果您發現 bug 或有建議：
+1. 檢查問題追蹤器中是否已存在該問題
+2. 建立新問題時請包含：
+   - 清晰的標題和描述
+   - 重現步驟（針對 bug）
+   - 預期行為與實際行為
+   - 範例 Gherkin/程式碼（如適用）
 
-### Contributing Code
+### 貢獻程式碼
 
-1. Fork the repository
-2. Create a feature branch (`git checkout -b feature/amazing-feature`)
-3. Make your changes
-4. Test your changes thoroughly
-5. Commit using descriptive commit messages
-6. Push to your fork
-7. Create a Pull Request
+1. Fork 此儲存庫
+2. 建立功能分支（`git checkout -b feature/amazing-feature`）
+3. 進行變更
+4. 徹底測試您的變更
+5. 使用描述性的 commit 訊息進行提交
+6. 推送到您的 fork
+7. 建立 Pull Request
 
-### Contributing Examples
+### 貢獻範例
 
-We love new examples! To add an example:
+我們歡迎新範例！要新增範例：
 
-1. Create a new directory under `examples/<your-feature>/`
-2. Include all 4 phase outputs:
-   - `spec.feature` - Gherkin specification
-   - `structure.py` (or `.ts`) - Data models and interfaces
-   - `implementation.py` (or `.ts`) - Concrete implementation
-   - `README.md` - Explanation of the example
-3. Ensure the example is complete and working
-4. Test it with the SDD workflow commands
+1. 在 `examples/<your-feature>/` 下建立新目錄
+2. 包含所有 4 個階段的輸出：
+   - `spec.feature` - Gherkin 規格
+   - `structure.py`（或 `.ts`）- 資料模型和介面
+   - `implementation.py`（或 `.ts`）- 具體實作
+   - `README.md` - 範例說明
+3. 確保範例完整且可運作
+4. 使用 SDD 工作流程指令測試它
 
-### Improving Documentation
+### 改善文件
 
-Documentation improvements are always welcome:
-- Fix typos or unclear explanations
-- Add more examples or use cases
-- Improve prompt templates
-- Translate documentation (future)
+歡迎改善文件：
+- 修正錯字或不清楚的說明
+- 新增更多範例或使用案例
+- 改善提示範本
+- 翻譯文件（未來）
 
-### Improving Slash Commands
+### 改善 Slash 指令
 
-If you want to improve the slash commands:
-1. Test your changes thoroughly
-2. Ensure backward compatibility
-3. Update documentation
-4. Provide examples of the improved behavior
+如果您想改善 slash 指令：
+1. 徹底測試您的變更
+2. 確保向後相容性
+3. 更新文件
+4. 提供改善後行為的範例
 
-## Development Guidelines
+## 開發指南
 
-### Prompt Writing
+### 撰寫提示
 
-When writing or improving prompts:
-- Be clear and specific about constraints
-- Use examples to illustrate concepts
-- Reference the expected_workflow.md for alignment
-- Test prompts with various inputs
+撰寫或改善提示時：
+- 對約束條件要清晰明確
+- 使用範例來說明概念
+- 參考 expected_workflow.md 以保持一致
+- 使用各種輸入測試提示
 
-### Code Examples
+### 程式碼範例
 
-When adding code examples:
-- Use type hints (Python) or strict typing (TypeScript)
-- Follow the SDD philosophy: Spec → Structure → Implementation
-- Include comments mapping code to Gherkin
-- Add verification/tests
+新增程式碼範例時：
+- 使用型別提示（Python）或嚴格型別（TypeScript）
+- 遵循 SDD 理念：規格 → 結構 → 實作
+- 包含將程式碼對應到 Gherkin 的註解
+- 新增驗證/測試
 
-### Gherkin Specifications
+### Gherkin 規格
 
-When writing Gherkin examples:
-- Follow Given-When-Then format strictly
-- Use concrete values, not variables
-- Cover happy path, edge cases, and error cases
-- Keep scenarios focused and atomic
+撰寫 Gherkin 範例時：
+- 嚴格遵循 Given-When-Then 格式
+- 使用具體值，而非變數
+- 涵蓋正常路徑、邊界案例和錯誤案例
+- 保持情境聚焦且原子化
 
-## Code Style
+## 程式碼風格
 
 ### Python
-- Follow PEP 8
-- Use type hints
-- Use Pydantic for data models
-- Use ABC for interfaces
+- 遵循 PEP 8
+- 使用型別提示
+- 使用 Pydantic 建立資料模型
+- 使用 ABC 建立介面
 
 ### TypeScript
-- Use strict TypeScript
-- Follow standard conventions
-- Use interfaces for contracts
+- 使用嚴格的 TypeScript
+- 遵循標準慣例
+- 使用介面定義契約
 
 ### Gherkin
-- Feature: Sentence case
-- Scenario: Sentence case
-- Steps: Lowercase except proper nouns
-- Indent: 2 spaces
+- Feature：句首大寫
+- Scenario：句首大寫
+- Steps：小寫（專有名詞除外）
+- 縮排：2 個空格
 
-## Testing
+## 測試
 
-Before submitting:
-1. Test slash commands work correctly
-2. Verify examples run without errors
-3. Check that all 4 phases work together
-4. Validate Gherkin syntax
+提交前：
+1. 測試 slash 指令是否正常運作
+2. 驗證範例能無錯誤執行
+3. 檢查所有 4 個階段能協同運作
+4. 驗證 Gherkin 語法
 
-## Pull Request Process
+## Pull Request 流程
 
-1. Update documentation for any changed functionality
-2. Add or update examples if applicable
-3. Ensure all examples still work
-4. Update CHANGELOG.md (if exists)
-5. Request review from maintainers
+1. 更新任何變更功能的文件
+2. 如適用，新增或更新範例
+3. 確保所有範例仍能運作
+4. 更新 CHANGELOG.md（如果存在）
+5. 請維護者審查
 
-## Code Review
+## 程式碼審查
 
-Reviewers will check:
-- Alignment with SDD philosophy
-- Code quality and clarity
-- Documentation completeness
-- Example correctness
-- Backward compatibility
+審查者會檢查：
+- 與 SDD 理念的一致性
+- 程式碼品質和清晰度
+- 文件完整性
+- 範例正確性
+- 向後相容性
 
-## Community
+## 社群
 
-- Be respectful and constructive
-- Help others learn the SDD approach
-- Share your success stories
-- Report what works and what doesn't
+- 保持尊重和建設性
+- 幫助他人學習 SDD 方法
+- 分享您的成功故事
+- 回報什麼有效、什麼無效
 
-## Questions?
+## 有問題？
 
-If you have questions:
-- Check the README.md
-- Review existing examples
-- Look at expected_workflow.md
-- Open a discussion issue
+如果您有問題：
+- 查看 README.md
+- 審查現有範例
+- 查看 expected_workflow.md
+- 開啟討論問題
 
-## License
+## 授權
 
-By contributing, you agree that your contributions will be licensed under the MIT License.
+透過貢獻，您同意您的貢獻將在 MIT 授權下授權。
 
 ---
 
-Thank you for helping make SDD Workflow better!
+感謝您幫助 SDD Workflow 變得更好！

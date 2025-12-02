@@ -1,39 +1,39 @@
-# SDD Language Guide
+# SDD 語言指南
 
-This guide shows how the SDD workflow adapts to different programming languages while maintaining the same core methodology.
+本指南展示 SDD 工作流程如何適應不同的程式語言，同時維持相同的核心方法論。
 
-## Core Principle
+## 核心原則
 
-**The SDD workflow is language-agnostic.** While the Gherkin specification (Phase 1) remains identical across languages, Phases 2-4 adapt to use language-specific idioms and best practices.
+**SDD 工作流程是語言無關的。** 雖然 Gherkin 規格（階段 1）在所有語言中保持一致，階段 2-4 會適應使用語言特定的慣用語和最佳實踐。
 
-## Language Support
+## 語言支援
 
-### Tier 1: Full Support with Examples
-- **Python** - Examples with dataclasses, Pydantic, and ABC
-- **TypeScript** - Examples with interfaces and types
+### 第一層：完整支援並附範例
+- **Python** - 使用 dataclasses、Pydantic 和 ABC 的範例
+- **TypeScript** - 使用介面和型別的範例
 
-### Tier 2: Documented Patterns
-- **Go** - Structs and interfaces
-- **Java** - Interfaces and POJOs
-- **Rust** - Structs and traits
-- **C#** - Interfaces and records
+### 第二層：文件化模式
+- **Go** - 結構體和介面
+- **Java** - 介面和 POJO
+- **Rust** - 結構體和特徵
+- **C#** - 介面和記錄
 
-### Tier 3: Any Language
-The methodology works with any language that supports:
-- Data structures (structs, classes, records)
-- Type definitions (explicit or implicit)
-- Function/method definitions
+### 第三層：任何語言
+方法論適用於任何支援以下特性的語言：
+- 資料結構（結構體、類別、記錄）
+- 型別定義（明確或隱式）
+- 函式/方法定義
 
-## Language-Specific Patterns
+## 語言特定模式
 
 ### Python
 
-**Strengths:**
-- Multiple options: dataclasses, Pydantic, TypedDict
-- ABC for interfaces
-- Dynamic typing with type hints
+**優勢：**
+- 多種選擇：dataclasses、Pydantic、TypedDict
+- ABC 用於介面
+- 動態型別與型別提示
 
-**Phase 2 - Structure:**
+**階段 2 - 結構：**
 ```python
 from dataclasses import dataclass
 from abc import ABC, abstractmethod
@@ -55,27 +55,27 @@ class IUserService(ABC):
         pass
 ```
 
-**When to use:**
-- Rapid prototyping
-- Data science applications
-- Backend services
-- Scripting
+**何時使用：**
+- 快速原型製作
+- 資料科學應用
+- 後端服務
+- 腳本
 
-**Dependencies:**
+**依賴項：**
 ```bash
-pip install pydantic  # If using Pydantic for validation
+pip install pydantic  # 如果使用 Pydantic 進行驗證
 ```
 
 ---
 
 ### TypeScript
 
-**Strengths:**
-- Strong compile-time type checking
-- Interface-based design
-- Excellent IDE support
+**優勢：**
+- 強大的編譯時型別檢查
+- 基於介面的設計
+- 優秀的 IDE 支援
 
-**Phase 2 - Structure:**
+**階段 2 - 結構：**
 ```typescript
 enum Status {
   ACTIVE = "ACTIVE",
@@ -92,13 +92,13 @@ interface IUserService {
 }
 ```
 
-**When to use:**
-- Frontend applications
-- Node.js backends
-- Full-stack web development
-- Projects requiring strong typing
+**何時使用：**
+- 前端應用
+- Node.js 後端
+- 全端網頁開發
+- 需要強型別的專案
 
-**Dependencies:**
+**依賴項：**
 ```bash
 npm install typescript --save-dev
 ```
@@ -107,12 +107,12 @@ npm install typescript --save-dev
 
 ### Go
 
-**Strengths:**
-- Simple, explicit interfaces
-- Built-in concurrency
-- Fast compilation and execution
+**優勢：**
+- 簡單、明確的介面
+- 內建並行處理
+- 快速編譯和執行
 
-**Phase 2 - Structure:**
+**階段 2 - 結構：**
 ```go
 package user
 
@@ -133,24 +133,24 @@ type UserService interface {
 }
 ```
 
-**When to use:**
-- Microservices
-- Cloud infrastructure
-- CLI tools
-- High-performance backends
+**何時使用：**
+- 微服務
+- 雲端基礎設施
+- CLI 工具
+- 高效能後端
 
-**No external dependencies needed**
+**不需要外部依賴**
 
 ---
 
 ### Java
 
-**Strengths:**
-- Enterprise-ready
-- Strong OOP support
-- Rich ecosystem
+**優勢：**
+- 企業級就緒
+- 強大的 OOP 支援
+- 豐富的生態系統
 
-**Phase 2 - Structure:**
+**階段 2 - 結構：**
 ```java
 public enum Status {
     ACTIVE,
@@ -161,7 +161,7 @@ public class User {
     private String id;
     private Status status;
 
-    // Constructor, getters, setters
+    // 建構子、getter、setter
 }
 
 public interface IUserService {
@@ -169,27 +169,27 @@ public interface IUserService {
 }
 ```
 
-**When to use:**
-- Enterprise applications
-- Android development
-- Large-scale systems
-- Legacy system integration
+**何時使用：**
+- 企業應用
+- Android 開發
+- 大規模系統
+- 遺留系統整合
 
-**Dependencies (Maven):**
+**依賴項（Maven）：**
 ```xml
-<!-- Add validation libraries if needed -->
+<!-- 視需要新增驗證函式庫 -->
 ```
 
 ---
 
 ### Rust
 
-**Strengths:**
-- Memory safety without garbage collection
-- Powerful type system
-- Zero-cost abstractions
+**優勢：**
+- 無垃圾回收的記憶體安全
+- 強大的型別系統
+- 零成本抽象
 
-**Phase 2 - Structure:**
+**階段 2 - 結構：**
 ```rust
 #[derive(Debug, Clone, PartialEq)]
 pub enum Status {
@@ -208,13 +208,13 @@ pub trait UserService {
 }
 ```
 
-**When to use:**
-- Systems programming
+**何時使用：**
+- 系統程式設計
 - WebAssembly
-- High-performance applications
-- Safety-critical software
+- 高效能應用
+- 安全關鍵軟體
 
-**Dependencies (Cargo.toml):**
+**依賴項（Cargo.toml）：**
 ```toml
 [dependencies]
 serde = { version = "1.0", features = ["derive"] }
@@ -224,12 +224,12 @@ serde = { version = "1.0", features = ["derive"] }
 
 ### C#
 
-**Strengths:**
-- .NET ecosystem
-- Modern language features
-- Unity game development
+**優勢：**
+- .NET 生態系統
+- 現代語言特性
+- Unity 遊戲開發
 
-**Phase 2 - Structure:**
+**階段 2 - 結構：**
 ```csharp
 public enum Status
 {
@@ -245,55 +245,55 @@ public interface IUserService
 }
 ```
 
-**When to use:**
-- .NET applications
-- Windows desktop apps
-- Unity games
-- Azure cloud services
+**何時使用：**
+- .NET 應用
+- Windows 桌面應用
+- Unity 遊戲
+- Azure 雲端服務
 
 ---
 
-## Choosing the Right Language
+## 選擇正確語言
 
-### Questions to Ask
+### 要問的問題
 
-1. **What is your existing codebase?**
-   - Use the same language for consistency
+1. **您現有的程式碼庫是什麼？**
+   - 使用相同語言以保持一致性
 
-2. **What is your team familiar with?**
-   - Leverage existing expertise
+2. **您的團隊熟悉什麼？**
+   - 利用現有專業知識
 
-3. **What are your performance requirements?**
-   - Go, Rust: High performance
-   - Python, TypeScript: Developer productivity
+3. **您的效能需求是什麼？**
+   - Go、Rust：高效能
+   - Python、TypeScript：開發者生產力
 
-4. **What is your deployment target?**
-   - Frontend: TypeScript
-   - Backend: Any (Python, Go, Java, etc.)
-   - Mobile: Kotlin, Swift
-   - WebAssembly: Rust
+4. **您的部署目標是什麼？**
+   - 前端：TypeScript
+   - 後端：任何（Python、Go、Java 等）
+   - 行動裝置：Kotlin、Swift
+   - WebAssembly：Rust
 
-5. **What is your type safety requirement?**
-   - Strict: TypeScript, Rust, Go
-   - Flexible: Python, Ruby
+5. **您的型別安全需求是什麼？**
+   - 嚴格：TypeScript、Rust、Go
+   - 彈性：Python、Ruby
 
-## SDD Workflow Across Languages
+## 跨語言的 SDD 工作流程
 
-### Phase 1: Specification (Gherkin)
-**Always the same across all languages**
+### 階段 1：規格（Gherkin）
+**所有語言始終相同**
 
 ```gherkin
-Feature: User Activation
-  Scenario: Activate inactive user
-    Given user status is INACTIVE
-    When user is activated
-    Then user status should be ACTIVE
+Feature: 使用者啟用
+  Scenario: 啟用非活動使用者
+    Given 使用者狀態是 INACTIVE
+    When 使用者被啟用
+    Then 使用者狀態應該是 ACTIVE
 ```
 
-### Phase 2: Structure
-**Adapts to language idioms:**
+### 階段 2：結構
+**適應語言慣用語：**
 
-| Language | Data Model | Interface | Enum |
+| 語言 | 資料模型 | 介面 | 列舉 |
 |----------|------------|-----------|------|
 | Python | dataclass/@dataclass | ABC | Enum |
 | TypeScript | interface | interface | enum |
@@ -302,87 +302,87 @@ Feature: User Activation
 | Rust | struct | trait | enum |
 | C# | record | interface | enum |
 
-### Phase 3: Implementation
-**Uses language-specific patterns:**
+### 階段 3：實作
+**使用語言特定模式：**
 
-| Language | Pattern | Error Handling |
+| 語言 | 模式 | 錯誤處理 |
 |----------|---------|----------------|
-| Python | class implementation | try/except, Optional |
-| TypeScript | class implementation | try/catch, undefined |
-| Go | struct methods | error return value |
-| Java | class implementation | try/catch, Exceptions |
-| Rust | impl for trait | Result<T, E> |
-| C# | class implementation | try/catch, nullable |
+| Python | 類別實作 | try/except、Optional |
+| TypeScript | 類別實作 | try/catch、undefined |
+| Go | 結構體方法 | 錯誤回傳值 |
+| Java | 類別實作 | try/catch、例外 |
+| Rust | 實作特徵 | Result<T, E> |
+| C# | 類別實作 | try/catch、可空 |
 
-### Phase 4: Verification
-**Uses language testing frameworks:**
+### 階段 4：驗證
+**使用語言測試框架：**
 
-| Language | Test Framework | Assertion Library |
+| 語言 | 測試框架 | 斷言函式庫 |
 |----------|---------------|-------------------|
-| Python | pytest, unittest | assert, pytest |
-| TypeScript | Jest, Mocha | expect, assert |
+| Python | pytest、unittest | assert、pytest |
+| TypeScript | Jest、Mocha | expect、assert |
 | Go | testing | testing.T |
-| Java | JUnit | JUnit assertions |
-| Rust | cargo test | assert! macros |
-| C# | xUnit, NUnit | Assert |
+| Java | JUnit | JUnit 斷言 |
+| Rust | cargo test | assert! 巨集 |
+| C# | xUnit、NUnit | Assert |
 
-## Best Practices
+## 最佳實踐
 
-### Universal Principles
+### 通用原則
 
-1. **Strong Typing**: Use the strongest typing available in your language
-2. **Clear Naming**: Follow language conventions (camelCase, snake_case, etc.)
-3. **Documentation**: Map code back to Gherkin scenarios in comments
-4. **Validation**: Validate at boundaries, trust internal code
-5. **Simplicity**: Don't over-engineer, implement only what Gherkin specifies
+1. **強型別**：使用語言中最強的型別
+2. **清晰命名**：遵循語言慣例（camelCase、snake_case 等）
+3. **文件**：在註解中將程式碼對應回 Gherkin 情境
+4. **驗證**：在邊界驗證，信任內部程式碼
+5. **簡單性**：不要過度設計，只實作 Gherkin 指定的內容
 
-### Language-Specific Tips
+### 語言特定建議
 
-**Python:**
-- Use type hints even though they're optional
-- Prefer dataclasses over plain classes
-- Consider Pydantic for validation-heavy code
+**Python：**
+- 即使是選用的也使用型別提示
+- 優先使用 dataclasses 而非普通類別
+- 對驗證密集的程式碼考慮使用 Pydantic
 
-**TypeScript:**
-- Enable `strict` mode in tsconfig.json
-- Use `interface` over `type` for contracts
-- Leverage union types for error handling
+**TypeScript：**
+- 在 tsconfig.json 中啟用 `strict` 模式
+- 對契約使用 `interface` 而非 `type`
+- 利用聯合型別進行錯誤處理
 
-**Go:**
-- Keep interfaces small and focused
-- Return errors explicitly
-- Use struct embedding sparingly
+**Go：**
+- 保持介面小而專注
+- 明確回傳錯誤
+- 謹慎使用結構體嵌入
 
-**Java:**
-- Prefer immutable objects where possible
-- Use record classes (Java 14+)
-- Leverage Optional for nullable values
+**Java：**
+- 盡可能使用不可變物件
+- 使用記錄類別（Java 14+）
+- 對可空值使用 Optional
 
-**Rust:**
-- Embrace Result<T, E> for error handling
-- Use derive macros for common traits
-- Leverage borrowing instead of cloning
+**Rust：**
+- 擁抱 Result<T, E> 進行錯誤處理
+- 使用 derive 巨集獲得常見特徵
+- 利用借用而非複製
 
-**C#:**
-- Use records for immutable data
-- Leverage nullable reference types
-- Use async/await for I/O operations
+**C#：**
+- 對不可變資料使用記錄
+- 利用可空參考型別
+- 對 I/O 操作使用 async/await
 
-## Migration Between Languages
+## 語言間遷移
 
-### Same Feature, Different Language
+### 相同功能，不同語言
 
-The SDD workflow makes cross-language migration systematic:
+SDD 工作流程使跨語言遷移系統化：
 
-1. **Gherkin stays the same** (Phase 1)
-2. **Map data models** to new language (Phase 2)
-3. **Map interfaces** to new language (Phase 2)
-4. **Translate implementation logic** (Phase 3)
-5. **Verify against same Gherkin** (Phase 4)
+1. **Gherkin 保持不變**（階段 1）
+2. **將資料模型對應**到新語言（階段 2）
+3. **將介面對應**到新語言（階段 2）
+4. **翻譯實作邏輯**（階段 3）
+5. **根據相同 Gherkin 驗證**（階段 4）
 
-### Example: Python → TypeScript
+### 範例：Python → TypeScript
 
-**Python:**
+**Python：**
 ```python
 @dataclass
 class User:
@@ -390,7 +390,7 @@ class User:
     points: int
 ```
 
-**TypeScript:**
+**TypeScript：**
 ```typescript
 interface User {
   id: string;
@@ -398,29 +398,29 @@ interface User {
 }
 ```
 
-**The Gherkin and logic remain identical!**
+**Gherkin 和邏輯保持一致！**
 
-## Getting Help
+## 獲取幫助
 
-When using SDD with a new language:
+使用新語言使用 SDD 時：
 
-1. Check the `examples/` directory for similar languages
-2. Review language-specific documentation for type systems
-3. Ask the AI: "Implement this in [language] using idiomatic patterns"
-4. Start with Phase 1 (Gherkin) - it's always the same
-5. Let the AI adapt Phases 2-4 to your language
+1. 查看 `examples/` 目錄中的類似語言
+2. 審查語言特定的型別系統文件
+3. 詢問 AI："使用慣用模式在 [語言] 中實作這個"
+4. 從階段 1（Gherkin）開始 - 它始終相同
+5. 讓 AI 將階段 2-4 適應您的語言
 
-## Contributing
+## 貢獻
 
-Help expand language support:
+幫助擴展語言支援：
 
-1. Create examples in new languages
-2. Document language-specific patterns
-3. Share best practices
-4. Report issues with language-specific adaptations
+1. 建立新語言的範例
+2. 記錄語言特定模式
+3. 分享最佳實踐
+4. 回報語言特定適應的問題
 
-See [CONTRIBUTING.md](CONTRIBUTING.md) for details.
+詳見 [CONTRIBUTING.md](CONTRIBUTING.md)。
 
 ---
 
-**Remember:** The power of SDD is in the methodology, not the language. Focus on clear specifications first, then let the implementation adapt to your chosen language.
+**記住：** SDD 的力量在於方法論，而非語言。首先專注於清晰的規格，然後讓實作適應您選擇的語言。

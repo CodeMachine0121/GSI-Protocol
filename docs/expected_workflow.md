@@ -1,137 +1,137 @@
-# AI-Driven SDD Workflow Definition
+# AI 驅動的 SDD 工作流程定義
 
-> Specification-Driven Development for New Feature Implementation
+> 用於新功能實作的規格驅動開發
 
-## 1. Overview
+## 1. 概覽
 
-This workflow defines a strict **Specification-Driven Development (SDD)** process for building new software features using AI Agents. The core philosophy is **"Spec -> Structure -> Implementation"**.
+此工作流程為使用 AI 代理建立軟體功能定義了嚴格的**規格驅動開發（SDD）** 流程。核心理念是**「規格 -> 結構 -> 實作」**。
 
-The process isolates business logic, technical architecture, and coding into three distinct phases to minimize hallucination and maximize precision.
+該流程將業務邏輯、技術架構和編碼隔離到三個不同階段，以最小化幻覺並最大化精確度。
 
-## 2. Process Flow (Text-Based)
+## 2. 流程（文字描述）
 
 ```text
-[ User Requirement ]
+[ 使用者需求 ]
        │
        ▼
 +=============================================+
-|  Phase 1: Specification (The Soul)          |
-|  Role:   PM Agent                           |
-|  Action: Define Behavior (BDD)              |
-|  Output: Gherkin (.feature)                 |
+|  階段 1：規格（靈魂）                        |
+|  角色：  PM 代理                            |
+|  行動：  定義行為（BDD）                     |
+|  輸出：  Gherkin (.feature)                 |
 +=============================================+
        │
-       │ (Pass Gherkin)
+       │ (傳遞 Gherkin)
        ▼
 +=============================================+
-|  Phase 2: Structure (The Skeleton)          |
-|  Role:   Architect Agent                    |
-|  Action: Define Data Models & Interfaces    |
-|  Input:  Gherkin                            |
-|  Output: Schema / Design Spec (Code)        |
+|  階段 2：結構（骨架）                        |
+|  角色：  架構師代理                          |
+|  行動：  定義資料模型與介面                   |
+|  輸入：  Gherkin                            |
+|  輸出：  結構描述 / 設計規格（程式碼）         |
 +=============================================+
        │
-       │ (Pass Gherkin + Schema)
+       │ (傳遞 Gherkin + 結構描述)
        ▼
 +=============================================+
-|  Phase 3: Implementation (The Flesh)        |
-|  Role:   Engineer Agent                     |
-|  Action: Write Logic / Fill Interfaces      |
-|  Input:  Gherkin + Schema                   |
-|  Output: Executable Code                    |
+|  階段 3：實作（血肉）                        |
+|  角色：  工程師代理                          |
+|  行動：  撰寫邏輯 / 填充介面                  |
+|  輸入：  Gherkin + 結構描述                  |
+|  輸出：  可執行程式碼                         |
 +=============================================+
        │
        ▼
 +=============================================+
-|  Phase 4: Verification (The Check)          |
-|  Role:   QA Agent / Automated Script        |
-|  Action: Run Gherkin Scenarios vs Code      |
+|  階段 4：驗證（檢查）                        |
+|  角色：  QA 代理 / 自動化腳本                 |
+|  行動：  對照 Gherkin 情境執行程式碼           |
 +=============================================+
        │
-       ├───── < Fail > ────┐
-       │                   │ (Feedback Loop)
+       ├───── < 失敗 > ────┐
+       │                   │ (回饋循環)
        │                   │
        ▼                   │
-( Feature Complete )       └────→ [ Retry Phase 3 ]
+( 功能完成 )               └────→ [ 重試階段 3 ]
 ```
 
-## 3. Workflow Phases Detail
+## 3. 工作流程階段詳情
 
-### Phase 1: Requirement Specification (Behavior)
+### 階段 1：需求規格（行為）
 
-**Role:** Product Manager (PM)
-**Goal:** Translate vague user requirements into strict behavioral specifications using BDD.
+**角色：** 產品經理（PM）
+**目標：** 使用 BDD 將模糊的使用者需求轉換為嚴格的行為規格。
 
-- **Input:** User's natural language request (e.g., "I need a discount system for VIPs").
-- **Action:**
-  1.  Analyze business rules and edge cases.
-  2.  Define scenarios using `Given-When-Then` syntax.
-- **Output Artifact:** `feature_spec.gherkin`
-  - **Must contain:** Happy paths, Edge cases, Error handling.
-  - **Must NOT contain:** Database schema, specific coding implementation details.
+- **輸入：** 使用者的自然語言請求（例如，「我需要 VIP 折扣系統」）。
+- **行動：**
+  1. 分析業務規則和邊界案例。
+  2. 使用 `Given-When-Then` 語法定義情境。
+- **輸出產出：** `feature_spec.gherkin`
+  - **必須包含：** 正常路徑、邊界案例、錯誤處理。
+  - **不得包含：** 資料庫結構描述、特定編碼實作細節。
 
-### Phase 2: Structural Design (Architecture)
+### 階段 2：結構設計（架構）
 
-**Role:** System Architect
-**Goal:** Design the technical skeleton required to support the Gherkin scenarios.
+**角色：** 系統架構師
+**目標：** 設計支援 Gherkin 情境所需的技術骨架。
 
-- **Input:** `feature_spec.gherkin` (from Phase 1)
-- **Action:**
-  1.  **Noun Analysis:** Extract nouns from Gherkin to create Data Models (Schema).
-  2.  **Verb Analysis:** Extract verbs from Gherkin to create Service Interfaces (Abstract Classes / Signatures).
-- **Output Artifact:** `structure_design.py` (or `.ts`)
-  - **Content:**
-    - **Data Models:** (e.g., Pydantic Models, Type Definitions) strictly typing input/output fields.
-    - **Interfaces:** (e.g., Abstract Base Classes) defining function signatures without implementation logic.
-  - **Constraint:** No business logic implementation allowed in this phase. Only definitions.
+- **輸入：** `feature_spec.gherkin`（來自階段 1）
+- **行動：**
+  1. **名詞分析：** 從 Gherkin 提取名詞以建立資料模型（結構描述）。
+  2. **動詞分析：** 從 Gherkin 提取動詞以建立服務介面（抽象類別/簽名）。
+- **輸出產出：** `structure_design.py`（或 `.ts`）
+  - **內容：**
+    - **資料模型：**（例如，Pydantic 模型、型別定義）嚴格定義輸入/輸出欄位型別。
+    - **介面：**（例如，抽象基礎類別）定義函式簽名，不含實作邏輯。
+  - **約束：** 此階段不允許業務邏輯實作。僅定義。
 
-### Phase 3: Implementation (Coding)
+### 階段 3：實作（編碼）
 
-**Role:** Senior Engineer
-**Goal:** Implement the logic within the defined structure to satisfy the Gherkin specs.
+**角色：** 資深工程師
+**目標：** 在定義的結構內實作邏輯以滿足 Gherkin 規格。
 
-- **Input:**
-  - `feature_spec.gherkin` (The Test/Requirement)
-  - `structure_design.py` (The Constraint/Blueprint)
-- **Action:**
-  1.  Write the actual code logic inside the defined interfaces.
-  2.  Ensure every logical branch in the code corresponds to a Scenario in the Gherkin file.
-- **Output Artifact:** `implementation.py` (or `.ts`)
-  - **Content:** Fully functional code that implements the interfaces from Phase 2.
+- **輸入：**
+  - `feature_spec.gherkin`（測試/需求）
+  - `structure_design.py`（約束/藍圖）
+- **行動：**
+  1. 在定義的介面內撰寫實際程式碼邏輯。
+  2. 確保程式碼中的每個邏輯分支對應 Gherkin 檔案中的情境。
+- **輸出產出：** `implementation.py`（或 `.ts`）
+  - **內容：** 實作階段 2 介面的完整功能程式碼。
 
-### Phase 4: Verification (Self-Correction)
+### 階段 4：驗證（自我修正）
 
-**Role:** QA Automation
-**Goal:** Verify that Phase 3 meets the requirements of Phase 1.
+**角色：** QA 自動化
+**目標：** 驗證階段 3 符合階段 1 的需求。
 
-- **Input:** `feature_spec.gherkin` + `implementation.py`
-- **Action:**
-  - Run the Gherkin scenarios against the implemented code.
-- **Logic:**
-  - If **Pass**: Workflow ends.
-  - If **Fail**: Return error logs to **Phase 3 (Engineer Agent)** for retry.
+- **輸入：** `feature_spec.gherkin` + `implementation.py`
+- **行動：**
+  - 對照實作的程式碼執行 Gherkin 情境。
+- **邏輯：**
+  - 如果**通過**：工作流程結束。
+  - 如果**失敗**：將錯誤日誌回傳給**階段 3（工程師代理）** 重試。
 
-## 4. Prompting Strategy for Plugin
+## 4. 插件的提示策略
 
-When generating the plugin, ensure the prompts for each agent follow these directives:
+生成插件時，確保每個代理的提示遵循以下指令：
 
-- **For Spec Agent:** "You are a PM. Do not discuss code. Focus solely on user behavior and business rules using Gherkin."
-- **For Architect Agent:** "You are an Architect. Read the Gherkin. Define the NECESSARY Pydantic models and Abstract Base Classes to support these scenarios. Do not implement the methods, only define signatures."
-- **For Engineer Agent:** "You are an Engineer. You must strictly use the provided Data Models. Implement the logic for the provided Interfaces. Your code must pass all Gherkin scenarios."
+- **對於規格代理：** "您是 PM。不要討論程式碼。僅使用 Gherkin 專注於使用者行為和業務規則。"
+- **對於架構師代理：** "您是架構師。讀取 Gherkin。定義支援這些情境所需的 Pydantic 模型和抽象基礎類別。不要實作方法，只定義簽名。"
+- **對於工程師代理：** "您是工程師。您必須嚴格使用提供的資料模型。為提供的介面實作邏輯。您的程式碼必須通過所有 Gherkin 情境。"
 
-## 5. Artifact Examples
+## 5. 產出範例
 
-**Phase 1 Output (Gherkin):**
+**階段 1 輸出（Gherkin）：**
 
 ```gherkin
-Feature: VIP Discount
-  Scenario: Apply discount
-    Given User is VIP
-    When Purchase amount is 1000
-    Then Final price should be 800
+Feature: VIP 折扣
+  Scenario: 套用折扣
+    Given 使用者是 VIP
+    When 購買金額是 1000
+    Then 最終價格應該是 800
 ```
 
-**Phase 2 Output (Structure):**
+**階段 2 輸出（結構）：**
 
 ```python
 class UserType(str, Enum):
@@ -144,40 +144,40 @@ class ICouponService(ABC):
         pass
 ```
 
-## 6. Example Usage Scenario
+## 6. 範例使用情境
 
-Here is how a real-world interaction would look like when the User triggers this workflow plugin.
+以下是使用者觸發此工作流程插件時實際互動的樣子。
 
-**User:**
+**使用者：**
 
-> "I need to implement a Referral Bonus system. If a user invites a friend, and the friend completes a purchase over $50, the inviter gets 100 points."
+> "我需要實作推薦獎金系統。如果使用者邀請朋友，且朋友完成超過 $50 的購買，邀請者獲得 100 點數。"
 
-**Agent (PM Role - Phase 1):**
+**代理（PM 角色 - 階段 1）：**
 
-> "Understood. I have drafted the behavioral specification (Gherkin) for your Referral System.
+> "了解。我已為您的推薦系統起草行為規格（Gherkin）。
 >
-> **File: `referral.feature`**
+> **檔案：`referral.feature`**
 >
 > ```gherkin
-> Feature: Referral Bonus System
->   Scenario: Successful Referral
->     Given User A invites User B
->     When User B makes a purchase of 60.0 USD
->     Then User A receives 100 reward points
+> Feature: 推薦獎金系統
+>   Scenario: 成功推薦
+>     Given 使用者 A 邀請使用者 B
+>     When 使用者 B 購買 60.0 美元
+>     Then 使用者 A 獲得 100 獎勵點數
 >
->   Scenario: Purchase amount too low
->     Given User A invites User B
->     When User B makes a purchase of 30.0 USD
->     Then User A receives 0 reward points
+>   Scenario: 購買金額太低
+>     Given 使用者 A 邀請使用者 B
+>     When 使用者 B 購買 30.0 美元
+>     Then 使用者 A 獲得 0 獎勵點數
 > ```
 >
-> _Moving to Structural Design..._"
+> _進入結構設計..._"
 
-**Agent (Architect Role - Phase 2):**
+**代理（架構師角色 - 階段 2）：**
 
-> "Based on the Gherkin above, I have defined the necessary Data Models and Interfaces.
+> "根據上述 Gherkin，我已定義必要的資料模型和介面。
 >
-> **File: `structure.py`**
+> **檔案：`structure.py`**
 >
 > ```python
 > class Purchase(BaseModel):
@@ -191,17 +191,17 @@ Here is how a real-world interaction would look like when the User triggers this
 > class IReferralService(ABC):
 >     @abstractmethod
 >     def process_purchase(self, inviter: User, purchase: Purchase) -> User:
->         """Calculates and updates points for the inviter."""
+>         """計算並更新邀請者的點數。"""
 >         pass
 > ```
 >
-> _Moving to Implementation..._"
+> _進入實作..._"
 
-**Agent (Engineer Role - Phase 3):**
+**代理（工程師角色 - 階段 3）：**
 
-> "I have implemented the logic strictly following the structure and scenarios.
+> "我已嚴格遵循結構和情境實作邏輯。
 >
-> **File: `impl.py`**
+> **檔案：`impl.py`**
 >
 > ```python
 > class ReferralService(IReferralService):
@@ -211,10 +211,10 @@ Here is how a real-world interaction would look like when the User triggers this
 >         return inviter
 > ```
 >
-> _Running Verification..._"
+> _執行驗證..._"
 
-**Agent (QA Role - Phase 4):**
+**代理（QA 角色 - 階段 4）：**
 
-> "✅ **Verification Passed.** All Gherkin scenarios passed successfully against the implementation.
+> "✅ **驗證通過。** 所有 Gherkin 情境對照實作成功通過。
 >
-> Here are your final files: `referral.feature`, `structure.py`, `impl.py`."
+> 這是您的最終檔案：`referral.feature`、`structure.py`、`impl.py`。"

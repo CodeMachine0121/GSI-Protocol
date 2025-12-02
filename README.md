@@ -1,42 +1,42 @@
-# GSI-Protocol
+# GSI-Protocol（中文）
 
-> **Gherkin → Structure → Implementation**
+> **Gherkin → 結構 → 實作**
 >
-> A language-agnostic workflow for building verified software features using AI agents and BDD principles.
+> 一個語言無關的工作流程，使用 AI 代理和 BDD 原則建立可驗證的軟體功能。
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 
-## 🎯 What is GSI-Protocol?
+## 🎯 什麼是 GSI-Protocol?
 
-GSI-Protocol is a Claude Code workflow plugin that implements **Specification-Driven Development (SDD)**. It transforms vague requirements into verified, production-ready code through a strict 4-phase process.
+GSI-Protocol 是一個 Claude Code 工作流程插件，實作了**規格驅動開發（SDD）**。它透過嚴格的四階段流程，將模糊的需求轉化為經過驗證、可用於生產環境的程式碼。
 
-### Core Philosophy
+### 核心理念
 
-**"Spec → Structure → Implementation"**
+**"規格 → 結構 → 實作"**
 
-Isolate business logic, technical architecture, and coding into distinct phases to minimize AI hallucination and maximize precision.
+將業務邏輯、技術架構和程式撰寫分離到不同階段，以最小化 AI 幻覺並最大化精確度。
 
-### Key Features
+### 主要特性
 
-- 🌍 **Language Agnostic**: Works with Python, TypeScript, Go, Java, Rust, C#, and more
-- 🎯 **Framework Independent**: Not tied to any specific library or framework
-- 📝 **BDD-Based**: Uses Gherkin for clear, testable specifications
-- ✅ **Verifiable**: Automated verification against specifications
-- 🔄 **Modular**: Run phases independently or as a complete workflow
+- 🌍 **語言無關**：支援 Python、TypeScript、Go、Java、Rust、C# 等等
+- 🎯 **框架獨立**：不綁定任何特定函式庫或框架
+- 📝 **基於 BDD**：使用 Gherkin 撰寫清晰、可測試的規格
+- ✅ **可驗證**：自動根據規格進行驗證
+- 🔄 **模組化**：可獨立執行各階段或完整工作流程
 
 ---
 
-## 📦 Quick Start
+## 📦 快速開始
 
-### Installation (30 seconds)
+### 安裝（30 秒）
 
-**Option 1: One-liner (if repo is public):**
+**選項 1：一鍵安裝（如果 repo 為 public）：**
 
 ```bash
 curl -sSL https://raw.githubusercontent.com/CodeMachine0121/GSI-Protocol/main/install.sh | bash
 ```
 
-**Option 2: Global Installation (Recommended):**
+**選項 2：全域安裝（推薦）：**
 
 ```bash
 mkdir -p ~/.claude/workflows
@@ -44,9 +44,9 @@ cd ~/.claude/workflows
 git clone https://github.com/CodeMachine0121/GSI-Protocol.git gsi-protocol
 ```
 
-Now use in any project!
+現在可以在任何專案中使用！
 
-**Option 3: Project-Specific Installation:**
+**選項 3：專案專用安裝：**
 
 ```bash
 cd /tmp
@@ -57,17 +57,17 @@ cp /tmp/gsi-temp/.claude/commands/* .claude/commands/
 rm -rf /tmp/gsi-temp
 ```
 
-> 📖 See [Installation Guide](docs/INSTALL.md) for more options
+> 📖 查看 [安裝指南](docs/INSTALL.md) 了解更多選項
 
-### First Use (2 minutes)
+### 第一次使用（2 分鐘）
 
 ```bash
 cd your-project
 
-# Auto mode - generates everything
+# 自動模式 - 生成所有內容
 /sdd-auto Create a shopping cart in TypeScript with add, remove, checkout functions
 
-# Manual mode - step by step
+# 手動模式 - 逐步執行
 /sdd-spec Create a shopping cart with add, remove, checkout
 /sdd-arch features/shopping_cart.feature
 /sdd-impl features/shopping_cart.feature structure/shopping_cart_structure.ts
@@ -76,64 +76,64 @@ cd your-project
 
 ---
 
-## 📚 Documentation
+## 📚 文件
 
-| Document | Description |
+| 文件 | 說明 |
 |----------|-------------|
-| **[Quick Start Guide](docs/QUICKSTART.md)** | 5-minute tutorial |
-| **[Installation Guide](docs/INSTALL.md)** | Detailed installation instructions |
-| **[Commands Reference](docs/COMMANDS.md)** | Complete command documentation |
-| **[Language Guide](docs/LANGUAGE_GUIDE.md)** | Multi-language support guide |
-| **[Workflow Definition](docs/expected_workflow.md)** | Detailed methodology |
-| **[Contributing](CONTRIBUTING.md)** | How to contribute |
+| **[快速入門指南](docs/QUICKSTART.md)** | 5 分鐘教學 |
+| **[安裝指南](docs/INSTALL.md)** | 詳細安裝說明 |
+| **[指令參考](docs/COMMANDS.md)** | 完整指令文件 |
+| **[語言指南](docs/LANGUAGE_GUIDE.md)** | 多語言支援指南 |
+| **[工作流程定義](docs/expected_workflow.md)** | 詳細方法論 |
+| **[貢獻指南](CONTRIBUTING.md)** | 如何貢獻 |
 
 ---
 
-## 🔄 Workflow Overview
+## 🔄 工作流程概覽
 
-### The 4 Phases
+### 四個階段
 
 ```
-Phase 1: Specification (PM)
+階段 1：規格（PM）
     ↓
-    Gherkin .feature file
+    Gherkin .feature 檔案
     ↓
-Phase 2: Structure (Architect)
+階段 2：結構（架構師）
     ↓
-    Data models + Interfaces
+    資料模型 + 介面
     ↓
-Phase 3: Implementation (Engineer)
+階段 3：實作（工程師）
     ↓
-    Working code
+    可運行的程式碼
     ↓
-Phase 4: Verification (QA)
+階段 4：驗證（QA）
     ↓
-    ✅ Verified feature
+    ✅ 已驗證功能
 ```
 
-### Commands
+### 指令
 
-| Command | Purpose | When to Use |
+| 指令 | 用途 | 何時使用 |
 |---------|---------|-------------|
-| `/sdd-auto` | Run all 4 phases automatically | Quick prototyping, simple features |
-| `/sdd-spec` | Generate Gherkin specification | Define requirements |
-| `/sdd-arch` | Design data models & interfaces | Review structure |
-| `/sdd-impl` | Implement the logic | Write code |
-| `/sdd-verify` | Verify against spec | Test implementation |
+| `/sdd-auto` | 自動執行全部 4 個階段 | 快速原型、簡單功能 |
+| `/sdd-spec` | 生成 Gherkin 規格 | 定義需求 |
+| `/sdd-arch` | 設計資料模型與介面 | 審查結構 |
+| `/sdd-impl` | 實作邏輯 | 撰寫程式碼 |
+| `/sdd-verify` | 根據規格驗證 | 測試實作 |
 
 ---
 
-## 💡 Example
+## 💡 範例
 
-### Input
+### 輸入
 
 ```
 /sdd-auto Implement a VIP discount system in Python where VIP users get 20% off purchases over $100
 ```
 
-### Output
+### 輸出
 
-**Phase 1: Specification** (`features/vip_discount.feature`)
+**階段 1：規格** (`features/vip_discount.feature`)
 ```gherkin
 Feature: VIP Discount
   Scenario: Apply discount to VIP user
@@ -142,7 +142,7 @@ Feature: VIP Discount
     Then final price should be 800 USD
 ```
 
-**Phase 2: Structure** (`structure/vip_discount_structure.py`)
+**階段 2：結構** (`structure/vip_discount_structure.py`)
 ```python
 from dataclasses import dataclass
 from enum import Enum
@@ -157,7 +157,7 @@ class DiscountResult:
     discount: float
 ```
 
-**Phase 3: Implementation** (`implementation/vip_discount_impl.py`)
+**階段 3：實作** (`implementation/vip_discount_impl.py`)
 ```python
 def calculate_discount(amount: float, user_type: UserType) -> DiscountResult:
     if user_type == UserType.VIP and amount >= 100:
@@ -166,17 +166,17 @@ def calculate_discount(amount: float, user_type: UserType) -> DiscountResult:
     return DiscountResult(amount, 0)
 ```
 
-**Phase 4: Verification**
+**階段 4：驗證**
 ```
-✅ All scenarios passed
-✅ Feature complete
+✅ 所有情境通過
+✅ 功能完成
 ```
 
 ---
 
-## 🌐 Multi-Language Support
+## 🌐 多語言支援
 
-Same workflow, different languages:
+相同的工作流程，不同的語言：
 
 <details>
 <summary><b>Python</b></summary>
@@ -227,157 +227,157 @@ type UserService interface {
 ```
 </details>
 
-See [Language Guide](docs/LANGUAGE_GUIDE.md) for Rust, Java, C#, and more.
+更多語言請參閱 [語言指南](docs/LANGUAGE_GUIDE.md)，包含 Rust、Java、C# 等。
 
 ---
 
-## 🎓 Use Cases
+## 🎓 使用案例
 
-### 1. API Development
+### 1. API 開發
 ```bash
 /sdd-spec Design a RESTful API for blog posts (CRUD operations)
 /sdd-arch features/blog_api.feature
-# Get clear API contracts and data structures
+# 獲得清晰的 API 契約和資料結構
 ```
 
-### 2. Feature Implementation
+### 2. 功能實作
 ```bash
 /sdd-auto Implement user authentication with JWT tokens in TypeScript
-# Get working, tested code in minutes
+# 幾分鐘內獲得可運行、已測試的程式碼
 ```
 
-### 3. Legacy Code Refactoring
+### 3. 遺留程式碼重構
 ```bash
 /sdd-spec The payment module should support credit card, PayPal, and crypto
-# Define clear requirements before refactoring
+# 在重構前定義清晰的需求
 ```
 
-### 4. Team Collaboration
+### 4. 團隊協作
 ```bash
-# PM: Define requirements
+# PM：定義需求
 /sdd-spec User registration with email verification
 
-# Architect: Review and design
+# 架構師：審查並設計
 /sdd-arch features/user_registration.feature
 
-# Engineer: Implement
+# 工程師：實作
 /sdd-impl features/user_registration.feature structure/user_registration_structure.py
 
-# QA: Verify
+# QA：驗證
 /sdd-verify features/user_registration.feature implementation/user_registration_impl.py
 ```
 
 ---
 
-## 📁 Project Structure
+## 📁 專案結構
 
 ```
 GSI-Protocol/
-├── README.md                    # This file
-├── CONTRIBUTING.md              # Contribution guidelines
-├── LICENSE                      # MIT License
-├── install.sh                   # Installation script
+├── README.md                    # 本檔案
+├── CONTRIBUTING.md              # 貢獻指南
+├── LICENSE                      # MIT 授權
+├── install.sh                   # 安裝腳本
 ├── .claude/
-│   └── commands/                # Claude Code slash commands
-│       ├── gsi-auto.md         # Auto workflow
-│       ├── gsi-spec.md         # Phase 1
-│       ├── gsi-arch.md         # Phase 2
-│       ├── gsi-impl.md         # Phase 3
-│       └── gsi-verify.md       # Phase 4
-├── docs/                        # Documentation
-│   ├── QUICKSTART.md           # Quick start guide
-│   ├── INSTALL.md              # Installation guide
-│   ├── COMMANDS.md             # Commands reference
-│   ├── LANGUAGE_GUIDE.md       # Language support
-│   └── expected_workflow.md    # Workflow details
-├── prompts/                     # Agent prompts
+│   └── commands/                # Claude Code slash 指令
+│       ├── gsi-auto.md         # 自動工作流程
+│       ├── gsi-spec.md         # 階段 1
+│       ├── gsi-arch.md         # 階段 2
+│       ├── gsi-impl.md         # 階段 3
+│       └── gsi-verify.md       # 階段 4
+├── docs/                        # 文件
+│   ├── QUICKSTART.md           # 快速入門指南
+│   ├── INSTALL.md              # 安裝指南
+│   ├── COMMANDS.md             # 指令參考
+│   ├── LANGUAGE_GUIDE.md       # 語言支援
+│   └── expected_workflow.md    # 工作流程細節
+├── prompts/                     # 代理提示
 │   ├── pm_agent.md
 │   ├── architect_agent.md
 │   ├── engineer_agent.md
 │   └── qa_agent.md
-└── examples/                    # Working examples
-    ├── referral_bonus/         # Python example
-    └── vip_discount_typescript/ # TypeScript example
+└── examples/                    # 實作範例
+    ├── referral_bonus/         # Python 範例
+    └── vip_discount_typescript/ # TypeScript 範例
 ```
 
 ---
 
-## 🚀 Benefits
+## 🚀 優勢
 
-### For Developers
-- ✅ **Faster Development**: Auto-generate boilerplate and structure
-- ✅ **Better Quality**: Systematic approach reduces bugs
-- ✅ **Clear Requirements**: Gherkin specs eliminate ambiguity
+### 對開發者
+- ✅ **更快開發**：自動生成樣板程式碼和結構
+- ✅ **更高品質**：系統化方法減少 bug
+- ✅ **清晰需求**：Gherkin 規格消除歧義
 
-### For Teams
-- ✅ **Shared Language**: BDD specs everyone understands
-- ✅ **Better Communication**: Clear phases for PM, Architect, Engineer, QA
-- ✅ **Maintainable Code**: Every line traces to a requirement
+### 對團隊
+- ✅ **共同語言**：所有人都能理解的 BDD 規格
+- ✅ **更好溝通**：PM、架構師、工程師、QA 各有明確階段
+- ✅ **可維護程式碼**：每一行都可追溯到需求
 
-### For Projects
-- ✅ **Language Flexibility**: Switch languages without changing methodology
-- ✅ **Framework Agnostic**: Use any library or framework
-- ✅ **Scalable**: Works for simple features to complex systems
+### 對專案
+- ✅ **語言彈性**：切換語言不需改變方法論
+- ✅ **框架無關**：使用任何函式庫或框架
+- ✅ **可擴展**：適用於簡單功能到複雜系統
 
 ---
 
-## 🔧 Requirements
+## 🔧 需求
 
 - Claude Code CLI
 - Git
-- Target language runtime (Python 3.8+, Node.js 16+, Go 1.19+, etc.)
+- 目標語言執行環境（Python 3.8+、Node.js 16+、Go 1.19+ 等）
 
 ---
 
-## 📖 Learn More
+## 📖 了解更多
 
-- 📝 [Quick Start (5 min)](docs/QUICKSTART.md)
-- 📚 [Full Documentation](docs/)
-- 🌍 [Language Support](docs/LANGUAGE_GUIDE.md)
-- 💬 [GitHub Discussions](https://github.com/CodeMachine0121/GSI-Protocol/discussions)
-
----
-
-## 🤝 Contributing
-
-We welcome contributions! See [CONTRIBUTING.md](CONTRIBUTING.md) for guidelines.
-
-### Ways to Contribute
-- 🐛 Report bugs
-- 💡 Suggest features
-- 📝 Improve documentation
-- 🌍 Add language examples
-- 🔧 Submit pull requests
+- 📝 [快速入門（5 分鐘）](docs/QUICKSTART.md)
+- 📚 [完整文件](docs/)
+- 🌍 [語言支援](docs/LANGUAGE_GUIDE.md)
+- 💬 [GitHub 討論](https://github.com/CodeMachine0121/GSI-Protocol/discussions)
 
 ---
 
-## 📄 License
+## 🤝 貢獻
 
-MIT License - see [LICENSE](LICENSE) file for details.
+我們歡迎貢獻！請參閱 [CONTRIBUTING.md](CONTRIBUTING.md) 了解指南。
 
----
-
-## 🙏 Acknowledgments
-
-Built with:
-- [Claude Code](https://claude.ai/claude-code) - AI-powered development
-- [Gherkin](https://cucumber.io/docs/gherkin/) - BDD specification language
-- Inspired by Test-Driven Development and Behavior-Driven Development principles
+### 貢獻方式
+- 🐛 回報 bug
+- 💡 建議功能
+- 📝 改善文件
+- 🌍 新增語言範例
+- 🔧 提交 pull request
 
 ---
 
-## 📞 Support
+## 📄 授權
 
-- 📖 [Documentation](docs/)
+MIT 授權 - 詳見 [LICENSE](LICENSE) 檔案。
+
+---
+
+## 🙏 致謝
+
+使用以下工具建置：
+- [Claude Code](https://claude.ai/claude-code) - AI 驅動開發
+- [Gherkin](https://cucumber.io/docs/gherkin/) - BDD 規格語言
+- 靈感來自測試驅動開發和行為驅動開發原則
+
+---
+
+## 📞 支援
+
+- 📖 [文件](docs/)
 - 💬 [GitHub Issues](https://github.com/CodeMachine0121/GSI-Protocol/issues)
-- 💡 [Discussions](https://github.com/CodeMachine0121/GSI-Protocol/discussions)
+- 💡 [討論](https://github.com/CodeMachine0121/GSI-Protocol/discussions)
 
 ---
 
 <div align="center">
 
-**[⬆ Back to Top](#gsi-protocol)**
+**[⬆ 回到頂端](#gsi-protocol中文)**
 
-Made with ❤️ by developers, for developers
+由開發者打造，為開發者服務 ❤️
 
 </div>

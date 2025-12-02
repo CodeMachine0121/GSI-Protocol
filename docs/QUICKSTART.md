@@ -1,12 +1,12 @@
-# GSI-Protocol - Quick Start Guide
+# GSI-Protocol - 快速入門指南
 
-Get started with GSI-Protocol (Specification-Driven Development) in 5 minutes!
+5 分鐘開始使用 GSI-Protocol（規格驅動開發）！
 
-## Installation
+## 安裝
 
-> ⚠️ **不要把整個 repo clone 到專案裡！** 這會複製 examples 到你的專案。
+> ⚠️ **不要把整個 repo clone 到專案裡！** 這會複製 examples 到您的專案。
 
-### 方式 1: 一鍵安裝（最快）⚡
+### 方式 1：一鍵安裝（最快）⚡
 
 ⚠️ 只在 repo 為 public 時可用
 
@@ -14,9 +14,9 @@ Get started with GSI-Protocol (Specification-Driven Development) in 5 minutes!
 curl -sSL https://raw.githubusercontent.com/CodeMachine0121/GSI-Protocol/main/install.sh | bash
 ```
 
-腳本會詢問你要全域安裝還是專案內安裝。
+腳本會詢問您要全域安裝還是專案內安裝。
 
-### 方式 2: 全域安裝（推薦）✅
+### 方式 2：全域安裝（推薦）✅
 
 ```bash
 mkdir -p ~/.claude/workflows
@@ -26,13 +26,13 @@ git clone https://github.com/CodeMachine0121/GSI-Protocol.git gsi-protocol
 
 現在在任何專案都能用！
 
-### 方式 3: 專案內安裝（只複製 commands）
+### 方式 3：專案內安裝（只複製 commands）
 
 ```bash
 # 在專案外臨時下載
 cd /tmp && git clone https://github.com/CodeMachine0121/GSI-Protocol.git gsi-temp
 
-# 進入你的專案並複製
+# 進入您的專案並複製
 cd ~/your-project
 mkdir -p .claude/commands
 cp /tmp/gsi-temp/.claude/commands/* .claude/commands/
@@ -47,242 +47,242 @@ rm -rf /tmp/gsi-temp
 ls .claude/commands/
 # 應該看到: sdd-auto.md, sdd-spec.md, sdd-arch.md, sdd-impl.md, sdd-verify.md
 
-# 確認沒有 examples/（除非是你自己的）
+# 確認沒有 examples/（除非是您自己的）
 ```
 
 > 📖 詳細安裝說明請參考 [INSTALL.md](INSTALL.md)
 
 ---
 
-## Your First SDD Feature
+## 您的第一個 SDD 功能
 
-### Step 1: Define Your Requirement
+### 步驟 1：定義需求
 
-Think of a simple feature you want to implement. For example:
-> "I need a discount system where VIP users get 20% off purchases over $100."
+想一個您想實作的簡單功能。例如：
+> "我需要一個折扣系統，VIP 使用者購買超過 $100 可享 20% 折扣。"
 
-### Step 2: Run the Auto Workflow
+### 步驟 2：執行自動工作流程
 
-In Claude Code, use the `/sdd-auto` command:
+在 Claude Code 中，使用 `/sdd-auto` 指令：
 
 ```
 /sdd-auto I need a discount system where VIP users get 20% off purchases over $100
 ```
 
-The agent will automatically:
-1. Generate a Gherkin specification (`features/discount.feature`)
-2. Design data models and interfaces (`structure/discount_structure.py`)
-3. Implement the logic (`implementation/discount_impl.py`)
-4. Verify against the specification
+代理會自動：
+1. 生成 Gherkin 規格（`features/discount.feature`）
+2. 設計資料模型和介面（`structure/discount_structure.py`）
+3. 實作邏輯（`implementation/discount_impl.py`）
+4. 根據規格驗證
 
-All in one go, without stopping between phases!
+一次完成，階段之間不會停止！
 
-### Step 3: Review the Output
+### 步驟 3：審查輸出
 
-Check the generated files:
-- `features/` - Your behavioral specifications
-- `structure/` - Your data models and interfaces
-- `implementation/` - Your working code
+檢查生成的檔案：
+- `features/` - 您的行為規格
+- `structure/` - 您的資料模型和介面
+- `implementation/` - 您的可運作程式碼
 
-### Step 4: Run and Test
+### 步驟 4：執行和測試
 
 ```bash
-# For Python implementations
+# 對於 Python 實作
 python implementation/discount_impl.py
 
-# The built-in verification will run and show results
+# 內建驗證會執行並顯示結果
 ```
 
 ---
 
-## Using Individual Phases
+## 使用個別階段
 
-You can also run each phase separately:
+您也可以分別執行每個階段：
 
-### Phase 1: Specification Only
+### 階段 1：僅規格
 ```
 /sdd-spec I need a user authentication system
 ```
-This generates only the Gherkin `.feature` file.
+這只生成 Gherkin `.feature` 檔案。
 
-### Phase 2: Structure Design
+### 階段 2：結構設計
 ```
 /sdd-arch features/authentication.feature
 ```
-This reads your Gherkin and generates data models and interfaces.
+這讀取您的 Gherkin 並生成資料模型和介面。
 
-### Phase 3: Implementation
+### 階段 3：實作
 ```
 /sdd-impl features/authentication.feature structure/authentication_structure.py
 ```
-This generates the actual code implementation.
+這生成實際的程式碼實作。
 
-### Phase 4: Verification
+### 階段 4：驗證
 ```
 /sdd-verify features/authentication.feature implementation/authentication_impl.py
 ```
-This verifies your implementation against the specification.
+這根據規格驗證您的實作。
 
 ---
 
-## Examples Included
+## 包含的範例
 
-Check out the `examples/` directory:
+查看 `examples/` 目錄：
 
-### Referral Bonus System
+### 推薦獎金系統
 ```bash
 cd examples/referral_bonus
 python implementation.py
 ```
 
-This shows a complete example with:
-- 4 Gherkin scenarios (happy path, edge cases, errors)
-- Fully typed data models
-- Clean implementation
-- Built-in verification
+這展示了一個完整範例，包含：
+- 4 個 Gherkin 情境（正常路徑、邊界案例、錯誤）
+- 完全型別化的資料模型
+- 乾淨的實作
+- 內建驗證
 
 ---
 
-## Common Patterns
+## 常見模式
 
-### Pattern 1: Quick Prototyping (Auto Mode)
+### 模式 1：快速原型製作（自動模式）
 ```
-/sdd-auto <entire requirement>
-# Get everything generated at once - fastest way to test ideas
+/sdd-auto <完整需求>
+# 一次生成所有內容 - 測試想法的最快方式
 ```
 
-**Best for:** Exploring ideas, simple features, demos
+**最適合：** 探索想法、簡單功能、展示
 
-### Pattern 2: Production Development (Manual Mode)
+### 模式 2：生產開發（手動模式）
 ```
-/sdd-spec <requirement>
-# Review and refine the Gherkin
+/sdd-spec <需求>
+# 審查並細化 Gherkin
 /sdd-arch features/<feature>.feature
-# Review structure, adjust if needed
+# 審查結構，視需要調整
 /sdd-impl features/<feature>.feature structure/<feature>_structure.py
-# Review implementation carefully
+# 仔細審查實作
 /sdd-verify features/<feature>.feature implementation/<feature>_impl.py
 ```
 
-**Best for:** Production code, complex features, team collaboration
+**最適合：** 生產程式碼、複雜功能、團隊協作
 
-### Pattern 3: Specification First
+### 模式 3：規格優先
 ```
-# Write your own .feature file manually
+# 手動撰寫您自己的 .feature 檔案
 /sdd-arch features/my_feature.feature
 /sdd-impl features/my_feature.feature structure/my_feature_structure.py
 ```
 
-**Best for:** Well-defined requirements, API contracts, pre-existing specs
+**最適合：** 明確定義的需求、API 契約、既有規格
 
 ---
 
-## Tips for Success
+## 成功秘訣
 
-### Writing Good Requirements
+### 撰寫良好需求
 
-✅ **Good:**
-> "Users can search products by name. Results show product name, price, and stock status. If no results found, show 'No products found' message."
+✅ **良好：**
+> "使用者可以按名稱搜尋產品。結果顯示產品名稱、價格和庫存狀態。如果找不到結果，顯示「找不到產品」訊息。"
 
-❌ **Too Vague:**
-> "Add a search feature."
+❌ **太模糊：**
+> "新增搜尋功能。"
 
-❌ **Too Technical:**
-> "Create a REST API endpoint with pagination using PostgreSQL full-text search."
+❌ **太技術性：**
+> "使用 PostgreSQL 全文搜尋建立帶分頁的 REST API 端點。"
 
-### Understanding the Output
+### 理解輸出
 
-Each phase builds on the previous:
-- **Phase 1** = What (business behavior)
-- **Phase 2** = Structure (data and interfaces)
-- **Phase 3** = How (implementation logic)
-- **Phase 4** = Verification (does it work?)
+每個階段建立在前一個之上：
+- **階段 1** = 什麼（業務行為）
+- **階段 2** = 結構（資料和介面）
+- **階段 3** = 如何（實作邏輯）
+- **階段 4** = 驗證（它能運作嗎？）
 
-### When to Use Each Approach
+### 何時使用各種方法
 
-**Use `/sdd-auto` (auto mode) when:**
-- You have a clear, simple requirement
-- You want to prototype quickly
-- You trust the AI to handle all phases
-- You need a working solution fast
+**使用 `/sdd-auto`（自動模式）當：**
+- 您有清晰、簡單的需求
+- 您想快速製作原型
+- 您信任 AI 處理所有階段
+- 您需要快速獲得可運作的解決方案
 
-**Use manual phases when:**
-- You want to review each phase carefully
-- The requirement is complex or ambiguous
-- You want to write some phases manually
-- You're learning the SDD methodology
-- You're developing production code
+**使用手動階段當：**
+- 您想仔細審查每個階段
+- 需求複雜或模糊
+- 您想手動撰寫某些階段
+- 您正在學習 SDD 方法論
+- 您正在開發生產程式碼
 
 ---
 
-## Troubleshooting
+## 故障排除
 
-### Commands Not Found
+### 找不到指令
 
-Ensure Claude Code can see the commands:
+確保 Claude Code 能看到指令：
 ```bash
 ls .claude/commands/
-# Should show: sdd-auto.md, sdd-spec.md, sdd-arch.md, etc.
+# 應該顯示：sdd-auto.md、sdd-spec.md、sdd-arch.md 等
 ```
 
-### Import Errors in Python
+### Python 匯入錯誤
 
-Make sure you're in the right directory:
+確保您在正確的目錄：
 ```bash
 cd implementation/
 python -c "import sys; sys.path.insert(0, '..'); from structure.feature_structure import *"
 ```
 
-Or use absolute imports in your code.
+或在程式碼中使用絕對匯入。
 
-### Gherkin Syntax Errors
+### Gherkin 語法錯誤
 
-Validate your Gherkin files:
-- Each scenario needs Given-When-Then
-- Indent with 2 spaces
-- Start with Feature: declaration
-
----
-
-## Next Steps
-
-1. **Try the example:** Run `examples/referral_bonus/implementation.py`
-2. **Read the workflow:** Check `docs/expected_workflow.md` for detailed methodology
-3. **Create your own:** Use `/sdd-auto` with your own feature requirement
-4. **Explore prompts:** Look at `prompts/` to understand each agent's role
-5. **Contribute:** Add your examples to help others!
+驗證您的 Gherkin 檔案：
+- 每個情境需要 Given-When-Then
+- 使用 2 個空格縮排
+- 以 Feature: 宣告開始
 
 ---
 
-## Learning Resources
+## 下一步
 
-- `README.md` - Full project documentation
-- `docs/expected_workflow.md` - Detailed SDD methodology
-- `docs/COMMANDS.md` - Complete command reference
-- `docs/LANGUAGE_GUIDE.md` - Multi-language support
-- `CONTRIBUTING.md` - How to contribute
-- `examples/` - Working examples
-
----
-
-## Getting Help
-
-If you encounter issues:
-1. Check the examples in `examples/`
-2. Review the prompt templates in `prompts/`
-3. Read the detailed workflow in `docs/expected_workflow.md`
-4. Open an issue on GitHub
+1. **試試範例：** 執行 `examples/referral_bonus/implementation.py`
+2. **閱讀工作流程：** 查看 `docs/expected_workflow.md` 了解詳細方法論
+3. **建立您自己的：** 使用 `/sdd-auto` 與您自己的功能需求
+4. **探索提示：** 查看 `prompts/` 了解每個代理的角色
+5. **貢獻：** 新增您的範例幫助他人！
 
 ---
 
-**Ready to start?** Try it now:
+## 學習資源
+
+- `README.md` - 完整專案文件
+- `docs/expected_workflow.md` - 詳細的 SDD 方法論
+- `docs/COMMANDS.md` - 完整指令參考
+- `docs/LANGUAGE_GUIDE.md` - 多語言支援
+- `CONTRIBUTING.md` - 如何貢獻
+- `examples/` - 可運作的範例
+
+---
+
+## 獲取幫助
+
+如果您遇到問題：
+1. 查看 `examples/` 中的範例
+2. 審查 `prompts/` 中的提示範本
+3. 閱讀 `docs/expected_workflow.md` 中的詳細工作流程
+4. 在 GitHub 上開啟問題
+
+---
+
+**準備開始了嗎？** 現在試試：
 ```
 /sdd-auto I need a simple todo list where users can add, complete, and delete tasks
 ```
 
-Or step through manually:
+或逐步執行：
 ```
 /sdd-spec I need a simple todo list where users can add, complete, and delete tasks
 ```
 
-Happy coding with GSI-Protocol! 🚀
+使用 GSI-Protocol 快樂編碼！🚀
