@@ -1,165 +1,148 @@
-# GSI-Protocol, Gherkin-Structure-Implementation
+# GSI-Protocol
 
-A Claude Code workflow plugin that implements a strict **Specification-Driven Development (SDD)** process for building new software features using AI Agents.
-
-## Philosophy
-
-**"Spec -> Structure -> Implementation"**
-
-This workflow isolates business logic, technical architecture, and coding into three distinct phases to minimize hallucination and maximize precision.
-
-**🌍 Language & Framework Agnostic:** Works with Python, TypeScript, Go, Java, Rust, C#, and more. The methodology stays the same regardless of your tech stack.
-
-## Installation
-
-> ⚠️ **重要提醒**: 不要直接 clone 整個 repo 到你的專案！這會把 `examples/` 也複製進去。
+> **Gherkin → Structure → Implementation**
 >
-> 📖 **請參考 [INSTALL.md](INSTALL.md) 查看詳細安裝說明**
+> A language-agnostic workflow for building verified software features using AI agents and BDD principles.
 
-### 方法一：全域安裝（推薦）✅
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 
-所有專案共用，最乾淨的方式：
+## 🎯 What is GSI-Protocol?
+
+GSI-Protocol is a Claude Code workflow plugin that implements **Specification-Driven Development (SDD)**. It transforms vague requirements into verified, production-ready code through a strict 4-phase process.
+
+### Core Philosophy
+
+**"Spec → Structure → Implementation"**
+
+Isolate business logic, technical architecture, and coding into distinct phases to minimize AI hallucination and maximize precision.
+
+### Key Features
+
+- 🌍 **Language Agnostic**: Works with Python, TypeScript, Go, Java, Rust, C#, and more
+- 🎯 **Framework Independent**: Not tied to any specific library or framework
+- 📝 **BDD-Based**: Uses Gherkin for clear, testable specifications
+- ✅ **Verifiable**: Automated verification against specifications
+- 🔄 **Modular**: Run phases independently or as a complete workflow
+
+---
+
+## 📦 Quick Start
+
+### Installation (30 seconds)
+
+**Option 1: One-liner (if repo is public):**
+
+```bash
+curl -sSL https://raw.githubusercontent.com/CodeMachine0121/GSI-Protocol/main/install.sh | bash
+```
+
+**Option 2: Global Installation (Recommended):**
 
 ```bash
 mkdir -p ~/.claude/workflows
 cd ~/.claude/workflows
-git clone https://github.com/CodeMachine0121/GSI-Protocol.git sdd-workflow
+git clone https://github.com/CodeMachine0121/GSI-Protocol.git gsi-protocol
 ```
 
-完成！現在在任何專案都能使用 `/sdd-auto` 等指令。
+Now use in any project!
 
-### 方法二：手動複製（專案內安裝）
-
-只複製 commands，不包含 examples：
+**Option 3: Project-Specific Installation:**
 
 ```bash
-# 在專案外臨時下載
 cd /tmp
-git clone https://github.com/CodeMachine0121/GSI-Protocol.git sdd-temp
-
-# 進入你的專案
+git clone https://github.com/CodeMachine0121/GSI-Protocol.git gsi-temp
 cd ~/your-project
-
-# 只複製 commands
 mkdir -p .claude/commands
-cp /tmp/sdd-temp/.claude/commands/* .claude/commands/
-
-# 清理
-rm -rf /tmp/sdd-temp
+cp /tmp/gsi-temp/.claude/commands/* .claude/commands/
+rm -rf /tmp/gsi-temp
 ```
 
-### 驗證安裝
+> 📖 See [Installation Guide](docs/INSTALL.md) for more options
+
+### First Use (2 minutes)
 
 ```bash
-# 檢查檔案
-ls .claude/commands/
-# 應該看到: sdd-auto.md, sdd-spec.md, sdd-arch.md, sdd-impl.md, sdd-verify.md
+cd your-project
 
-# 確認沒有 examples 目錄
-ls examples/
-# 應該不存在（或是你自己的 examples）
+# Auto mode - generates everything
+/sdd-auto Create a shopping cart in TypeScript with add, remove, checkout functions
+
+# Manual mode - step by step
+/sdd-spec Create a shopping cart with add, remove, checkout
+/sdd-arch features/shopping_cart.feature
+/sdd-impl features/shopping_cart.feature structure/shopping_cart_structure.ts
+/sdd-verify features/shopping_cart.feature implementation/shopping_cart_impl.ts
 ```
 
 ---
 
-> 📖 **完整安裝指南**: [INSTALL.md](INSTALL.md)
->
-> 📖 **指令參考**: [COMMANDS.md](COMMANDS.md)
->
-> 📖 **快速入門**: [QUICKSTART.md](QUICKSTART.md)
+## 📚 Documentation
 
-## Usage
+| Document | Description |
+|----------|-------------|
+| **[Quick Start Guide](docs/QUICKSTART.md)** | 5-minute tutorial |
+| **[Installation Guide](docs/INSTALL.md)** | Detailed installation instructions |
+| **[Commands Reference](docs/COMMANDS.md)** | Complete command documentation |
+| **[Language Guide](docs/LANGUAGE_GUIDE.md)** | Multi-language support guide |
+| **[Workflow Definition](docs/expected_workflow.md)** | Detailed methodology |
+| **[Contributing](CONTRIBUTING.md)** | How to contribute |
 
-### Auto Mode (Full Workflow)
+---
 
-Run the complete 4-phase SDD workflow automatically in any language:
+## 🔄 Workflow Overview
 
-```
-/sdd-auto I need to implement a Referral Bonus system in TypeScript. If a user invites a friend, and the friend completes a purchase over $50, the inviter gets 100 points.
-```
-
-```
-/sdd-auto Implement a discount system in Go where VIP users get 20% off purchases over $100
-```
+### The 4 Phases
 
 ```
-/sdd-auto Create a task management system in Rust with create, complete, and delete operations
+Phase 1: Specification (PM)
+    ↓
+    Gherkin .feature file
+    ↓
+Phase 2: Structure (Architect)
+    ↓
+    Data models + Interfaces
+    ↓
+Phase 3: Implementation (Engineer)
+    ↓
+    Working code
+    ↓
+Phase 4: Verification (QA)
+    ↓
+    ✅ Verified feature
 ```
 
-The agent will automatically execute all 4 phases and adapt the output format to your chosen language while maintaining the SDD principles.
+### Commands
 
-### Language Specification
+| Command | Purpose | When to Use |
+|---------|---------|-------------|
+| `/sdd-auto` | Run all 4 phases automatically | Quick prototyping, simple features |
+| `/sdd-spec` | Generate Gherkin specification | Define requirements |
+| `/sdd-arch` | Design data models & interfaces | Review structure |
+| `/sdd-impl` | Implement the logic | Write code |
+| `/sdd-verify` | Verify against spec | Test implementation |
 
-You can specify the language in three ways:
+---
 
-1. **Explicitly in the prompt:** `/sdd-auto Implement user auth in Python`
-2. **From project context:** The agent detects your project's language from existing files
-3. **When asked:** The agent will ask which language you prefer if unclear
+## 💡 Example
 
-### Manual Mode (Step-by-Step)
-
-For more control, run each phase separately:
+### Input
 
 ```
-/sdd-spec <your requirement>     # Phase 1: Generate Gherkin specifications
-/sdd-arch <gherkin file>         # Phase 2: Design data models & interfaces
-/sdd-impl <gherkin & structure>  # Phase 3: Implement the logic
-/sdd-verify <gherkin & impl>     # Phase 4: Verify implementation
+/sdd-auto Implement a VIP discount system in Python where VIP users get 20% off purchases over $100
 ```
 
-**When to use Auto vs Manual:**
+### Output
 
-- **Auto Mode (`/sdd-auto`)**: Quick prototyping, simple features, one-shot development
-- **Manual Mode**: Production code, complex features, need to review each phase before proceeding
-
-## Workflow Phases
-
-### Phase 1: Specification (The Soul)
-
-- **Role:** Product Manager
-- **Input:** User's natural language requirement
-- **Output:** Gherkin `.feature` file with BDD scenarios
-- **Goal:** Translate vague requirements into strict behavioral specifications
-
-### Phase 2: Structure (The Skeleton)
-
-- **Role:** System Architect
-- **Input:** Gherkin specification from Phase 1
-- **Output:** Data models and interface definitions (Python/TypeScript/Go/etc.)
-- **Goal:** Design the technical skeleton required to support the Gherkin scenarios
-
-### Phase 3: Implementation (The Flesh)
-
-- **Role:** Senior Engineer
-- **Input:** Gherkin specification + Structure design
-- **Output:** Fully functional code implementing the interfaces
-- **Goal:** Implement the logic within the defined structure to satisfy the specs
-
-### Phase 4: Verification (The Check)
-
-- **Role:** QA Automation
-- **Input:** Gherkin specification + Implementation
-- **Output:** Test results and feedback
-- **Goal:** Verify that implementation meets all requirements
-
-## Example Outputs
-
-The workflow adapts to your chosen language while maintaining the same SDD principles.
-
-### Example: VIP Discount System
-
-**Phase 1 - Gherkin (Language-Independent)**
-
+**Phase 1: Specification** (`features/vip_discount.feature`)
 ```gherkin
 Feature: VIP Discount
-  Scenario: Apply discount
-    Given User is VIP
-    When Purchase amount is 1000
-    Then Final price should be 800
+  Scenario: Apply discount to VIP user
+    Given user is VIP
+    When user makes a purchase of 1000 USD
+    Then final price should be 800 USD
 ```
 
-**Phase 2 & 3 - Python**
-
+**Phase 2: Structure** (`structure/vip_discount_structure.py`)
 ```python
 from dataclasses import dataclass
 from enum import Enum
@@ -172,8 +155,10 @@ class UserType(str, Enum):
 class DiscountResult:
     final_price: float
     discount: float
+```
 
-# Implementation
+**Phase 3: Implementation** (`implementation/vip_discount_impl.py`)
+```python
 def calculate_discount(amount: float, user_type: UserType) -> DiscountResult:
     if user_type == UserType.VIP and amount >= 100:
         discount = amount * 0.2
@@ -181,113 +166,218 @@ def calculate_discount(amount: float, user_type: UserType) -> DiscountResult:
     return DiscountResult(amount, 0)
 ```
 
-**Phase 2 & 3 - TypeScript**
+**Phase 4: Verification**
+```
+✅ All scenarios passed
+✅ Feature complete
+```
+
+---
+
+## 🌐 Multi-Language Support
+
+Same workflow, different languages:
+
+<details>
+<summary><b>Python</b></summary>
+
+```python
+from dataclasses import dataclass
+from abc import ABC, abstractmethod
+
+@dataclass
+class User:
+    id: str
+    type: UserType
+
+class IUserService(ABC):
+    @abstractmethod
+    def authenticate(self, credentials: Credentials) -> User:
+        pass
+```
+</details>
+
+<details>
+<summary><b>TypeScript</b></summary>
 
 ```typescript
-enum UserType {
-  VIP = "VIP",
-  NORMAL = "NORMAL",
+interface User {
+  id: string;
+  type: UserType;
 }
 
-interface DiscountResult {
-  finalPrice: number;
-  discount: number;
-}
-
-// Implementation
-function calculateDiscount(amount: number, userType: UserType): DiscountResult {
-  if (userType === UserType.VIP && amount >= 100) {
-    const discount = amount * 0.2;
-    return { finalPrice: amount - discount, discount };
-  }
-  return { finalPrice: amount, discount: 0 };
+interface IUserService {
+  authenticate(credentials: Credentials): User;
 }
 ```
+</details>
 
-**Phase 2 & 3 - Go**
+<details>
+<summary><b>Go</b></summary>
 
 ```go
-type UserType string
-
-const (
-    UserTypeVIP    UserType = "VIP"
-    UserTypeNormal UserType = "NORMAL"
-)
-
-type DiscountResult struct {
-    FinalPrice float64
-    Discount   float64
+type User struct {
+    ID   string
+    Type UserType
 }
 
-// Implementation
-func CalculateDiscount(amount float64, userType UserType) DiscountResult {
-    if userType == UserTypeVIP && amount >= 100 {
-        discount := amount * 0.2
-        return DiscountResult{FinalPrice: amount - discount, Discount: discount}
-    }
-    return DiscountResult{FinalPrice: amount, Discount: 0}
+type UserService interface {
+    Authenticate(credentials Credentials) (User, error)
 }
 ```
+</details>
 
-## Project Structure
+See [Language Guide](docs/LANGUAGE_GUIDE.md) for Rust, Java, C#, and more.
+
+---
+
+## 🎓 Use Cases
+
+### 1. API Development
+```bash
+/sdd-spec Design a RESTful API for blog posts (CRUD operations)
+/sdd-arch features/blog_api.feature
+# Get clear API contracts and data structures
+```
+
+### 2. Feature Implementation
+```bash
+/sdd-auto Implement user authentication with JWT tokens in TypeScript
+# Get working, tested code in minutes
+```
+
+### 3. Legacy Code Refactoring
+```bash
+/sdd-spec The payment module should support credit card, PayPal, and crypto
+# Define clear requirements before refactoring
+```
+
+### 4. Team Collaboration
+```bash
+# PM: Define requirements
+/sdd-spec User registration with email verification
+
+# Architect: Review and design
+/sdd-arch features/user_registration.feature
+
+# Engineer: Implement
+/sdd-impl features/user_registration.feature structure/user_registration_structure.py
+
+# QA: Verify
+/sdd-verify features/user_registration.feature implementation/user_registration_impl.py
+```
+
+---
+
+## 📁 Project Structure
 
 ```
-.
-├── README.md                           # This file
-├── QUICKSTART.md                       # Quick start guide
-├── INSTALL.md                          # Detailed installation guide
-├── COMMANDS.md                         # Complete command reference
-├── LANGUAGE_GUIDE.md                   # Multi-language support guide
-├── expected_workflow.md                # Detailed workflow definition
+GSI-Protocol/
+├── README.md                    # This file
+├── CONTRIBUTING.md              # Contribution guidelines
+├── LICENSE                      # MIT License
+├── install.sh                   # Installation script
 ├── .claude/
-│   └── commands/
-│       ├── sdd-auto.md                # Auto mode: run all phases
-│       ├── sdd-spec.md                # Phase 1: Specification
-│       ├── sdd-arch.md                # Phase 2: Architecture
-│       ├── sdd-impl.md                # Phase 3: Implementation
-│       └── sdd-verify.md              # Phase 4: Verification
-├── prompts/
-│   ├── pm_agent.md                    # PM Agent prompt template
-│   ├── architect_agent.md             # Architect Agent prompt template
-│   ├── engineer_agent.md              # Engineer Agent prompt template
-│   └── qa_agent.md                    # QA Agent prompt template
-└── examples/
-    ├── referral_bonus/                # Python example
-    │   ├── spec.feature
-    │   ├── structure.py
-    │   ├── implementation.py
-    │   └── README.md
-    └── vip_discount_typescript/       # TypeScript example
-        ├── spec.feature
-        ├── structure.ts
-        ├── implementation.ts
-        ├── package.json
-        └── README.md
+│   └── commands/                # Claude Code slash commands
+│       ├── gsi-auto.md         # Auto workflow
+│       ├── gsi-spec.md         # Phase 1
+│       ├── gsi-arch.md         # Phase 2
+│       ├── gsi-impl.md         # Phase 3
+│       └── gsi-verify.md       # Phase 4
+├── docs/                        # Documentation
+│   ├── QUICKSTART.md           # Quick start guide
+│   ├── INSTALL.md              # Installation guide
+│   ├── COMMANDS.md             # Commands reference
+│   ├── LANGUAGE_GUIDE.md       # Language support
+│   └── expected_workflow.md    # Workflow details
+├── prompts/                     # Agent prompts
+│   ├── pm_agent.md
+│   ├── architect_agent.md
+│   ├── engineer_agent.md
+│   └── qa_agent.md
+└── examples/                    # Working examples
+    ├── referral_bonus/         # Python example
+    └── vip_discount_typescript/ # TypeScript example
 ```
 
-## Benefits
+---
 
-1. **Language Agnostic**: Works with any programming language - Python, TypeScript, Go, Java, Rust, C#, and more
-2. **Framework Independent**: Not tied to any specific framework or library - use what fits your project
-3. **Reduced Hallucination**: Each phase has clear constraints and inputs, minimizing AI confusion
-4. **Traceability**: Every code line traces back to a Gherkin scenario for complete auditability
-5. **Modularity**: Phases can be run independently or as a complete workflow
-6. **Clarity**: Business logic separated from technical implementation
-7. **Verifiable**: Automated verification against specifications
-8. **Consistent Methodology**: Same proven approach regardless of your tech stack
+## 🚀 Benefits
 
-## Requirements
+### For Developers
+- ✅ **Faster Development**: Auto-generate boilerplate and structure
+- ✅ **Better Quality**: Systematic approach reduces bugs
+- ✅ **Clear Requirements**: Gherkin specs eliminate ambiguity
+
+### For Teams
+- ✅ **Shared Language**: BDD specs everyone understands
+- ✅ **Better Communication**: Clear phases for PM, Architect, Engineer, QA
+- ✅ **Maintainable Code**: Every line traces to a requirement
+
+### For Projects
+- ✅ **Language Flexibility**: Switch languages without changing methodology
+- ✅ **Framework Agnostic**: Use any library or framework
+- ✅ **Scalable**: Works for simple features to complex systems
+
+---
+
+## 🔧 Requirements
 
 - Claude Code CLI
-- Target language runtime (Python 3.8+, Node.js 16+, Go 1.19+, Java 11+, Rust 1.65+, etc.)
-- Language-specific dependencies (if any - see examples for details)
+- Git
+- Target language runtime (Python 3.8+, Node.js 16+, Go 1.19+, etc.)
 
-## License
+---
 
-MIT
+## 📖 Learn More
 
-## Contributing
+- 📝 [Quick Start (5 min)](docs/QUICKSTART.md)
+- 📚 [Full Documentation](docs/)
+- 🌍 [Language Support](docs/LANGUAGE_GUIDE.md)
+- 💬 [GitHub Discussions](https://github.com/CodeMachine0121/GSI-Protocol/discussions)
 
-Contributions are welcome! Please feel free to submit a Pull Request.
+---
 
-See [CONTRIBUTING.md](CONTRIBUTING.md) for details.
+## 🤝 Contributing
+
+We welcome contributions! See [CONTRIBUTING.md](CONTRIBUTING.md) for guidelines.
+
+### Ways to Contribute
+- 🐛 Report bugs
+- 💡 Suggest features
+- 📝 Improve documentation
+- 🌍 Add language examples
+- 🔧 Submit pull requests
+
+---
+
+## 📄 License
+
+MIT License - see [LICENSE](LICENSE) file for details.
+
+---
+
+## 🙏 Acknowledgments
+
+Built with:
+- [Claude Code](https://claude.ai/claude-code) - AI-powered development
+- [Gherkin](https://cucumber.io/docs/gherkin/) - BDD specification language
+- Inspired by Test-Driven Development and Behavior-Driven Development principles
+
+---
+
+## 📞 Support
+
+- 📖 [Documentation](docs/)
+- 💬 [GitHub Issues](https://github.com/CodeMachine0121/GSI-Protocol/issues)
+- 💡 [Discussions](https://github.com/CodeMachine0121/GSI-Protocol/discussions)
+
+---
+
+<div align="center">
+
+**[⬆ Back to Top](#gsi-protocol)**
+
+Made with ❤️ by developers, for developers
+
+</div>

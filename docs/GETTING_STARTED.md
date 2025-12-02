@@ -21,7 +21,7 @@ mkdir -p ~/.claude/workflows
 
 # Clone 這個工具
 cd ~/.claude/workflows
-git clone <your-repo-url> sdd-workflow
+git clone https://github.com/CodeMachine0121/GSI-Protocol.git sdd-workflow
 ```
 
 ### 步驟 2: 在任何專案中使用
@@ -49,7 +49,7 @@ Claude Code 會自動找到全域安裝的指令。
 cd ~/projects/my-new-project
 
 # Clone 工具到 .claude 目錄
-git clone <your-repo-url> .sdd-workflow
+git clone https://github.com/CodeMachine0121/GSI-Protocol.git .sdd-workflow
 
 # 複製 slash commands 到專案
 mkdir -p .claude/commands
@@ -60,7 +60,7 @@ cp .sdd-workflow/.claude/commands/* .claude/commands/
 
 ```bash
 # 選項 A: 作為 git submodule（推薦）
-git submodule add <your-repo-url> .sdd-workflow
+git submodule add https://github.com/CodeMachine0121/GSI-Protocol.git .sdd-workflow
 
 # 選項 B: 直接 commit
 git add .claude/
@@ -386,7 +386,7 @@ pwd
 
 # 1. 安裝
 cd ~/.claude/workflows
-git clone <repo> sdd-workflow
+git clone https://github.com/CodeMachine0121/GSI-Protocol.git sdd-workflow
 
 # 2. 進入專案
 cd ~/my-project

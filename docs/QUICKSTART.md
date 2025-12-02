@@ -1,36 +1,45 @@
-# SDD Workflow - Quick Start Guide
+# GSI-Protocol - Quick Start Guide
 
-Get started with Specification-Driven Development in 5 minutes!
+Get started with GSI-Protocol (Specification-Driven Development) in 5 minutes!
 
 ## Installation
 
 > ⚠️ **不要把整個 repo clone 到專案裡！** 這會複製 examples 到你的專案。
 
-### 推薦方式：全域安裝
+### 方式 1: 一鍵安裝（最快）⚡
+
+⚠️ 只在 repo 為 public 時可用
+
+```bash
+curl -sSL https://raw.githubusercontent.com/CodeMachine0121/GSI-Protocol/main/install.sh | bash
+```
+
+腳本會詢問你要全域安裝還是專案內安裝。
+
+### 方式 2: 全域安裝（推薦）✅
 
 ```bash
 mkdir -p ~/.claude/workflows
 cd ~/.claude/workflows
-git clone <repo-url> sdd-workflow
+git clone https://github.com/CodeMachine0121/GSI-Protocol.git gsi-protocol
 ```
 
 現在在任何專案都能用！
 
-### 專案內安裝（只複製 commands）
+### 方式 3: 專案內安裝（只複製 commands）
 
 ```bash
 # 在專案外臨時下載
-cd /tmp && git clone <repo-url> sdd-temp
+cd /tmp && git clone https://github.com/CodeMachine0121/GSI-Protocol.git gsi-temp
 
 # 進入你的專案並複製
 cd ~/your-project
 mkdir -p .claude/commands
-cp /tmp/sdd-temp/.claude/commands/* .claude/commands/
+cp /tmp/gsi-temp/.claude/commands/* .claude/commands/
 
 # 清理臨時檔案
-rm -rf /tmp/sdd-temp
+rm -rf /tmp/gsi-temp
 ```
-
 
 ### 驗證安裝
 
@@ -42,6 +51,8 @@ ls .claude/commands/
 ```
 
 > 📖 詳細安裝說明請參考 [INSTALL.md](INSTALL.md)
+
+---
 
 ## Your First SDD Feature
 
@@ -82,9 +93,11 @@ python implementation/discount_impl.py
 # The built-in verification will run and show results
 ```
 
+---
+
 ## Using Individual Phases
 
-You can also run phases separately:
+You can also run each phase separately:
 
 ### Phase 1: Specification Only
 ```
@@ -110,6 +123,8 @@ This generates the actual code implementation.
 ```
 This verifies your implementation against the specification.
 
+---
+
 ## Examples Included
 
 Check out the `examples/` directory:
@@ -125,6 +140,8 @@ This shows a complete example with:
 - Fully typed data models
 - Clean implementation
 - Built-in verification
+
+---
 
 ## Common Patterns
 
@@ -157,6 +174,8 @@ This shows a complete example with:
 ```
 
 **Best for:** Well-defined requirements, API contracts, pre-existing specs
+
+---
 
 ## Tips for Success
 
@@ -194,6 +213,8 @@ Each phase builds on the previous:
 - You're learning the SDD methodology
 - You're developing production code
 
+---
+
 ## Troubleshooting
 
 ### Commands Not Found
@@ -221,28 +242,35 @@ Validate your Gherkin files:
 - Indent with 2 spaces
 - Start with Feature: declaration
 
+---
+
 ## Next Steps
 
 1. **Try the example:** Run `examples/referral_bonus/implementation.py`
-2. **Read the workflow:** Check `expected_workflow.md` for detailed methodology
-3. **Create your own:** Use `/sdd` with your own feature requirement
+2. **Read the workflow:** Check `docs/expected_workflow.md` for detailed methodology
+3. **Create your own:** Use `/sdd-auto` with your own feature requirement
 4. **Explore prompts:** Look at `prompts/` to understand each agent's role
 5. **Contribute:** Add your examples to help others!
+
+---
 
 ## Learning Resources
 
 - `README.md` - Full project documentation
-- `expected_workflow.md` - Detailed SDD methodology
-- `prompts/` - Agent prompt templates
-- `examples/` - Working examples
+- `docs/expected_workflow.md` - Detailed SDD methodology
+- `docs/COMMANDS.md` - Complete command reference
+- `docs/LANGUAGE_GUIDE.md` - Multi-language support
 - `CONTRIBUTING.md` - How to contribute
+- `examples/` - Working examples
+
+---
 
 ## Getting Help
 
 If you encounter issues:
 1. Check the examples in `examples/`
 2. Review the prompt templates in `prompts/`
-3. Read the detailed workflow in `expected_workflow.md`
+3. Read the detailed workflow in `docs/expected_workflow.md`
 4. Open an issue on GitHub
 
 ---
@@ -257,4 +285,4 @@ Or step through manually:
 /sdd-spec I need a simple todo list where users can add, complete, and delete tasks
 ```
 
-Happy coding with SDD! 🚀
+Happy coding with GSI-Protocol! 🚀

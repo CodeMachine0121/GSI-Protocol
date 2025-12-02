@@ -22,7 +22,7 @@ mkdir -p ~/.claude/workflows
 
 # 2. Clone 到全域目錄
 cd ~/.claude/workflows
-git clone <your-repo-url> sdd-workflow
+git clone https://github.com/CodeMachine0121/GSI-Protocol.git sdd-workflow
 
 # 3. 完成！現在在任何專案都能使用
 cd ~/your-project
@@ -59,7 +59,7 @@ cd ~/projects/my-python-api
 ```bash
 # 1. 在專案外臨時下載
 cd /tmp
-git clone <your-repo-url> sdd-temp
+git clone https://github.com/CodeMachine0121/GSI-Protocol.git sdd-temp
 
 # 2. 進入你的專案
 cd ~/your-project
@@ -76,23 +76,37 @@ git add .claude/commands/
 git commit -m "Add SDD workflow commands"
 ```
 
-### 使用腳本安裝（僅限 Public Repo）
+### 使用腳本安裝
 
-⚠️ **注意**: 如果 repo 是 private，curl/wget 會要求認證。請使用「手動複製」方式。
+#### 選項 A: 一鍵 curl 安裝（推薦，需要 Public Repo）
 
-如果 repo 是 public，可以使用安裝腳本：
+⚠️ **注意**: 此方式只在 repo 為 public 時可用
 
 ```bash
-# 先 clone repo
+# 下載並執行安裝腳本
+curl -sSL https://raw.githubusercontent.com/CodeMachine0121/GSI-Protocol/main/install.sh | bash
+
+# 或使用 wget
+wget -qO- https://raw.githubusercontent.com/CodeMachine0121/GSI-Protocol/main/install.sh | bash
+```
+
+#### 選項 B: Clone 後安裝（Private Repo 也可用）
+
+```bash
+# 1. Clone repo（private repo 會要求 GitHub 認證）
 git clone https://github.com/CodeMachine0121/GSI-Protocol.git /tmp/gsi-temp
 cd /tmp/gsi-temp
 
-# 執行安裝腳本
+# 2. 執行安裝腳本
 ./install.sh
 
-# 清理
+# 3. 清理
 cd ~ && rm -rf /tmp/gsi-temp
 ```
+
+**如何選擇**：
+- ✅ Repo 是 **public** → 使用選項 A（最快最方便）
+- ✅ Repo 是 **private** → 使用選項 B 或「手動複製」方式
 
 ---
 
@@ -104,7 +118,7 @@ cd ~ && rm -rf /tmp/gsi-temp
 cd ~/your-project
 
 # 初始化 sparse checkout
-git clone --no-checkout <your-repo-url> .sdd-tools
+git clone --no-checkout https://github.com/CodeMachine0121/GSI-Protocol.git .sdd-tools
 cd .sdd-tools
 
 # 設定只 checkout .claude/commands
@@ -215,7 +229,7 @@ your-project/
 
 ```bash
 # 方式 1: 每個開發者自己全域安裝
-每人執行：mkdir -p ~/.claude/workflows && cd ~/.claude/workflows && git clone <repo>
+每人執行：mkdir -p ~/.claude/workflows && cd ~/.claude/workflows && git clone https://github.com/CodeMachine0121/GSI-Protocol.git
 
 # 方式 2: 專案內只包含 commands（Git 管理）
 在專案內：mkdir -p .claude/commands && cp <commands>
@@ -311,10 +325,10 @@ cd ~/.claude/workflows/sdd-workflow/examples
 
 ```bash
 # 全域安裝（推薦）
-mkdir -p ~/.claude/workflows && cd ~/.claude/workflows && git clone <repo> sdd-workflow
+mkdir -p ~/.claude/workflows && cd ~/.claude/workflows && git clone https://github.com/CodeMachine0121/GSI-Protocol.git sdd-workflow
 
 # 專案內安裝（只複製 commands）
-mkdir -p .claude/commands && cd /tmp && git clone <repo> sdd-temp && cp sdd-temp/.claude/commands/* <your-project>/.claude/commands/ && rm -rf sdd-temp
+mkdir -p .claude/commands && cd /tmp && git clone https://github.com/CodeMachine0121/GSI-Protocol.git sdd-temp && cp sdd-temp/.claude/commands/* <your-project>/.claude/commands/ && rm -rf sdd-temp
 ```
 
 開始使用 SDD Workflow，讓 AI 幫你寫結構化的程式碼！🚀
