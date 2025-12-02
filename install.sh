@@ -19,7 +19,7 @@ else
     echo ""
     echo "Please choose installation type:"
     echo "1) Install to current directory (manual project)"
-    echo "2) Install globally to ~/.claude/workflows"
+    echo "2) Install globally to ~/.claude/commands"
     read -p "Enter choice [1-2]: " choice
 
     case $choice in
