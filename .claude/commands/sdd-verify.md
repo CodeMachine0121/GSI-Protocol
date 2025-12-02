@@ -1,275 +1,275 @@
 ---
-description: Phase 4 - Verify implementation against Gherkin specification (QA role)
+description: 階段 4 - 根據 Gherkin 規格驗證實作（QA 角色）
 ---
 
-# SDD Phase 4: Verification (The Check)
+# SDD 階段 4：驗證（檢查）
 
-**Role:** QA Automation Engineer
+**角色：** QA 自動化工程師
 
-**Goal:** Verify that the Phase 3 implementation satisfies all requirements from the Phase 1 Gherkin specification.
+**目標：** 驗證階段 3 的實作是否滿足階段 1 Gherkin 規格的所有需求。
 
-## Input
+## 輸入
 
-Provide two files:
-1. Gherkin specification: `features/<feature>.feature`
-2. Implementation: `implementation/<feature>_impl.py` (or `.ts`)
+提供兩個檔案：
+1. Gherkin 規格：`features/<feature>.feature`
+2. 實作：`implementation/<feature>_impl.py`（或 `.ts`）
 
-Usage: `/sdd-verify features/<feature>.feature implementation/<feature>_impl.py`
+用法：`/sdd-verify features/<feature>.feature implementation/<feature>_impl.py`
 
-Prompt: {{prompt}}
+提示：{{prompt}}
 
-## Your Constraints
+## 您的職責約束
 
-- You are a QA Engineer verifying code against behavioral specifications.
-- Run each Gherkin scenario against the implementation.
-- Report objective Pass/Fail results with evidence.
-- Provide specific, actionable feedback for failures.
-- Do NOT modify the implementation - only test and report.
+- 您是 QA 工程師，根據行為規格驗證程式碼。
+- 對實作執行每個 Gherkin 情境。
+- 報告客觀的通過/失敗結果並附上證據。
+- 為失敗提供具體、可操作的回饋。
+- 不要修改實作 - 只測試和報告。
 
-## Your Task
+## 您的任務
 
-1. **Read both input files:**
-   - The Gherkin specification (test cases)
-   - The implementation (code under test)
+1. **讀取兩個輸入檔案：**
+   - Gherkin 規格（測試案例）
+   - 實作（待測程式碼）
 
-2. **For each Gherkin scenario:**
-   - Parse the Given-When-Then steps
-   - Set up the test conditions (Given)
-   - Execute the action (When)
-   - Verify the outcome (Then)
-   - Record Pass or Fail with details
+2. **針對每個 Gherkin 情境：**
+   - 解析 Given-When-Then 步驟
+   - 設定測試條件（Given）
+   - 執行動作（When）
+   - 驗證結果（Then）
+   - 記錄通過或失敗及詳細資訊
 
-3. **Create a comprehensive verification report**
+3. **建立完整的驗證報告**
 
-4. **Provide feedback:**
-   - If all pass: Declare feature complete
-   - If any fail: Provide specific feedback for Phase 3 retry
+4. **提供回饋：**
+   - 如果全部通過：宣告功能完成
+   - 如果有任何失敗：為階段 3 重試提供具體回饋
 
-## Verification Methodology
+## 驗證方法
 
-### Step-by-Step Verification
+### 逐步驗證
 
 ```python
-# For each scenario in Gherkin:
+# 針對 Gherkin 中的每個情境：
 
-# 1. Parse scenario steps
+# 1. 解析情境步驟
 given_conditions = extract_given_steps(scenario)
 when_action = extract_when_step(scenario)
 then_expectation = extract_then_step(scenario)
 
-# 2. Setup test (Given)
+# 2. 設定測試（Given）
 test_inputs = setup_from_given(given_conditions)
 
-# 3. Execute action (When)
+# 3. 執行動作（When）
 actual_result = execute_when(when_action, test_inputs)
 
-# 4. Verify outcome (Then)
+# 4. 驗證結果（Then）
 expected_result = parse_then(then_expectation)
 test_passed = (actual_result == expected_result)
 
-# 5. Record result
+# 5. 記錄結果
 report_result(scenario.name, test_passed, actual_result, expected_result)
 ```
 
-## Output Format
+## 輸出格式
 
-Create a file named `verification/<feature_name>_verification_report.md`:
+建立名為 `verification/<feature_name>_verification_report.md` 的檔案：
 
 ```markdown
-# Verification Report: <Feature Name>
+# 驗證報告：<功能名稱>
 
-**Date:** <timestamp>
-**Gherkin Spec:** features/<feature_name>.feature
-**Implementation:** implementation/<feature_name>_impl.py
-
----
-
-## Test Results
-
-### Scenario 1: <Scenario Name>
-
-**Status:** ✅ PASS / ❌ FAIL
-
-**Test Execution:**
-- **Given:** <condition setup>
-  - Setup values: `<actual values used>`
-- **When:** <action executed>
-  - Method called: `service.method_name(args)`
-- **Then:** <expected outcome>
-  - Expected: `<expected value>`
-  - Actual: `<actual value>`
-
-**Result:** ✅ Expectation met / ❌ Expectation NOT met
-
-**Notes:** <Any observations or edge cases discovered>
+**日期：** <時間戳記>
+**Gherkin 規格：** features/<feature_name>.feature
+**實作：** implementation/<feature_name>_impl.py
 
 ---
 
-### Scenario 2: <Scenario Name>
+## 測試結果
 
-**Status:** ✅ PASS / ❌ FAIL
+### 情境 1：<情境名稱>
 
-**Test Execution:**
-- **Given:** <condition setup>
-  - Setup values: `<actual values used>`
-- **When:** <action executed>
-  - Method called: `service.method_name(args)`
-- **Then:** <expected outcome>
-  - Expected: `<expected value>`
-  - Actual: `<actual value>`
+**狀態：** ✅ 通過 / ❌ 失敗
 
-**Result:** ✅ Expectation met / ❌ Expectation NOT met
+**測試執行：**
+- **Given：** <條件設定>
+  - 設定值：`<使用的實際值>`
+- **When：** <執行的動作>
+  - 呼叫的方法：`service.method_name(args)`
+- **Then：** <預期結果>
+  - 預期：`<預期值>`
+  - 實際：`<實際值>`
 
-**Failure Reason (if failed):** <Specific reason why test failed>
+**結果：** ✅ 符合預期 / ❌ 不符合預期
+
+**備註：** <任何觀察或發現的邊界情況>
 
 ---
 
-## Summary
+### 情境 2：<情境名稱>
 
-| Metric | Count |
+**狀態：** ✅ 通過 / ❌ 失敗
+
+**測試執行：**
+- **Given：** <條件設定>
+  - 設定值：`<使用的實際值>`
+- **When：** <執行的動作>
+  - 呼叫的方法：`service.method_name(args)`
+- **Then：** <預期結果>
+  - 預期：`<預期值>`
+  - 實際：`<實際值>`
+
+**結果：** ✅ 符合預期 / ❌ 不符合預期
+
+**失敗原因（如果失敗）：** <測試失敗的具體原因>
+
+---
+
+## 摘要
+
+| 指標 | 數量 |
 |--------|-------|
-| Total Scenarios | X |
-| Passed | Y |
-| Failed | Z |
-| Pass Rate | Y/X % |
+| 總情境數 | X |
+| 通過 | Y |
+| 失敗 | Z |
+| 通過率 | Y/X % |
 
 ---
 
-## Overall Status
+## 整體狀態
 
-### ✅ ALL TESTS PASSED - Feature Complete
-All Gherkin scenarios have been verified successfully.
-The implementation satisfies all requirements.
+### ✅ 所有測試通過 - 功能完成
+所有 Gherkin 情境都已成功驗證。
+實作滿足所有需求。
 
-**Deliverables:**
-- ✅ Gherkin specification: `features/<feature_name>.feature`
-- ✅ Structure design: `structure/<feature_name>_structure.py`
-- ✅ Implementation: `implementation/<feature_name>_impl.py`
-- ✅ Verification report: `verification/<feature_name>_verification_report.md`
+**交付成果：**
+- ✅ Gherkin 規格：`features/<feature_name>.feature`
+- ✅ 結構設計：`structure/<feature_name>_structure.py`
+- ✅ 實作：`implementation/<feature_name>_impl.py`
+- ✅ 驗證報告：`verification/<feature_name>_verification_report.md`
 
-**Next Steps:** Feature is ready for integration.
+**下一步：** 功能已準備好整合。
 
 ---
 
-### ❌ TESTS FAILED - Phase 3 Retry Required
+### ❌ 測試失敗 - 需要重試階段 3
 
-**Failed Scenarios:** X out of Y
+**失敗情境：** Y 個中的 X 個
 
-**Specific Issues Found:**
+**發現的具體問題：**
 
-1. **Scenario: "<scenario name>"**
-   - **Issue:** <What went wrong>
-   - **Expected:** <What the Gherkin specified>
-   - **Actual:** <What the code did>
-   - **Fix Required:** <Specific change needed in implementation>
+1. **情境："<情境名稱>"**
+   - **問題：** <出了什麼問題>
+   - **預期：** <Gherkin 指定的內容>
+   - **實際：** <程式碼做了什麼>
+   - **需要修正：** <實作中需要的具體變更>
 
-2. **Scenario: "<scenario name>"**
-   - **Issue:** <What went wrong>
-   - **Expected:** <What the Gherkin specified>
-   - **Actual:** <What the code did>
-   - **Fix Required:** <Specific change needed in implementation>
+2. **情境："<情境名稱>"**
+   - **問題：** <出了什麼問題>
+   - **預期：** <Gherkin 指定的內容>
+   - **實際：** <程式碼做了什麼>
+   - **需要修正：** <實作中需要的具體變更>
 
-**Feedback for Engineer (Phase 3):**
-- Please review the failed scenarios above
-- Update implementation to handle: <list specific cases>
-- Ensure logic matches Gherkin exactly
-- Re-run verification after fixes
+**給工程師的回饋（階段 3）：**
+- 請審查上述失敗的情境
+- 更新實作以處理：<列出具體案例>
+- 確保邏輯與 Gherkin 完全匹配
+- 修正後重新執行驗證
 
-**Next Steps:** Return to Phase 3 with this feedback.
+**下一步：** 帶著此回饋返回階段 3。
 ```
 
-## Complete Example
+## 完整範例
 
-**Gherkin:**
+**Gherkin：**
 ```gherkin
-Feature: VIP Discount
-  Scenario: Apply discount to VIP user
-    Given user is VIP
-    When user makes a purchase of 1000 USD
-    Then final price should be 800 USD
+Feature: VIP 折扣
+  Scenario: 對 VIP 使用者套用折扣
+    Given 使用者是 VIP
+    When 使用者購買 1000 美元
+    Then 最終價格應該是 800 美元
 
-  Scenario: No discount for non-VIP
-    Given user is NORMAL
-    When user makes a purchase of 1000 USD
-    Then final price should be 1000 USD
+  Scenario: 非 VIP 使用者無折扣
+    Given 使用者是 NORMAL
+    When 使用者購買 1000 美元
+    Then 最終價格應該是 1000 美元
 ```
 
-**Verification Report:**
+**驗證報告：**
 ```markdown
-# Verification Report: VIP Discount
+# 驗證報告：VIP 折扣
 
-## Test Results
+## 測試結果
 
-### Scenario 1: Apply discount to VIP user
+### 情境 1：對 VIP 使用者套用折扣
 
-**Status:** ✅ PASS
+**狀態：** ✅ 通過
 
-**Test Execution:**
-- **Given:** user is VIP
-  - Setup: `user_type = UserType.VIP`
-- **When:** user makes a purchase of 1000 USD
-  - Method called: `service.calculate_discount(1000, UserType.VIP)`
-- **Then:** final price should be 800 USD
-  - Expected: `800`
-  - Actual: `800`
+**測試執行：**
+- **Given：** 使用者是 VIP
+  - 設定：`user_type = UserType.VIP`
+- **When：** 使用者購買 1000 美元
+  - 呼叫的方法：`service.calculate_discount(1000, UserType.VIP)`
+- **Then：** 最終價格應該是 800 美元
+  - 預期：`800`
+  - 實際：`800`
 
-**Result:** ✅ Expectation met
-
----
-
-### Scenario 2: No discount for non-VIP
-
-**Status:** ✅ PASS
-
-**Test Execution:**
-- **Given:** user is NORMAL
-  - Setup: `user_type = UserType.NORMAL`
-- **When:** user makes a purchase of 1000 USD
-  - Method called: `service.calculate_discount(1000, UserType.NORMAL)`
-- **Then:** final price should be 1000 USD
-  - Expected: `1000`
-  - Actual: `1000`
-
-**Result:** ✅ Expectation met
+**結果：** ✅ 符合預期
 
 ---
 
-## Summary
+### 情境 2：非 VIP 使用者無折扣
 
-| Metric | Count |
+**狀態：** ✅ 通過
+
+**測試執行：**
+- **Given：** 使用者是 NORMAL
+  - 設定：`user_type = UserType.NORMAL`
+- **When：** 使用者購買 1000 美元
+  - 呼叫的方法：`service.calculate_discount(1000, UserType.NORMAL)`
+- **Then：** 最終價格應該是 1000 美元
+  - 預期：`1000`
+  - 實際：`1000`
+
+**結果：** ✅ 符合預期
+
+---
+
+## 摘要
+
+| 指標 | 數量 |
 |--------|-------|
-| Total Scenarios | 2 |
-| Passed | 2 |
-| Failed | 0 |
-| Pass Rate | 100% |
+| 總情境數 | 2 |
+| 通過 | 2 |
+| 失敗 | 0 |
+| 通過率 | 100% |
 
-## Overall Status
+## 整體狀態
 
-### ✅ ALL TESTS PASSED - Feature Complete
+### ✅ 所有測試通過 - 功能完成
 
-All Gherkin scenarios verified successfully!
+所有 Gherkin 情境驗證成功！
 ```
 
-## Quality Checklist
+## 品質檢查清單
 
-Before completing, ensure:
-- [ ] Every Gherkin scenario has been tested
-- [ ] Each test shows Given-When-Then mapping
-- [ ] Pass/Fail status is clearly indicated
-- [ ] Actual vs Expected values are documented
-- [ ] Specific feedback provided for any failures
-- [ ] Summary statistics are included
-- [ ] Report is saved in `verification/` directory
+完成前，確保：
+- [ ] 每個 Gherkin 情境都已測試
+- [ ] 每個測試都顯示 Given-When-Then 對應
+- [ ] 通過/失敗狀態清楚標示
+- [ ] 實際值與預期值都有記錄
+- [ ] 為任何失敗提供具體回饋
+- [ ] 包含摘要統計
+- [ ] 報告已儲存在 `verification/` 目錄
 
-## Verification Automation (Optional)
+## 驗證自動化（可選）
 
-You may also create an automated test script:
+您也可以建立自動化測試腳本：
 
-**Python:**
+**Python：**
 ```python
 """
-Automated verification script for <feature_name>
-Run with: python verification/<feature_name>_test.py
+<feature_name> 的自動化驗證腳本
+執行：python verification/<feature_name>_test.py
 """
 
 import pytest
@@ -280,27 +280,27 @@ class Test<FeatureName>:
         self.service = <Service>Service()
 
     def test_scenario_1(self):
-        """Scenario: <scenario 1 name>"""
+        """情境：<情境 1 名稱>"""
         # Given
-        setup_value = <value from Gherkin>
+        setup_value = <來自 Gherkin 的值>
 
         # When
         result = self.service.method(setup_value)
 
         # Then
-        assert result == <expected from Gherkin>
+        assert result == <來自 Gherkin 的預期值>
 
     def test_scenario_2(self):
-        """Scenario: <scenario 2 name>"""
+        """情境：<情境 2 名稱>"""
         # Given, When, Then
         ...
 ```
 
-## Next Steps
+## 下一步
 
-After completing verification:
-- If all pass: Feature is complete and ready
-- If any fail: Return to Phase 3 with specific feedback
-- Consider creating automated test suite for CI/CD
+完成驗證後：
+- 如果全部通過：功能完成並準備就緒
+- 如果有任何失敗：帶著具體回饋返回階段 3
+- 考慮為 CI/CD 建立自動化測試套件
 
-Now read both files and create the verification report.
+現在讀取兩個檔案並建立驗證報告。

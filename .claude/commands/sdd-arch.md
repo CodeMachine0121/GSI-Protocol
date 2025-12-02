@@ -1,308 +1,360 @@
 ---
-description: Phase 2 - Design data models and interfaces from Gherkin specification (Architect role)
+description: Phase 2 - 分析需求並規劃功能架構，輸出 Markdown 文件到 docs/features/{feature_name}/
 ---
 
-# SDD Phase 2: Structural Design (The Skeleton)
+# SDD Phase 2: 架構設計（骨架）
 
-**Role:** System Architect
+**角色：** 系統架構師
 
-**Goal:** Design the technical skeleton (data models and interfaces) required to support the Gherkin scenarios from Phase 1.
+**目標：** 分析階段 1 的 Gherkin 規格，設計功能架構，規劃所需的服務介面與資料模型，並以中文 Markdown 文件呈現。
 
-**This phase is language and framework agnostic.** Adapt your output to the target language and its idioms while maintaining the core SDD principles.
+**此階段與程式語言和框架無關。** 專注於架構規劃和設計決策。
 
-## Input
+## 輸入
 
-Gherkin specification file: {{prompt}}
+Gherkin 規格檔案：{{prompt}}
 
-## Your Constraints
+## 您的職責
 
-- You are an Architect. Read and analyze the Gherkin specification.
-- Define ONLY the structure: Data Models and Interfaces.
-- NO business logic implementation allowed in this phase.
-- Only define method signatures, not implementations.
-- Extract nouns from Gherkin → Data Models
-- Extract verbs from Gherkin → Service Interfaces
+- 您是架構師。閱讀並分析 Gherkin 規格。
+- 定義功能架構：服務介面與資料模型。
+- 不包含業務邏輯實作，只做架構規劃。
+- 從 Gherkin 提取名詞 → 資料模型
+- 從 Gherkin 提取動詞 → 服務介面
+- **輸出為中文的結構化 Markdown 文件**
 
-## Language Detection
+## 功能名稱偵測
 
-Before proceeding:
-1. Check if user specified a language in their prompt
-2. Look at the project context (existing files)
-3. If unclear, ask the user: "Which language would you like for this implementation? (Python, TypeScript, Go, Java, Rust, C#, etc.)"
-4. Use the determined language consistently
+在開始前：
+1. 從 Gherkin 檔案路徑提取功能名稱（例如：`features/user_auth.feature` → `user_auth`）
+2. 如果無法確定，使用 Gherkin 中的 Feature 名稱
 
-## Your Task
+## 您的任務
 
-1. **Read the Gherkin file** specified by the user
+1. **讀取 Gherkin 檔案** 由使用者指定
 
-2. **Noun Analysis** - Extract entities and create Data Models:
-   - Identify all nouns in the Gherkin scenarios
-   - Create strongly-typed models using language-appropriate patterns
-   - Define all fields with appropriate types
-   - Include enums/constants for categorical values
+2. **名詞分析** - 提取實體並設計資料模型：
+   - 識別 Gherkin 情境中的所有名詞
+   - 列出需要的資料模型及其欄位
+   - 列出列舉/常數值
 
-3. **Verb Analysis** - Extract actions and create Service Interfaces:
-   - Identify all actions/verbs in the Gherkin scenarios
-   - Create abstract interfaces/protocols/traits
-   - Define method signatures with type hints
-   - Add docstrings/comments that reference the Gherkin scenarios
+3. **動詞分析** - 提取動作並設計服務介面：
+   - 識別 Gherkin 情境中的所有動作/動詞
+   - 列出需要的服務介面
+   - 定義方法簽名與參數
+   - 註明對應的 Gherkin 情境
 
-4. **Choose appropriate idioms for your target language:**
+4. **架構決策** - 說明設計考量：
+   - 為什麼需要這些介面？
+   - 為什麼設計這些資料模型？
+   - 有哪些技術考量？
 
-   - **Python:** dataclasses, Pydantic models, or Protocol/ABC
-   - **TypeScript:** interfaces and types
-   - **Go:** structs and interfaces
-   - **Java:** interfaces and POJOs
-   - **Rust:** structs and traits
-   - **C#:** interfaces and records/classes
-   - **Ruby:** modules and duck typing
-   - **Kotlin:** interfaces and data classes
+## 輸出格式範例
 
-## Output Examples by Language
+### Markdown 架構文件格式（中文）
 
-### Python (dataclasses + ABC)
+檔案位置：`docs/features/{feature_name}/architecture.md`
 
-```python
-"""
-Structural design for <Feature Name>
-Source: features/<feature>.feature
-"""
+**重要：文件必須使用繁體中文撰寫**
 
-from dataclasses import dataclass
-from abc import ABC, abstractmethod
-from enum import Enum
-from typing import Optional
+```markdown
+# VIP 折扣系統 - 架構設計
 
-# Enums (from categorical nouns)
-class UserType(str, Enum):
-    VIP = "VIP"
-    NORMAL = "NORMAL"
+> 來源：features/vip_discount.feature
+> 
+> 建立日期：2024-12-02
 
-# Data Models (from nouns)
-@dataclass
-class User:
-    """From Scenario: '<scenario name>'"""
-    id: str
-    user_type: UserType
-    points: int = 0
+## 1. 功能概述
 
-@dataclass
-class Result:
-    success: bool
-    value: Optional[float] = None
-    error: Optional[str] = None
+本功能提供 VIP 會員專屬的折扣機制。當 VIP 會員的購買金額達到特定門檻時，系統會自動計算並套用相應的折扣優惠。
 
-# Interfaces (from verbs)
-class IDiscountService(ABC):
-    """Satisfies: features/<feature>.feature"""
+**核心需求：**
+- VIP 會員購買金額超過 $100 時享有 20% 折扣
+- 一般會員無折扣優惠
+- 系統需清楚記錄原價、折扣金額與最終價格
 
-    @abstractmethod
-    def calculate_discount(self, user: User, amount: float) -> Result:
-        """
-        From Scenarios:
-        - "Apply discount to VIP" (line X)
-        - "No discount for normal" (line Y)
-        """
-        pass
-```
+## 2. 資料模型設計
 
-### TypeScript
+### 2.1 列舉與常數
 
+#### UserType（使用者類型）
+**來源情境：** "Given user is VIP" (第 5 行)
+
+| 值 | 說明 | 用途 |
+|---|---|---|
+| VIP | VIP 會員 | 享有折扣優惠的會員等級 |
+| NORMAL | 一般會員 | 標準會員，無特殊優惠 |
+
+### 2.2 核心實體
+
+#### User（使用者）
+**來源情境：** "Given user is VIP" (第 5 行)
+
+| 欄位名稱 | 資料型別 | 必填 | 預設值 | 說明 |
+|---|---|---|---|---|
+| id | string | ✅ | - | 使用者的唯一識別碼 |
+| userType | UserType | ✅ | - | 使用者類型（VIP 或一般） |
+| points | number | ✅ | 0 | 使用者的點數餘額 |
+| name | string | - | - | 使用者姓名（選填） |
+
+**設計考量：**
+- `id` 使用 string 型別以支援多種 ID 格式（UUID、數字等）
+- `points` 預設為 0，避免 null 值處理
+- `name` 為選填欄位，用於顯示或日誌記錄
+
+#### DiscountResult（折扣計算結果）
+**來源情境：** "Then final price should be 800" (第 7 行)
+
+| 欄位名稱 | 資料型別 | 必填 | 說明 |
+|---|---|---|---|
+| originalPrice | number | ✅ | 原始購買金額 |
+| finalPrice | number | ✅ | 套用折扣後的最終金額 |
+| discountAmount | number | ✅ | 實際折扣金額 |
+| discountRate | number | - | 折扣率（例如：0.2 表示 20%） |
+| appliedRule | string | - | 套用的折扣規則描述 |
+
+**設計考量：**
+- 保留完整的計算過程資訊，便於稽核與顯示
+- `discountRate` 為選填，因為可能有固定金額折扣的情況
+- `appliedRule` 便於追蹤是哪一條規則被套用
+
+## 3. 服務介面設計
+
+### 3.1 IDiscountService（折扣計算服務）
+
+**服務職責：**
+根據使用者類型和購買金額，計算應享的折扣並回傳完整的計算結果。
+
+#### 方法：calculateDiscount()
+
+**來源情境：**
+- "Apply discount to VIP user" (第 5-7 行)
+- "No discount for normal user" (第 12-14 行)
+
+**方法簽名：**
 ```typescript
-/**
- * Structural design for <Feature Name>
- * Source: features/<feature>.feature
- */
-
-// Enums (from categorical nouns)
-export enum UserType {
-  VIP = "VIP",
-  NORMAL = "NORMAL"
-}
-
-// Data Models (from nouns)
-export interface User {
-  /** From Scenario: '<scenario name>' */
-  id: string;
-  userType: UserType;
-  points: number;
-}
-
-export interface Result {
-  success: boolean;
-  value?: number;
-  error?: string;
-}
-
-// Interfaces (from verbs)
-export interface IDiscountService {
-  /**
-   * From Scenarios:
-   * - "Apply discount to VIP" (line X)
-   * - "No discount for normal" (line Y)
-   */
-  calculateDiscount(user: User, amount: number): Result;
-}
+calculateDiscount(user: User, purchaseAmount: number): DiscountResult
 ```
 
-### Go
+**輸入參數：**
 
-```go
-// Structural design for <Feature Name>
-// Source: features/<feature>.feature
+| 參數名稱 | 型別 | 說明 |
+|---|---|---|
+| user | User | 購買者的使用者物件 |
+| purchaseAmount | number | 購買金額（必須為正數） |
 
-package discount
+**回傳值：**
 
-// Enums (from categorical nouns)
-type UserType string
+| 型別 | 說明 |
+|---|---|
+| DiscountResult | 包含原價、折扣、最終價格等完整資訊 |
 
-const (
-    UserTypeVIP    UserType = "VIP"
-    UserTypeNormal UserType = "NORMAL"
-)
+**業務規則：**
 
-// Data Models (from nouns)
-// From Scenario: '<scenario name>'
-type User struct {
-    ID        string
-    UserType  UserType
-    Points    int
-}
+1. **VIP 會員折扣規則：**
+   - 購買金額 >= $100：享有 20% 折扣
+   - 購買金額 < $100：無折扣
 
-type Result struct {
-    Success bool
-    Value   *float64
-    Error   *string
-}
+2. **一般會員規則：**
+   - 所有金額：無折扣
 
-// Interfaces (from verbs)
-// Satisfies: features/<feature>.feature
-type DiscountService interface {
-    // From Scenarios:
-    // - "Apply discount to VIP" (line X)
-    // - "No discount for normal" (line Y)
-    CalculateDiscount(user User, amount float64) Result
-}
+3. **輸入驗證：**
+   - `purchaseAmount` 必須 > 0
+   - `user` 不可為 null
+   - `user.userType` 必須為有效的 UserType 值
+
+**異常處理：**
+- 金額為負數或零：拋出 `InvalidAmountError`
+- 使用者資料無效：拋出 `InvalidUserError`
+
+## 4. 架構決策
+
+### 4.1 為什麼使用 IDiscountService 介面？
+
+**優點：**
+- ✅ **可測試性**：可以建立 Mock 實作進行單元測試，無需依賴實際計算邏輯
+- ✅ **可擴展性**：未來可以新增不同的折扣策略實作（例如：季節性折扣、組合優惠等）
+- ✅ **依賴反轉**：上層業務邏輯依賴介面而非具體實作，降低耦合度
+- ✅ **可替換性**：可以在不同環境使用不同實作（例如：測試環境、生產環境）
+
+**未來擴展場景：**
+- `SeasonalDiscountService`：季節性促銷折扣
+- `BulkDiscountService`：大量購買折扣
+- `CombinedDiscountService`：組合多種折扣規則
+
+### 4.2 為什麼需要 DiscountResult 資料模型？
+
+**設計理由：**
+- ✅ **資訊完整性**：同時提供原價、折扣、最終價格，方便前端直接顯示
+- ✅ **可追溯性**：保留計算過程的所有中間值，便於問題排查
+- ✅ **型別安全**：避免只回傳單一數值造成的歧義（是原價？還是最終價？）
+- ✅ **擴展性**：可以輕鬆新增額外欄位（例如：折扣原因、適用規則等）
+
+**實際應用：**
+```
+原價：$1000
+折扣：$200 (20%)
+最終價格：$800
+適用規則：VIP 會員折扣
 ```
 
-### Java
+### 4.3 技術考量
 
-```java
-/**
- * Structural design for <Feature Name>
- * Source: features/<feature>.feature
- */
+#### 型別定義
+- 建議使用 **TypeScript** 或 **Python Type Hints** 確保型別安全
+- 所有金額欄位使用 `number` 型別，避免字串運算錯誤
+- 使用列舉型別定義使用者類型，避免魔術字串
 
-// Enums (from categorical nouns)
-public enum UserType {
-    VIP,
-    NORMAL
-}
+#### 資料驗證
+- 金額必須在進入服務前完成驗證（正數、合理範圍）
+- 建議在 API Gateway 層先進行基本驗證
+- 服務層再次驗證，確保資料正確性
 
-// Data Models (from nouns)
-/** From Scenario: '<scenario name>' */
-public class User {
-    private String id;
-    private UserType userType;
-    private int points;
+#### 錯誤處理
+- 定義明確的錯誤類型：`InvalidAmountError`、`InvalidUserError`
+- 錯誤訊息要包含足夠的上下文資訊
+- 記錄錯誤日誌，便於問題追蹤
 
-    // Constructor, getters, setters
-}
+#### 效能考量
+- 折扣計算為純函數，可考慮快取結果
+- 使用者資料可從快取讀取，減少資料庫查詢
+- 計算邏輯簡單，不需要特別優化
 
-public class Result {
-    private boolean success;
-    private Double value;
-    private String error;
+#### 擴展性設計
+- 預留折扣規則可配置的空間（例如：從資料庫或設定檔讀取）
+- 考慮使用策略模式處理多種折扣規則
+- 介面設計要能支援未來的複雜折扣組合
 
-    // Constructor, getters, setters
-}
+## 5. 情境對應關係
 
-// Interfaces (from verbs)
-/** Satisfies: features/<feature>.feature */
-public interface IDiscountService {
-    /**
-     * From Scenarios:
-     * - "Apply discount to VIP" (line X)
-     * - "No discount for normal" (line Y)
-     */
-    Result calculateDiscount(User user, double amount);
-}
+| Gherkin 情境 | 行數 | 相關資料模型 | 相關服務方法 | 驗證重點 |
+|---|---|---|---|---|
+| VIP 會員套用折扣 | 5-7 | User, DiscountResult | calculateDiscount() | 驗證 20% 折扣計算正確 |
+| 一般會員無折扣 | 12-14 | User, DiscountResult | calculateDiscount() | 驗證折扣為 0 |
+| 購買金額低於門檻 | 19-21 | User, DiscountResult | calculateDiscount() | 驗證未達門檻時無折扣 |
+
+## 6. 下一步行動
+
+### 階段 3：程式碼實作
+
+**需要實作的元件：**
+1. ✅ 定義 `UserType` 列舉
+2. ✅ 建立 `User` 資料模型/介面
+3. ✅ 建立 `DiscountResult` 資料模型/介面
+4. ✅ 實作 `IDiscountService` 介面
+5. ✅ 撰寫業務邏輯以滿足所有 Gherkin 情境
+6. ✅ 新增單元測試確保正確性
+
+### 建議實作語言
+
+根據專案上下文，建議使用以下語言：
+
+**推薦選項：**
+- [ ] **TypeScript**（適用於前端或 Node.js 後端）
+  - 優點：型別安全、生態系完整、適合全端開發
+  - 適用場景：Web 應用、API 服務
+  
+- [ ] **Python**（適用於後端服務）
+  - 優點：開發速度快、函式庫豐富、易於維護
+  - 適用場景：數據處理、API 服務、微服務
+  
+- [ ] **Go**（適用於高效能服務）
+  - 優點：效能優異、並行處理強、部署簡單
+  - 適用場景：高流量 API、微服務架構
+
+**其他語言：** ____________
+
+### 實作優先順序
+
+1. **第一階段**（核心功能）
+   - 實作基本的 VIP 折扣計算
+   - 完成資料模型定義
+   
+2. **第二階段**（完善功能）
+   - 加入錯誤處理
+   - 新增輸入驗證
+   
+3. **第三階段**（品質提升）
+   - 撰寫單元測試
+   - 加入日誌記錄
+   - 效能優化
 ```
 
-### Rust
+## 架構設計原則
 
-```rust
-//! Structural design for <Feature Name>
-//! Source: features/<feature>.feature
+無論使用何種程式語言，您的架構設計文件必須：
 
-// Enums (from categorical nouns)
-#[derive(Debug, Clone, PartialEq)]
-pub enum UserType {
-    Vip,
-    Normal,
-}
+1. **可追溯性**：每個模型和介面都要註明來源的 Gherkin 情境及行數
+2. **完整性**：所有名詞 → 資料模型，所有動詞 → 服務介面
+3. **清晰性**：使用表格和結構化格式呈現，易於閱讀
+4. **決策透明**：詳細說明為什麼這樣設計，提供設計理由
+5. **文件化**：連結到具體的 Gherkin 行數，建立完整的追蹤鏈
+6. **中文撰寫**：所有文件內容必須使用繁體中文
 
-// Data Models (from nouns)
-/// From Scenario: '<scenario name>'
-#[derive(Debug, Clone)]
-pub struct User {
-    pub id: String,
-    pub user_type: UserType,
-    pub points: i32,
-}
+## 文件撰寫要求
 
-#[derive(Debug, Clone)]
-pub struct Result {
-    pub success: bool,
-    pub value: Option<f64>,
-    pub error: Option<String>,
-}
+**語言：** 必須使用繁體中文
 
-// Traits (from verbs)
-/// Satisfies: features/<feature>.feature
-pub trait DiscountService {
-    /// From Scenarios:
-    /// - "Apply discount to VIP" (line X)
-    /// - "No discount for normal" (line Y)
-    fn calculate_discount(&self, user: &User, amount: f64) -> Result;
-}
+**風格：**
+- 使用專業但易懂的技術用語
+- 避免過度簡化或過度複雜的描述
+- 提供充分的上下文和說明
+- 使用具體的範例和場景
+
+**結構：**
+- 遵循範例文件的章節結構
+- 使用表格呈現結構化資訊
+- 使用清單列舉重點項目
+- 適當使用 emoji 增加可讀性（✅ ❌ 等）
+
+## 品質檢查清單
+
+完成前請確保：
+- [ ] **完整性**：Gherkin 中的所有名詞都已列為資料模型
+- [ ] **完整性**：Gherkin 中的所有動詞都已列為服務介面方法
+- [ ] **明確性**：所有分類值都使用列舉/常數並說明用途
+- [ ] **追溯性**：每個元素都註明來源 Gherkin 情境及行數
+- [ ] **說明性**：包含完整的架構決策說明（為什麼這樣設計）
+- [ ] **對應性**：包含情境對應關係表
+- [ ] **語言**：全文使用繁體中文撰寫
+- [ ] **格式**：使用 Markdown 表格和清單格式
+- [ ] **儲存**：檔案已儲存至 `docs/features/{feature_name}/architecture.md`
+
+## 輸出位置
+
+將 Markdown 文件儲存至：
+```
+docs/features/{feature_name}/architecture.md
 ```
 
-## Language-Agnostic Principles
+**路徑對應範例：**
+- Gherkin 檔案：`features/user_auth.feature` 
+- 架構文件：`docs/features/user_auth/architecture.md`
 
-Regardless of the target language, your structure design must:
+**目錄結構：**
+```
+專案根目錄/
+├── features/
+│   └── user_auth.feature          # Gherkin 規格
+└── docs/
+    └── features/
+        └── user_auth/
+            └── architecture.md    # 架構設計文件（中文）
+```
 
-1. **Traceability:** Every model and interface references its source Gherkin scenario
-2. **Strong Typing:** Use the strongest typing available in the language
-3. **No Implementation:** Only signatures/definitions, no logic
-4. **Completeness:** All nouns → models, all verbs → interfaces
-5. **Documentation:** Comments/docstrings link to specific Gherkin lines
+## 下一步
 
-## Quality Checklist
+完成此階段後：
+1. 自動建立目錄結構 `docs/features/{feature_name}/`
+2. 儲存架構文件到指定位置
+3. 顯示檔案路徑給使用者確認
+4. 等待使用者審查架構設計
+5. 或提示使用者可繼續至階段 3：`/sdd-impl features/<feature>.feature`
 
-Before completing, ensure:
-- [ ] All nouns from Gherkin are represented as data structures
-- [ ] All verbs from Gherkin are represented as interface methods
-- [ ] All categorical values use enums/constants
-- [ ] Types are as strict as the language allows
-- [ ] Each element references its source Gherkin scenario
-- [ ] NO implementation logic exists (only definitions)
-- [ ] File uses appropriate extension for target language
-- [ ] Follows language-specific naming conventions
+---
 
-## Naming Conventions by Language
-
-- **Python:** `snake_case` for functions/variables, `PascalCase` for classes
-- **TypeScript/JavaScript:** `camelCase` for functions/variables, `PascalCase` for types/interfaces
-- **Go:** `PascalCase` for exported, `camelCase` for private
-- **Java/C#:** `camelCase` for methods/variables, `PascalCase` for classes/interfaces
-- **Rust:** `snake_case` for functions/variables, `PascalCase` for types
-
-## Next Steps
-
-After completing this phase:
-- Save the structure file with appropriate extension
-- Proceed to Phase 3: `/sdd-impl features/<feature>.feature structure/<feature>_structure.<ext>`
-- Or return to user for architecture review
-
-Now read the Gherkin file and create the structural design in the appropriate language.
+**現在請執行以下步驟：**
+1. 讀取使用者指定的 Gherkin 檔案
+2. 分析其中的名詞（實體）和動詞（行為）
+3. 依照上述範例格式建立完整的中文架構設計文件
+4. 儲存至 `docs/features/{feature_name}/architecture.md`

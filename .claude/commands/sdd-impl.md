@@ -1,112 +1,112 @@
 ---
-description: Phase 3 - Implement the logic within the defined structure (Engineer role)
+description: 階段 3 - 在定義的結構內實作邏輯（工程師角色）
 ---
 
-# SDD Phase 3: Implementation (The Flesh)
+# SDD 階段 3：實作（血肉）
 
-**Role:** Senior Engineer
+**角色：** 資深工程師
 
-**Goal:** Implement the business logic within the defined structure to satisfy all Gherkin scenarios.
+**目標：** 在定義的結構內實作業務邏輯，以滿足所有 Gherkin 情境。
 
-## Input
+## 輸入
 
-Provide two files:
-1. Gherkin specification: `features/<feature>.feature`
-2. Structure definition: `structure/<feature>_structure.py` (or `.ts`)
+提供兩個檔案：
+1. Gherkin 規格：`features/<feature>.feature`
+2. 結構定義：`structure/<feature>_structure.py`（或 `.ts`）
 
-Usage: `/sdd-impl features/<feature>.feature structure/<feature>_structure.py`
+用法：`/sdd-impl features/<feature>.feature structure/<feature>_structure.py`
 
-Prompt: {{prompt}}
+提示：{{prompt}}
 
-## Your Constraints
+## 您的職責約束
 
-- You are a Senior Engineer implementing a strictly defined specification.
-- You MUST use the Data Models from Phase 2 (structure file).
-- You MUST implement all Interfaces from Phase 2.
-- Every code branch must correspond to a Gherkin scenario.
-- Your code MUST satisfy all scenarios from the Gherkin file.
-- DO NOT modify the structure definitions - only implement them.
+- 您是資深工程師，實作嚴格定義的規格。
+- 您必須使用階段 2 的資料模型（結構檔案）。
+- 您必須實作階段 2 的所有介面。
+- 每個程式碼分支必須對應一個 Gherkin 情境。
+- 您的程式碼必須滿足 Gherkin 檔案中的所有情境。
+- 不要修改結構定義 - 只實作它們。
 
-## Your Task
+## 您的任務
 
-1. **Read both input files:**
-   - The Gherkin file (requirements/test specification)
-   - The structure file (data models and interfaces)
+1. **讀取兩個輸入檔案：**
+   - Gherkin 檔案（需求/測試規格）
+   - 結構檔案（資料模型和介面）
 
-2. **Create concrete implementations:**
-   - Implement each interface as a concrete class
-   - Use the provided data models
-   - Map each Gherkin scenario to code logic
+2. **建立具體實作：**
+   - 將每個介面實作為具體類別
+   - 使用提供的資料模型
+   - 將每個 Gherkin 情境對應到程式碼邏輯
 
-3. **Implementation mapping:**
-   - `Given` statements → Setup/input parameters
-   - `When` statements → Method calls/actions
-   - `Then` statements → Return values/outcomes
+3. **實作對應：**
+   - `Given` 陳述 → 設定/輸入參數
+   - `When` 陳述 → 方法呼叫/動作
+   - `Then` 陳述 → 回傳值/結果
 
-4. **Output Format:**
+4. **輸出格式：**
 
-Create a file named `implementation/<feature_name>_impl.py` (or `.ts`):
+建立名為 `implementation/<feature_name>_impl.py`（或 `.ts`）的檔案：
 
-**Python Example:**
+**Python 範例：**
 ```python
 """
-Implementation for <Feature Name>
-Implements: structure/<feature_name>_structure.py
-Satisfies: features/<feature_name>.feature
+<功能名稱> 的實作
+實作：structure/<feature_name>_structure.py
+滿足：features/<feature_name>.feature
 
-This module contains the concrete implementation of the
-service interfaces defined in the structure module.
+此模組包含結構模組中定義的
+服務介面的具體實作。
 """
 
 from structure.<feature_name>_structure import *
 
 class <Service>Service(I<Service>Service):
     """
-    Concrete implementation of I<Service>Service.
-    Implements all scenarios from features/<feature_name>.feature
+    I<Service>Service 的具體實作。
+    實作 features/<feature_name>.feature 的所有情境
     """
 
     def action_name(self, param1: Type1, param2: Type2) -> ResultType:
         """
-        Implementation satisfying:
-        - Scenario: "<scenario 1 name>"
-        - Scenario: "<scenario 2 name>"
+        實作滿足：
+        - 情境："<情境 1 名稱>"
+        - 情境："<情境 2 名稱>"
         """
 
-        # Map Gherkin Given conditions to code logic
+        # 將 Gherkin Given 條件對應到程式碼邏輯
         if condition_from_scenario_1:
-            # Map Gherkin Then to return value
+            # 將 Gherkin Then 對應到回傳值
             return result_for_scenario_1
 
-        # Handle edge case from Scenario 2
+        # 處理情境 2 的邊界情況
         elif condition_from_scenario_2:
             return result_for_scenario_2
 
-        # Handle error case from Scenario 3
+        # 處理情境 3 的錯誤情況
         if invalid_condition:
             return ResultType(
                 success=False,
-                error_message="Error message from Gherkin"
+                error_message="來自 Gherkin 的錯誤訊息"
             )
 
-        # Default/happy path
+        # 預設/正常路徑
         return default_result
 
-# Example usage (optional, for demonstration)
+# 範例用法（可選，用於示範）
 if __name__ == "__main__":
     service = <Service>Service()
 
-    # Test scenario 1 from Gherkin
+    # 測試 Gherkin 的情境 1
     result = service.action_name(param1_value, param2_value)
-    print(f"Result: {result}")
+    print(f"結果：{result}")
 ```
 
-**TypeScript Example:**
+**TypeScript 範例：**
 ```typescript
 /**
- * Implementation for <Feature Name>
- * Implements: structure/<feature_name>_structure.ts
- * Satisfies: features/<feature_name>.feature
+ * <功能名稱> 的實作
+ * 實作：structure/<feature_name>_structure.ts
+ * 滿足：features/<feature_name>.feature
  */
 
 import {
@@ -118,53 +118,53 @@ import {
 
 export class <Service>Service implements I<Service>Service {
   /**
-   * Implementation satisfying:
-   * - Scenario: "<scenario 1 name>"
-   * - Scenario: "<scenario 2 name>"
+   * 實作滿足：
+   * - 情境："<情境 1 名稱>"
+   * - 情境："<情境 2 名稱>"
    */
   actionName(param1: Type1, param2: Type2): ResultType {
-    // Map Gherkin Given conditions to code logic
+    // 將 Gherkin Given 條件對應到程式碼邏輯
     if (conditionFromScenario1) {
-      // Map Gherkin Then to return value
+      // 將 Gherkin Then 對應到回傳值
       return resultForScenario1;
     }
 
-    // Handle edge case from Scenario 2
+    // 處理情境 2 的邊界情況
     if (conditionFromScenario2) {
       return resultForScenario2;
     }
 
-    // Handle error case from Scenario 3
+    // 處理情境 3 的錯誤情況
     if (invalidCondition) {
       return {
         success: false,
-        errorMessage: "Error message from Gherkin"
+        errorMessage: "來自 Gherkin 的錯誤訊息"
       };
     }
 
-    // Default/happy path
+    // 預設/正常路徑
     return defaultResult;
   }
 }
 ```
 
-## Complete Example
+## 完整範例
 
-**Gherkin (features/vip_discount.feature):**
+**Gherkin（features/vip_discount.feature）：**
 ```gherkin
-Feature: VIP Discount
-  Scenario: Apply discount to VIP user
-    Given user is VIP
-    When user makes a purchase of 1000 USD
-    Then final price should be 800 USD
+Feature: VIP 折扣
+  Scenario: 對 VIP 使用者套用折扣
+    Given 使用者是 VIP
+    When 使用者購買 1000 美元
+    Then 最終價格應該是 800 美元
 
-  Scenario: No discount for non-VIP
-    Given user is NORMAL
-    When user makes a purchase of 1000 USD
-    Then final price should be 1000 USD
+  Scenario: 非 VIP 使用者無折扣
+    Given 使用者是 NORMAL
+    When 使用者購買 1000 美元
+    Then 最終價格應該是 1000 美元
 ```
 
-**Structure (structure/vip_discount_structure.py):**
+**結構（structure/vip_discount_structure.py）：**
 ```python
 class UserType(str, Enum):
     VIP = "VIP"
@@ -176,55 +176,55 @@ class IDiscountService(ABC):
         pass
 ```
 
-**Implementation (implementation/vip_discount_impl.py):**
+**實作（implementation/vip_discount_impl.py）：**
 ```python
 from structure.vip_discount_structure import *
 
 class DiscountService(IDiscountService):
-    """Implements VIP discount logic."""
+    """實作 VIP 折扣邏輯。"""
 
     def calculate_discount(self, amount: float, user_type: UserType) -> float:
         """
-        Satisfies scenarios:
-        - "Apply discount to VIP user"
-        - "No discount for non-VIP"
+        滿足情境：
+        - "對 VIP 使用者套用折扣"
+        - "非 VIP 使用者無折扣"
         """
-        # Scenario 1: VIP gets 20% discount
+        # 情境 1：VIP 享 20% 折扣
         if user_type == UserType.VIP:
             return amount * 0.8
 
-        # Scenario 2: Non-VIP pays full price
+        # 情境 2：非 VIP 支付全額
         return amount
 
-# Verification
+# 驗證
 if __name__ == "__main__":
     service = DiscountService()
 
-    # Test Scenario 1
+    # 測試情境 1
     assert service.calculate_discount(1000, UserType.VIP) == 800
 
-    # Test Scenario 2
+    # 測試情境 2
     assert service.calculate_discount(1000, UserType.NORMAL) == 1000
 
-    print("✅ All scenarios verified")
+    print("✅ 所有情境驗證成功")
 ```
 
-## Quality Checklist
+## 品質檢查清單
 
-Before completing, ensure:
-- [ ] All interfaces from structure file are implemented
-- [ ] All data models from structure file are used
-- [ ] Every Gherkin scenario has corresponding code logic
-- [ ] No structure definitions are modified
-- [ ] Code includes comments mapping to Gherkin scenarios
-- [ ] Basic verification/test code is included (optional but recommended)
-- [ ] File is saved in `implementation/` directory
+完成前，確保：
+- [ ] 結構檔案中的所有介面都已實作
+- [ ] 結構檔案中的所有資料模型都已使用
+- [ ] 每個 Gherkin 情境都有對應的程式碼邏輯
+- [ ] 沒有修改結構定義
+- [ ] 程式碼包含對應到 Gherkin 情境的註解
+- [ ] 包含基本驗證/測試程式碼（可選但建議）
+- [ ] 檔案已儲存在 `implementation/` 目錄
 
-## Next Steps
+## 下一步
 
-After completing this phase:
-- Save the implementation file
-- Proceed to Phase 4 with: `/sdd-verify features/<feature>.feature implementation/<feature>_impl.py`
-- Or run manual tests before verification
+完成此階段後：
+- 儲存實作檔案
+- 使用以下指令進入階段 4：`/sdd-verify features/<feature>.feature implementation/<feature>_impl.py`
+- 或在驗證前執行手動測試
 
-Now read both input files and create the implementation.
+現在讀取兩個輸入檔案並建立實作。

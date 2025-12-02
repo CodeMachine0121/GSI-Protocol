@@ -1,114 +1,114 @@
 ---
-description: Phase 1 - Generate Gherkin behavioral specification from user requirements (PM role)
+description: 階段 1 - 從使用者需求生成 Gherkin 行為規格（PM 角色）
 ---
 
-# SDD Phase 1: Requirement Specification (The Soul)
+# SDD 階段 1：需求規格（靈魂）
 
-**Role:** Product Manager (PM)
+**角色：** 產品經理（PM）
 
-**Goal:** Translate user's natural language requirements into strict behavioral specifications using BDD (Behavior-Driven Development).
+**目標：** 使用 BDD（行為驅動開發）將使用者的自然語言需求轉換為嚴格的行為規格。
 
-## User's Requirement
+## 使用者需求
 
 {{prompt}}
 
-## Your Constraints
+## 您的職責約束
 
-- You are a PM. Do NOT discuss code, databases, or technical implementation details.
-- Focus SOLELY on user behavior and business rules.
-- Think about: What should the system do? What are the edge cases? How should errors be handled?
-- Use Gherkin syntax (Given-When-Then) exclusively.
+- 您是 PM。不要討論程式碼、資料庫或技術實作細節。
+- 僅專注於使用者行為和業務規則。
+- 思考：系統應該做什麼？有哪些邊界情況？如何處理錯誤？
+- 只使用 Gherkin 語法（Given-When-Then）。
 
-## Your Task
+## 您的任務
 
-1. **Analyze the requirement** for:
-   - Core business rules
-   - Happy path scenarios
-   - Edge cases (boundary conditions, invalid inputs)
-   - Error handling scenarios
+1. **分析需求**，考慮：
+   - 核心業務規則
+   - 正常流程情境
+   - 邊界情況（邊界條件、無效輸入）
+   - 錯誤處理情境
 
-2. **Create comprehensive Gherkin scenarios** that cover:
-   - Primary use cases
-   - Alternative flows
-   - Exception cases
-   - Validation rules
+2. **建立完整的 Gherkin 情境**，涵蓋：
+   - 主要使用案例
+   - 替代流程
+   - 例外情況
+   - 驗證規則
 
-3. **Output Format:**
+3. **輸出格式：**
 
-Create a file named `features/<feature_name>.feature` with the following structure:
-
-```gherkin
-Feature: <Clear, concise feature name>
-  <Brief description of the feature's business value>
-
-  Scenario: <Happy path scenario name>
-    Given <precondition 1>
-    And <precondition 2>
-    When <user action or event>
-    And <additional action if needed>
-    Then <expected outcome 1>
-    And <expected outcome 2>
-
-  Scenario: <Edge case scenario name>
-    Given <edge case setup>
-    When <action under edge case>
-    Then <expected behavior>
-
-  Scenario: <Error handling scenario name>
-    Given <invalid condition>
-    When <action attempted>
-    Then <error response expected>
-```
-
-## Example Output
-
-For requirement: "VIP users get 20% discount on purchases over $100"
+建立名為 `features/<feature_name>.feature` 的檔案，結構如下：
 
 ```gherkin
-Feature: VIP Discount System
-  As a business, I want to reward VIP customers with discounts
-  to increase customer loyalty and repeat purchases.
+Feature: <清楚簡潔的功能名稱>
+  <功能業務價值的簡短描述>
 
-  Scenario: Apply discount to VIP user
-    Given user is VIP
-    When user makes a purchase of 1000 USD
-    Then final price should be 800 USD
-    And discount applied should be 200 USD
+  Scenario: <正常流程情境名稱>
+    Given <前置條件 1>
+    And <前置條件 2>
+    When <使用者動作或事件>
+    And <額外動作（如需要）>
+    Then <預期結果 1>
+    And <預期結果 2>
 
-  Scenario: No discount for non-VIP users
-    Given user is NORMAL
-    When user makes a purchase of 1000 USD
-    Then final price should be 1000 USD
-    And discount applied should be 0 USD
+  Scenario: <邊界情況情境名稱>
+    Given <邊界情況設定>
+    When <邊界情況下的動作>
+    Then <預期行為>
 
-  Scenario: No discount for purchases under threshold
-    Given user is VIP
-    When user makes a purchase of 50 USD
-    Then final price should be 50 USD
-    And discount applied should be 0 USD
-
-  Scenario: Handle invalid purchase amount
-    Given user is VIP
-    When user makes a purchase of -100 USD
-    Then system should reject with error "Invalid purchase amount"
+  Scenario: <錯誤處理情境名稱>
+    Given <無效條件>
+    When <嘗試的動作>
+    Then <預期的錯誤回應>
 ```
 
-## Quality Checklist
+## 範例輸出
 
-Before completing, ensure your specification has:
-- [ ] Clear feature description
-- [ ] At least one happy path scenario
-- [ ] At least one edge case scenario
-- [ ] At least one error handling scenario
-- [ ] No technical implementation details (no database, no code, no architecture)
-- [ ] All scenarios follow Given-When-Then format
-- [ ] Each scenario is atomic and testable
+針對需求："VIP 使用者購買超過 $100 可享 20% 折扣"
 
-## Next Steps
+```gherkin
+Feature: VIP 折扣系統
+  作為企業，我想要給予 VIP 客戶折扣優惠
+  以提高客戶忠誠度和重複購買率。
 
-After completing this phase:
-- Save the `.feature` file
-- You can proceed to Phase 2 with: `/sdd-arch features/<feature_name>.feature`
-- Or return to the user for review
+  Scenario: 對 VIP 使用者套用折扣
+    Given 使用者是 VIP
+    When 使用者購買 1000 美元
+    Then 最終價格應該是 800 美元
+    And 套用的折扣應該是 200 美元
 
-Now create the Gherkin specification based on the user's requirement.
+  Scenario: 非 VIP 使用者無折扣
+    Given 使用者是 NORMAL
+    When 使用者購買 1000 美元
+    Then 最終價格應該是 1000 美元
+    And 套用的折扣應該是 0 美元
+
+  Scenario: 購買金額低於門檻無折扣
+    Given 使用者是 VIP
+    When 使用者購買 50 美元
+    Then 最終價格應該是 50 美元
+    And 套用的折扣應該是 0 美元
+
+  Scenario: 處理無效的購買金額
+    Given 使用者是 VIP
+    When 使用者購買 -100 美元
+    Then 系統應該拒絕並回應錯誤 "無效的購買金額"
+```
+
+## 品質檢查清單
+
+完成前，確保您的規格具有：
+- [ ] 清楚的功能描述
+- [ ] 至少一個正常流程情境
+- [ ] 至少一個邊界情況情境
+- [ ] 至少一個錯誤處理情境
+- [ ] 沒有技術實作細節（沒有資料庫、沒有程式碼、沒有架構）
+- [ ] 所有情境遵循 Given-When-Then 格式
+- [ ] 每個情境都是原子性且可測試的
+
+## 下一步
+
+完成此階段後：
+- 儲存 `.feature` 檔案
+- 您可以使用以下指令進入階段 2：`/sdd-arch features/<feature_name>.feature`
+- 或返回給使用者審查
+
+現在根據使用者的需求建立 Gherkin 規格。
