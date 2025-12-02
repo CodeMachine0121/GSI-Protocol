@@ -34,10 +34,10 @@ git clone https://github.com/CodeMachine0121/GSI-Protocol.git sdd-workflow
 
 ```bash
 # 下載並執行安裝腳本
-curl -sSL https://github.com/CodeMachine0121/GSI-Protocol.git/raw/main/install.sh | bash
+curl -sSL https://raw.githubusercontent.com/CodeMachine0121/GSI-Protocol/main/install.sh | bash
 
 # 或手動執行
-wget https://github.com/CodeMachine0121/GSI-Protocol.git/raw/main/install.sh
+wget https://raw.githubusercontent.com/CodeMachine0121/GSI-Protocol/main/install.sh
 chmod +x install.sh
 ./install.sh
 ```
