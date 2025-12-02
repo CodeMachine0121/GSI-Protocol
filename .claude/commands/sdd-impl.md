@@ -1,230 +1,181 @@
 ---
-description: 階段 3 - 在定義的結構內實作邏輯（工程師角色）
+description: Phase 3 - 根據架構設計實作程式碼，滿足 Gherkin 規格
 ---
 
-# SDD 階段 3：實作（血肉）
+# SDD Phase 3: 實作
 
-**角色：** 資深工程師
+**角色：** 資深工程師  
+**輸入：** Gherkin 規格檔案 {{prompt}}  
+**前置條件：** 已完成 Phase 2，存在 `docs/features/{feature_name}/architecture.md`  
+**輸出：** 實作程式碼於專案既有目錄結構
 
-**目標：** 在定義的結構內實作業務邏輯，以滿足所有 Gherkin 情境。
+## 核心原則
 
-## 輸入
+- **遵循架構**：嚴格依照 architecture.md 定義的資料模型與服務介面
+- **情境驅動**：每個 Gherkin 情境對應到程式碼邏輯分支
+- **專案整合**：檔案放置於專案既有目錄結構
+- **可測試性**：程式碼可直接用於驗證 Gherkin 情境
 
-提供兩個檔案：
-1. Gherkin 規格：`features/<feature>.feature`
-2. 結構定義：`structure/<feature>_structure.py`（或 `.ts`）
+## 執行步驟
 
-用法：`/sdd-impl features/<feature>.feature structure/<feature>_structure.py`
+### 1. 讀取架構設計
 
-提示：{{prompt}}
+從 `docs/features/{feature_name}/architecture.md` 讀取：
+- 專案上下文（語言、框架、架構模式）
+- 資料模型定義（列舉、實體）
+- 服務介面定義（方法簽名、參數、回傳值）
+- 情境對應關係
 
-## 您的職責約束
+### 2. 實作元件
 
-- 您是資深工程師，實作嚴格定義的規格。
-- 您必須使用階段 2 的資料模型（結構檔案）。
-- 您必須實作階段 2 的所有介面。
-- 每個程式碼分支必須對應一個 Gherkin 情境。
-- 您的程式碼必須滿足 Gherkin 檔案中的所有情境。
-- 不要修改結構定義 - 只實作它們。
+依據架構文件實作：
 
-## 您的任務
+**資料模型：**
+- 實作列舉/常數
+- 實作核心實體
+- 加入資料驗證（依框架）
 
-1. **讀取兩個輸入檔案：**
-   - Gherkin 檔案（需求/測試規格）
-   - 結構檔案（資料模型和介面）
+**服務介面：**
+- 實作服務類別/介面
+- 實作所有方法
+- 每個方法對應 Gherkin 情境
 
-2. **建立具體實作：**
-   - 將每個介面實作為具體類別
-   - 使用提供的資料模型
-   - 將每個 Gherkin 情境對應到程式碼邏輯
+**情境對應：**
+- `Given` → 設定/輸入參數
+- `When` → 方法呼叫
+- `Then` → 回傳值/驗證
 
-3. **實作對應：**
-   - `Given` 陳述 → 設定/輸入參數
-   - `When` 陳述 → 方法呼叫/動作
-   - `Then` 陳述 → 回傳值/結果
+### 3. 儲存檔案
 
-4. **輸出格式：**
+依據 architecture.md 的「檔案結構」章節，將檔案放置於正確位置
 
-建立名為 `implementation/<feature_name>_impl.py`（或 `.ts`）的檔案：
+## 實作範例
 
-**Python 範例：**
-```python
-"""
-<功能名稱> 的實作
-實作：structure/<feature_name>_structure.py
-滿足：features/<feature_name>.feature
+### TypeScript + NestJS
 
-此模組包含結構模組中定義的
-服務介面的具體實作。
-"""
+**資料模型 (src/models/UserType.ts):**
+```typescript
+export enum UserType {
+  VIP = 'VIP',
+  NORMAL = 'NORMAL',
+}
 
-from structure.<feature_name>_structure import *
-
-class <Service>Service(I<Service>Service):
-    """
-    I<Service>Service 的具體實作。
-    實作 features/<feature_name>.feature 的所有情境
-    """
-
-    def action_name(self, param1: Type1, param2: Type2) -> ResultType:
-        """
-        實作滿足：
-        - 情境："<情境 1 名稱>"
-        - 情境："<情境 2 名稱>"
-        """
-
-        # 將 Gherkin Given 條件對應到程式碼邏輯
-        if condition_from_scenario_1:
-            # 將 Gherkin Then 對應到回傳值
-            return result_for_scenario_1
-
-        # 處理情境 2 的邊界情況
-        elif condition_from_scenario_2:
-            return result_for_scenario_2
-
-        # 處理情境 3 的錯誤情況
-        if invalid_condition:
-            return ResultType(
-                success=False,
-                error_message="來自 Gherkin 的錯誤訊息"
-            )
-
-        # 預設/正常路徑
-        return default_result
-
-# 範例用法（可選，用於示範）
-if __name__ == "__main__":
-    service = <Service>Service()
-
-    # 測試 Gherkin 的情境 1
-    result = service.action_name(param1_value, param2_value)
-    print(f"結果：{result}")
+export interface User {
+  id: string;
+  userType: UserType;
+  points: number;
+}
 ```
 
-**TypeScript 範例：**
+**服務實作 (src/services/DiscountService.ts):**
 ```typescript
-/**
- * <功能名稱> 的實作
- * 實作：structure/<feature_name>_structure.ts
- * 滿足：features/<feature_name>.feature
- */
+import { Injectable } from '@nestjs/common';
+import { User, UserType } from '../models/UserType';
 
-import {
-  I<Service>Service,
-  <Entity>,
-  <Result>,
-  <EntityType>
-} from './structure/<feature_name>_structure';
-
-export class <Service>Service implements I<Service>Service {
+@Injectable()
+export class DiscountService {
   /**
-   * 實作滿足：
-   * - 情境："<情境 1 名稱>"
-   * - 情境："<情境 2 名稱>"
+   * 滿足情境：
+   * - "VIP 使用者享有 20% 折扣" (第 5-8 行)
+   * - "一般使用者無折扣" (第 10-13 行)
    */
-  actionName(param1: Type1, param2: Type2): ResultType {
-    // 將 Gherkin Given 條件對應到程式碼邏輯
-    if (conditionFromScenario1) {
-      // 將 Gherkin Then 對應到回傳值
-      return resultForScenario1;
+  calculateDiscount(user: User, amount: number): number {
+    // Given: 使用者是 VIP (情境 1)
+    if (user.userType === UserType.VIP) {
+      // Then: 折扣 20%
+      return amount * 0.8;
     }
 
-    // 處理情境 2 的邊界情況
-    if (conditionFromScenario2) {
-      return resultForScenario2;
-    }
-
-    // 處理情境 3 的錯誤情況
-    if (invalidCondition) {
-      return {
-        success: false,
-        errorMessage: "來自 Gherkin 的錯誤訊息"
-      };
-    }
-
-    // 預設/正常路徑
-    return defaultResult;
+    // Given: 使用者是 NORMAL (情境 2)
+    // Then: 無折扣
+    return amount;
   }
 }
 ```
 
-## 完整範例
+### Python + FastAPI
 
-**Gherkin（features/vip_discount.feature）：**
-```gherkin
-Feature: VIP 折扣
-  Scenario: 對 VIP 使用者套用折扣
-    Given 使用者是 VIP
-    When 使用者購買 1000 美元
-    Then 最終價格應該是 800 美元
-
-  Scenario: 非 VIP 使用者無折扣
-    Given 使用者是 NORMAL
-    When 使用者購買 1000 美元
-    Then 最終價格應該是 1000 美元
-```
-
-**結構（structure/vip_discount_structure.py）：**
+**資料模型 (src/models/user.py):**
 ```python
+from enum import Enum
+from pydantic import BaseModel
+
 class UserType(str, Enum):
     VIP = "VIP"
     NORMAL = "NORMAL"
 
-class IDiscountService(ABC):
-    @abstractmethod
-    def calculate_discount(self, amount: float, user_type: UserType) -> float:
-        pass
+class User(BaseModel):
+    id: str
+    user_type: UserType
+    points: int = 0
 ```
 
-**實作（implementation/vip_discount_impl.py）：**
+**服務實作 (src/services/discount_service.py):**
 ```python
-from structure.vip_discount_structure import *
+from src.models.user import User, UserType
 
-class DiscountService(IDiscountService):
-    """實作 VIP 折扣邏輯。"""
-
-    def calculate_discount(self, amount: float, user_type: UserType) -> float:
-        """
-        滿足情境：
-        - "對 VIP 使用者套用折扣"
-        - "非 VIP 使用者無折扣"
-        """
-        # 情境 1：VIP 享 20% 折扣
-        if user_type == UserType.VIP:
+class DiscountService:
+    """
+    滿足情境：
+    - "VIP 使用者享有 20% 折扣" (第 5-8 行)
+    - "一般使用者無折扣" (第 10-13 行)
+    """
+    def calculate_discount(self, user: User, amount: float) -> float:
+        # Given: 使用者是 VIP (情境 1)
+        if user.user_type == UserType.VIP:
+            # Then: 折扣 20%
             return amount * 0.8
-
-        # 情境 2：非 VIP 支付全額
+        
+        # Given: 使用者是 NORMAL (情境 2)
+        # Then: 無折扣
         return amount
-
-# 驗證
-if __name__ == "__main__":
-    service = DiscountService()
-
-    # 測試情境 1
-    assert service.calculate_discount(1000, UserType.VIP) == 800
-
-    # 測試情境 2
-    assert service.calculate_discount(1000, UserType.NORMAL) == 1000
-
-    print("✅ 所有情境驗證成功")
 ```
 
-## 品質檢查清單
+## 程式碼撰寫要求
 
-完成前，確保：
-- [ ] 結構檔案中的所有介面都已實作
-- [ ] 結構檔案中的所有資料模型都已使用
-- [ ] 每個 Gherkin 情境都有對應的程式碼邏輯
-- [ ] 沒有修改結構定義
-- [ ] 程式碼包含對應到 Gherkin 情境的註解
-- [ ] 包含基本驗證/測試程式碼（可選但建議）
-- [ ] 檔案已儲存在 `implementation/` 目錄
+### 註解標註
+- 每個方法標註對應的 Gherkin 情境與行數
+- 關鍵邏輯註明對應的 Given/When/Then
+
+### 錯誤處理
+依據專案既有模式處理異常：
+```typescript
+// TypeScript
+if (!user) {
+  throw new BadRequestException('使用者不存在');
+}
+```
+
+```python
+# Python
+if not user:
+    raise ValueError("使用者不存在")
+```
+
+### 驗證邏輯
+依據框架加入資料驗證（如需要）
+
+## 品質檢查
+
+- [ ] 已讀取 `docs/features/{feature_name}/architecture.md`
+- [ ] 所有資料模型已實作
+- [ ] 所有服務介面已實作
+- [ ] 每個 Gherkin 情境都有對應程式碼邏輯
+- [ ] 程式碼符合專案既有命名慣例與架構模式
+- [ ] 檔案儲存至正確位置（依 architecture.md）
+- [ ] 包含 Gherkin 情境追溯註解
+
+## 執行流程
+
+1. 讀取 `docs/features/{feature_name}/architecture.md`
+2. 讀取 `features/{feature_name}.feature`
+3. 依據架構文件與專案上下文實作程式碼
+4. 將檔案儲存至專案既有目錄結構
+5. 回報已建立的檔案清單
 
 ## 下一步
 
-完成此階段後：
-- 儲存實作檔案
-- 使用以下指令進入階段 4：`/sdd-verify features/<feature>.feature implementation/<feature>_impl.py`
-- 或在驗證前執行手動測試
-
-現在讀取兩個輸入檔案並建立實作。
+完成後可進行：
+- 執行專案既有測試框架驗證
+- 進入 Phase 4：測試驗證（如有定義）
+- 整合至專案主要程式碼
