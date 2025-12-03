@@ -37,6 +37,7 @@ GSI-Protocol 現在支援 **Codex (OpenAI)**！除了原有的 Claude Code 支�
 - ✅ 支援同時安裝兩個平台
 - ✅ 自動處理兩個平台的目錄結構
 - ✅ 改進的安裝流程提示
+- ✅ **修復 `curl | bash` 輸入問題**（使用 `< /dev/tty`）
 
 **新功能：**
 ```bash
@@ -45,6 +46,10 @@ GSI-Protocol 現在支援 **Codex (OpenAI)**！除了原有的 Claude Code 支�
 2) Codex (OpenAI) only  
 3) Both Claude Code and Codex
 ```
+
+**技術修復：**
+- 所有 `read` 命令都加上 `< /dev/tty` 以支援管道執行
+- 確保 `curl -sSL ... | bash` 可以正常接收用戶輸入
 
 ### 2. `README.md` - 主要說明文件
 **更新內容：**

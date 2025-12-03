@@ -15,7 +15,7 @@ echo "Select AI platform(s) to install:"
 echo "1) Claude Code only"
 echo "2) Codex (OpenAI) only"
 echo "3) Both Claude Code and Codex"
-read -p "Enter choice [1-3]: " platform_choice
+read -p "Enter choice [1-3]: " platform_choice < /dev/tty
 
 case $platform_choice in
     1)
@@ -48,7 +48,7 @@ else
     echo "Please choose installation type:"
     echo "1) Install to current directory (manual project)"
     echo "2) Install globally"
-    read -p "Enter choice [1-2]: " choice
+    read -p "Enter choice [1-2]: " choice < /dev/tty
 
     case $choice in
         1)
@@ -134,7 +134,7 @@ TOTAL_FILES=0
 # Install Claude Code commands
 if [ "$INSTALL_CLAUDE" = true ]; then
     if [ -d ".claude/commands" ]; then
-        read -p "⚠️  .claude/commands already exists. Overwrite? [y/N]: " confirm
+        read -p "⚠️  .claude/commands already exists. Overwrite? [y/N]: " confirm < /dev/tty
         if [ "$confirm" != "y" ] && [ "$confirm" != "Y" ]; then
             echo "Skipping Claude Code installation."
         else
@@ -158,7 +158,7 @@ fi
 # Install Codex commands
 if [ "$INSTALL_CODEX" = true ]; then
     if [ -d ".codex/commands" ]; then
-        read -p "⚠️  .codex/commands already exists. Overwrite? [y/N]: " confirm
+        read -p "⚠️  .codex/commands already exists. Overwrite? [y/N]: " confirm < /dev/tty
         if [ "$confirm" != "y" ] && [ "$confirm" != "Y" ]; then
             echo "Skipping Codex installation."
         else
