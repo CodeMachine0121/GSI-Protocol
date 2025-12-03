@@ -1,6 +1,6 @@
 # Include essential files
 include LICENSE
-include INSTALLER_README.md
+include README.md
 include pyproject.toml
 include gsi_installer.py
 
