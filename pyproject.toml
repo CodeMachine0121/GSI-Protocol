@@ -1,24 +1,30 @@
 [project]
 name = "gsi-protocol-installer"
-version = "1.0.0"
+version = "1.0.1"
 description = "Installer for GSI-Protocol workflow commands (Claude Code & Codex)"
 authors = [
+    {name = "James Hsueh", email = "asdfg55887@gmail.com"}
+]
+maintainers = [
     {name = "GSI-Protocol Contributors"}
 ]
-readme = "README.md"
+readme = "INSTALLER_README.md"
 requires-python = ">=3.10"
 license = {text = "MIT"}
-keywords = ["gsi-protocol", "sdd", "bdd", "gherkin", "claude", "codex", "ai"]
+keywords = ["gsi-protocol", "sdd", "bdd", "gherkin", "claude", "codex", "ai", "workflow", "spec-driven-development"]
 classifiers = [
     "Development Status :: 4 - Beta",
     "Intended Audience :: Developers",
     "License :: OSI Approved :: MIT License",
+    "Operating System :: OS Independent",
     "Programming Language :: Python :: 3",
     "Programming Language :: Python :: 3.10",
     "Programming Language :: Python :: 3.11",
     "Programming Language :: Python :: 3.12",
     "Topic :: Software Development :: Code Generators",
     "Topic :: Software Development :: Testing",
+    "Topic :: Software Development :: Quality Assurance",
+    "Environment :: Console",
 ]
 
 [project.urls]
@@ -26,6 +32,7 @@ Homepage = "https://github.com/CodeMachine0121/GSI-Protocol"
 Documentation = "https://github.com/CodeMachine0121/GSI-Protocol/blob/main/README.md"
 Repository = "https://github.com/CodeMachine0121/GSI-Protocol"
 Issues = "https://github.com/CodeMachine0121/GSI-Protocol/issues"
+Changelog = "https://github.com/CodeMachine0121/GSI-Protocol/blob/main/CODEX_SUPPORT_CHANGELOG.md"
 
 [project.scripts]
 gsi-install = "gsi_installer:main"
@@ -39,4 +46,10 @@ packages = ["."]
 only-include = ["gsi_installer.py"]
 
 [tool.hatch.build.targets.sdist]
-only-include = ["gsi_installer.py", "pyproject.toml", "README.md", "LICENSE"]
+only-include = [
+    "gsi_installer.py",
+    "pyproject.toml",
+    "INSTALLER_README.md",
+    "LICENSE",
+    "MANIFEST.in"
+]

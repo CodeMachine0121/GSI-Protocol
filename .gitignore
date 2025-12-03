@@ -25,6 +25,10 @@ ENV/
 env/
 .venv
 
+# PyPI (important!)
+.pypirc
+!.pypirc.example
+
 # TypeScript / JavaScript
 node_modules/
 npm-debug.log*
@@ -33,8 +37,6 @@ yarn-error.log*
 .npm
 .eslintcache
 *.tsbuildinfo
-dist/
-build/
 
 # IDEs
 .vscode/
@@ -66,3 +68,7 @@ verification/*.generated.*
 # OS
 .DS_Store
 Thumbs.db
+
+# Virtual environments for testing
+test_env/
+
