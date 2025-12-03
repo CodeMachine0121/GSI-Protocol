@@ -12,6 +12,7 @@ GSI-Protocol（Gherkin-Structure-Implementation）工作流程的完整文件。
 |----------|-------------|------|
 | **[快速入門指南](QUICKSTART.md)** | 5 分鐘快速開始教學 | 5 分鐘 |
 | **[安裝指南](INSTALL.md)** | 所有情境的詳細安裝說明 | 10 分鐘 |
+| **[平台支援](PLATFORM_SUPPORT.md)** | Claude Code vs Codex 比較 | 5 分鐘 |
 
 ### 參考
 
@@ -165,6 +166,9 @@ GSI-Protocol（Gherkin-Structure-Implementation）工作流程的完整文件。
 **"我想安裝這個工具"**
 → [安裝指南](INSTALL.md)
 
+**"我想選擇 AI 平台"**
+→ [平台支援](PLATFORM_SUPPORT.md)
+
 **"我想快速試用"**
 → [快速入門](QUICKSTART.md)
 
@@ -186,6 +190,9 @@ GSI-Protocol（Gherkin-Structure-Implementation）工作流程的完整文件。
 
 **"如何安裝？"**
 → [安裝指南](INSTALL.md)
+
+**"應該選 Claude Code 還是 Codex？"**
+→ [平台支援](PLATFORM_SUPPORT.md)
 
 **"有哪些可用指令？"**
 → [指令參考](COMMANDS.md)

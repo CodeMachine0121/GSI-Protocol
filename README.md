@@ -8,7 +8,11 @@
 
 ## 🎯 什麼是 GSI-Protocol?
 
-GSI-Protocol 是一個 Claude Code 工作流程插件，實作了**規格驅動開發（SDD）**。它透過嚴格的四階段流程，將模糊的需求轉化為經過驗證、可用於生產環境的程式碼。
+GSI-Protocol 是一個 AI 驅動的工作流程插件，實作了**規格驅動開發（SDD）**。它透過嚴格的四階段流程，將模糊的需求轉化為經過驗證、可用於生產環境的程式碼。
+
+**支援平台：**
+- ✅ Claude Code
+- ✅ Codex (OpenAI)
 
 ### 核心理念
 
@@ -37,12 +41,11 @@ GSI-Protocol 是一個 Claude Code 工作流程插件，實作了**規格驅動�
 curl -sSL https://raw.githubusercontent.com/CodeMachine0121/GSI-Protocol/main/install.sh | bash
 ```
 
-安裝腳本會詢問是否進行全域安裝或專案安裝。
+安裝腳本會詢問您要安裝哪個 AI 平台（Claude Code、Codex 或兩者），以及選擇全域安裝或專案安裝。
 
 **選項 2：手動全域安裝：**
 
-將指令檔案複製到 Claude Code 全域指令目錄：
-
+**Claude Code:**
 ```bash
 mkdir -p ~/.claude/commands
 cd ~/.claude/commands
@@ -51,6 +54,17 @@ curl -sSL https://raw.githubusercontent.com/CodeMachine0121/GSI-Protocol/main/.c
 curl -sSL https://raw.githubusercontent.com/CodeMachine0121/GSI-Protocol/main/.claude/commands/sdd-arch.md -o sdd-arch.md
 curl -sSL https://raw.githubusercontent.com/CodeMachine0121/GSI-Protocol/main/.claude/commands/sdd-impl.md -o sdd-impl.md
 curl -sSL https://raw.githubusercontent.com/CodeMachine0121/GSI-Protocol/main/.claude/commands/sdd-verify.md -o sdd-verify.md
+```
+
+**Codex (OpenAI):**
+```bash
+mkdir -p ~/.codex/commands
+cd ~/.codex/commands
+curl -sSL https://raw.githubusercontent.com/CodeMachine0121/GSI-Protocol/main/.codex/commands/sdd-auto.md -o sdd-auto.md
+curl -sSL https://raw.githubusercontent.com/CodeMachine0121/GSI-Protocol/main/.codex/commands/sdd-spec.md -o sdd-spec.md
+curl -sSL https://raw.githubusercontent.com/CodeMachine0121/GSI-Protocol/main/.codex/commands/sdd-arch.md -o sdd-arch.md
+curl -sSL https://raw.githubusercontent.com/CodeMachine0121/GSI-Protocol/main/.codex/commands/sdd-impl.md -o sdd-impl.md
+curl -sSL https://raw.githubusercontent.com/CodeMachine0121/GSI-Protocol/main/.codex/commands/sdd-verify.md -o sdd-verify.md
 ```
 
 完成後，可在任何專案中使用 `/sdd-auto`、`/sdd-spec` 等全域指令。
@@ -80,6 +94,7 @@ cd your-project
 |----------|-------------|
 | **[快速入門指南](docs/QUICKSTART.md)** | 5 分鐘教學 |
 | **[安裝指南](docs/INSTALL.md)** | 詳細安裝說明 |
+| **[平台支援](docs/PLATFORM_SUPPORT.md)** | Claude Code vs Codex 比較 |
 | **[指令參考](docs/COMMANDS.md)** | 完整指令文件 |
 | **[語言指南](docs/LANGUAGE_GUIDE.md)** | 多語言支援指南 |
 | **[工作流程定義](docs/expected_workflow.md)** | 詳細方法論 |
@@ -298,9 +313,16 @@ GSI-Protocol/
 ├── README.md                    # 本檔案
 ├── CONTRIBUTING.md              # 貢獻指南
 ├── LICENSE                      # MIT 授權
-├── install.sh                   # 安裝腳本
+├── install.sh                   # 安裝腳本（支援多平台）
 ├── .claude/
 │   └── commands/                # Claude Code slash 指令
+│       ├── sdd-auto.md         # 自動工作流程
+│       ├── sdd-spec.md         # Phase 1
+│       ├── sdd-arch.md         # Phase 2
+│       ├── sdd-impl.md         # Phase 3
+│       └── sdd-verify.md       # Phase 4
+├── .codex/
+│   └── commands/                # Codex (OpenAI) 指令
 │       ├── sdd-auto.md         # 自動工作流程
 │       ├── sdd-spec.md         # Phase 1
 │       ├── sdd-arch.md         # Phase 2
@@ -309,6 +331,7 @@ GSI-Protocol/
 ├── docs/                        # 文件
 │   ├── QUICKSTART.md           # 快速入門指南
 │   ├── INSTALL.md              # 安裝指南
+│   ├── PLATFORM_SUPPORT.md     # 平台支援說明
 │   ├── COMMANDS.md             # 指令參考
 │   ├── LANGUAGE_GUIDE.md       # 語言支援
 │   └── expected_workflow.md    # 工作流程細節
@@ -342,7 +365,9 @@ GSI-Protocol/
 
 ## 🔧 需求
 
-- Claude Code CLI
+- **AI 平台（擇一或兩者）：**
+  - Claude Code CLI，或
+  - Codex (OpenAI)
 - Git
 - 目標語言執行環境（Python 3.8+、Node.js 16+、Go 1.19+ 等）
 
@@ -380,6 +405,7 @@ MIT 授權 - 詳見 [LICENSE](LICENSE) 檔案。
 
 使用以下工具建置：
 - [Claude Code](https://claude.ai/claude-code) - AI 驅動開發
+- [Codex (OpenAI)](https://openai.com/blog/openai-codex) - AI 程式碼生成
 - [Gherkin](https://cucumber.io/docs/gherkin/) - BDD 規格語言
 - 靈感來自測試驅動開發和行為驅動開發原則
 

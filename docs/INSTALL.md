@@ -2,6 +2,10 @@
 
 本文件說明如何在您的專案中安裝和使用 GSI-Protocol 工作流程。
 
+**支援平台：**
+- ✅ Claude Code
+- ✅ Codex (OpenAI)
+
 ---
 
 ## ⚠️ 重要提醒
@@ -14,13 +18,16 @@
 
 ## 方法一：一鍵安裝（最推薦）✅
 
-這是最簡單的方式，會自動詢問您是要全域安裝還是專案內安裝。
+這是最簡單的方式，會自動詢問您要安裝哪個 AI 平台，以及全域安裝或專案內安裝。
 
 ```bash
 curl -sSL https://raw.githubusercontent.com/CodeMachine0121/GSI-Protocol/main/install.sh | bash
 ```
 
-安裝腳本會詢問您的偏好，然後自動完成設定。
+安裝腳本會引導您完成：
+1. 選擇 AI 平台（Claude Code、Codex 或兩者）
+2. 選擇安裝位置（全域或當前專案）
+3. 自動完成設定
 
 ---
 
@@ -46,7 +53,7 @@ cd ~/your-project
 
 ### 驗證安裝
 
-在 Claude Code 中輸入 `/sdd` 應該會看到自動補全提示：
+在您的 AI 工具中輸入 `/sdd` 應該會看到自動補全提示：
 - `/sdd-auto`
 - `/sdd-spec`
 - `/sdd-arch`
@@ -71,6 +78,7 @@ cd ~/projects/my-python-api
 
 ### 手動複製（最簡單）
 
+**Claude Code:**
 ```bash
 # 1. 在專案外臨時下載
 cd /tmp
@@ -88,6 +96,37 @@ rm -rf /tmp/sdd-temp
 
 # 5. 提交到 Git（可選）
 git add .claude/commands/
+git commit -m "Add GSI-Protocol workflow commands for Claude Code"
+```
+
+**Codex (OpenAI):**
+```bash
+# 1. 在專案外臨時下載
+cd /tmp
+git clone https://github.com/CodeMachine0121/GSI-Protocol.git sdd-temp
+
+# 2. 進入您的專案
+cd ~/your-project
+
+# 3. 只複製 commands 目錄
+mkdir -p .codex/commands
+cp /tmp/sdd-temp/.codex/commands/* .codex/commands/
+
+# 4. 清理臨時檔案
+rm -rf /tmp/sdd-temp
+
+# 5. 提交到 Git（可選）
+git add .codex/commands/
+git commit -m "Add GSI-Protocol workflow commands for Codex"
+```
+
+**同時安裝兩者：**
+```bash
+# 同時複製兩個平台的命令
+mkdir -p .claude/commands .codex/commands
+cp /tmp/sdd-temp/.claude/commands/* .claude/commands/
+cp /tmp/sdd-temp/.codex/commands/* .codex/commands/
+git add .claude/commands/ .codex/commands/
 git commit -m "Add GSI-Protocol workflow commands"
 ```
 
@@ -113,24 +152,35 @@ cd ~ && rm -rf /tmp/gsi-temp
 
 ### 檢查檔案
 
+**Claude Code (全域安裝):**
 ```bash
-# 全域安裝
 ls ~/.claude/commands/ | grep sdd
+```
 
-# 或專案內安裝
+**Codex (全域安裝):**
+```bash
+ls ~/.codex/commands/ | grep sdd
+```
+
+**專案內安裝:**
+```bash
 ls .claude/commands/ | grep sdd
+# 或
+ls .codex/commands/ | grep sdd
+```
 
-# 應該看到：
-# sdd-auto.md
-# sdd-spec.md
-# sdd-arch.md
-# sdd-impl.md
-# sdd-verify.md
+應該看到：
+```
+sdd-auto.md
+sdd-spec.md
+sdd-arch.md
+sdd-impl.md
+sdd-verify.md
 ```
 
 ### 測試指令
 
-在 Claude Code 中：
+在您的 AI 工具中：
 
 1. 輸入 `/` 應該會看到指令提示
 2. 嘗試執行：`/sdd-spec Create a simple calculator`
@@ -170,6 +220,7 @@ ls .claude/commands/ | grep sdd
 
 ### 全域安裝
 
+**Claude Code:**
 ```
 ~/.claude/commands/
 ├── sdd-auto.md
@@ -177,8 +228,20 @@ ls .claude/commands/ | grep sdd
 ├── sdd-arch.md
 ├── sdd-impl.md
 └── sdd-verify.md
+```
 
-# 您的專案保持乾淨，只有生成的程式碼
+**Codex (OpenAI):**
+```
+~/.codex/commands/
+├── sdd-auto.md
+├── sdd-spec.md
+├── sdd-arch.md
+├── sdd-impl.md
+└── sdd-verify.md
+```
+
+**您的專案保持乾淨，只有生成的程式碼:**
+```
 your-project/
 ├── features/
 │   └── *.feature
@@ -195,21 +258,28 @@ your-project/
 
 ```
 your-project/
-├── .claude/
-│   └── commands/           # SDD 指令（安裝時建立）
+├── .claude/               # Claude Code 指令（可選）
+│   └── commands/
 │       ├── sdd-auto.md
 │       ├── sdd-spec.md
 │       ├── sdd-arch.md
 │       ├── sdd-impl.md
 │       └── sdd-verify.md
-├── features/               # 階段 1：Gherkin 規格
+├── .codex/                # Codex 指令（可選）
+│   └── commands/
+│       ├── sdd-auto.md
+│       ├── sdd-spec.md
+│       ├── sdd-arch.md
+│       ├── sdd-impl.md
+│       └── sdd-verify.md
+├── features/              # Phase 1：Gherkin 規格
 │   └── *.feature
 ├── docs/
-│   └── features/           # 階段 2：架構設計
+│   └── features/          # Phase 2：架構設計
 │       └── {feature}/
 │           ├── architecture.md
 │           └── conclusion.md
-└── src/                    # 階段 3：實作程式碼
+└── src/                   # Phase 3：實作程式碼
     └── （您的程式碼）
 ```
 
@@ -221,7 +291,7 @@ your-project/
 
 ### 推薦配置
 
-- ✅ **全域安裝**：`~/.claude/commands/sdd-*.md`（所有專案共用）
+- ✅ **全域安裝**：`~/.claude/commands/` 或 `~/.codex/commands/` (所有專案共用)
 - ✅ **專案目錄**：只有 `features/`、`docs/features/`、`src/`（生成的程式碼）
 - ❌ **不要**：把整個 GSI-Protocol repo clone 到專案裡
 
@@ -229,13 +299,18 @@ your-project/
 
 如果團隊需要統一使用：
 
+**方式 1：每個開發者自己全域安裝（推薦）**
 ```bash
-# 方式 1：每個開發者自己全域安裝
 每人執行：curl -sSL https://raw.githubusercontent.com/CodeMachine0121/GSI-Protocol/main/install.sh | bash
+```
 
-# 方式 2：專案內只包含 commands（Git 管理）
-在專案內：mkdir -p .claude/commands && cp <commands>
-然後 commit .claude/commands/ 到 Git
+**方式 2：專案內只包含 commands（Git 管理）**
+```bash
+# 在專案內安裝並 commit
+mkdir -p .claude/commands .codex/commands
+# 複製命令檔案...
+git add .claude/commands/ .codex/commands/
+git commit -m "Add SDD workflow commands"
 ```
 
 ---
@@ -244,16 +319,17 @@ your-project/
 
 ### 全域安裝的更新
 
-如果您是從 GitHub repo 直接下載的指令檔案，只需重新執行 curl 命令下載最新版本即可。
+重新執行一鍵安裝腳本，選擇您要更新的平台：
 
 ```bash
-# 或簡單方式：重新執行一鍵安裝
 curl -sSL https://raw.githubusercontent.com/CodeMachine0121/GSI-Protocol/main/install.sh | bash
 ```
 
+或手動下載最新版本的指令檔案（使用上方的 curl 命令）。
+
 ### 專案內安裝的更新
 
-重新執行安裝步驟，覆蓋 `.claude/commands/` 內容。
+重新執行安裝步驟，覆蓋 `.claude/commands/` 或 `.codex/commands/` 內容。
 
 ---
 
@@ -261,14 +337,30 @@ curl -sSL https://raw.githubusercontent.com/CodeMachine0121/GSI-Protocol/main/in
 
 ### 全域安裝
 
+**Claude Code:**
 ```bash
 rm -f ~/.claude/commands/sdd-*.md
 ```
 
+**Codex (OpenAI):**
+```bash
+rm -f ~/.codex/commands/sdd-*.md
+```
+
 ### 專案內安裝
 
+**Claude Code:**
 ```bash
 rm -rf .claude/commands/sdd-*.md
+# 或整個目錄
+rm -rf .claude/
+```
+
+**Codex (OpenAI):**
+```bash
+rm -rf .codex/commands/sdd-*.md
+# 或整個目錄
+rm -rf .codex/
 ```
 
 ---
@@ -285,18 +377,29 @@ rm -rf .claude/commands/sdd-*.md
 
 如果整個團隊需要使用，建議全域安裝 + 在文檔中說明安裝步驟。
 
+### Q：我應該選擇 Claude Code 還是 Codex？
+
+**A：** 取決於您的 AI 工具：
+- 如果使用 Claude Code → 安裝 `.claude/commands/`
+- 如果使用 Codex (OpenAI) → 安裝 `.codex/commands/`
+- 可以同時安裝兩者，隨時切換使用
+
+### Q：Claude Code 和 Codex 的指令內容有差異嗎？
+
+**A：** 沒有，兩個平台的指令內容完全相同，只是目錄位置不同。這樣設計是為了讓兩個平台都能使用相同的工作流程。
+
 ### Q：我的專案裡出現了 examples/ 目錄怎麼辦？
 
 **A：** 這表示您錯誤地 clone 了整個 repo 到專案裡。請：
 1. 刪除：`rm -rf .claude/gsi-protocol` 或類似目錄
-2. 改為只複製 `.claude/commands/`
+2. 改為只複製 `.claude/commands/` 和/或 `.codex/commands/`
 3. 確認 `git status` 沒有 examples 相關檔案
 
 ### Q：全域安裝和專案內安裝有什麼區別？
 
 **A：**
-- **全域**：`~/.claude/commands/sdd-*.md`，所有專案共用，專案保持乾淨
-- **專案內**：`.claude/commands/sdd-*.md`，指令隨專案走，團隊成員 clone 後就有
+- **全域**：`~/.claude/commands/` 或 `~/.codex/commands/`，所有專案共用，專案保持乾淨
+- **專案內**：`.claude/commands/` 或 `.codex/commands/`，指令隨專案走，團隊成員 clone 後就有
 
 ### Q：團隊成員需要每個人都安裝嗎？
 
@@ -334,17 +437,29 @@ https://github.com/CodeMachine0121/GSI-Protocol/tree/main/examples
 
 **快速安裝指令：**
 
+**一鍵安裝（推薦）：**
 ```bash
-# 最簡單：一鍵安裝（推薦）
 curl -sSL https://raw.githubusercontent.com/CodeMachine0121/GSI-Protocol/main/install.sh | bash
+```
 
-# 或手動全域安裝
+**手動全域安裝 - Claude Code：**
+```bash
 mkdir -p ~/.claude/commands
 curl -sSL https://raw.githubusercontent.com/CodeMachine0121/GSI-Protocol/main/.claude/commands/sdd-auto.md -o ~/.claude/commands/sdd-auto.md
 curl -sSL https://raw.githubusercontent.com/CodeMachine0121/GSI-Protocol/main/.claude/commands/sdd-spec.md -o ~/.claude/commands/sdd-spec.md
 curl -sSL https://raw.githubusercontent.com/CodeMachine0121/GSI-Protocol/main/.claude/commands/sdd-arch.md -o ~/.claude/commands/sdd-arch.md
 curl -sSL https://raw.githubusercontent.com/CodeMachine0121/GSI-Protocol/main/.claude/commands/sdd-impl.md -o ~/.claude/commands/sdd-impl.md
 curl -sSL https://raw.githubusercontent.com/CodeMachine0121/GSI-Protocol/main/.claude/commands/sdd-verify.md -o ~/.claude/commands/sdd-verify.md
+```
+
+**手動全域安裝 - Codex (OpenAI)：**
+```bash
+mkdir -p ~/.codex/commands
+curl -sSL https://raw.githubusercontent.com/CodeMachine0121/GSI-Protocol/main/.codex/commands/sdd-auto.md -o ~/.codex/commands/sdd-auto.md
+curl -sSL https://raw.githubusercontent.com/CodeMachine0121/GSI-Protocol/main/.codex/commands/sdd-spec.md -o ~/.codex/commands/sdd-spec.md
+curl -sSL https://raw.githubusercontent.com/CodeMachine0121/GSI-Protocol/main/.codex/commands/sdd-arch.md -o ~/.codex/commands/sdd-arch.md
+curl -sSL https://raw.githubusercontent.com/CodeMachine0121/GSI-Protocol/main/.codex/commands/sdd-impl.md -o ~/.codex/commands/sdd-impl.md
+curl -sSL https://raw.githubusercontent.com/CodeMachine0121/GSI-Protocol/main/.codex/commands/sdd-verify.md -o ~/.codex/commands/sdd-verify.md
 ```
 
 開始使用 GSI-Protocol，讓 AI 幫您寫結構化的程式碼！🚀

@@ -1,13 +1,41 @@
 #!/bin/bash
 
 # SDD Workflow Installation Script
-# This script installs only the .claude/commands files to your project
+# This script installs commands for Claude Code and/or Codex (OpenAI)
 # without copying examples or other unnecessary files
 
 set -e
 
 echo "🚀 SDD Workflow Installer"
 echo "========================="
+echo ""
+
+# Choose AI platform
+echo "Select AI platform(s) to install:"
+echo "1) Claude Code only"
+echo "2) Codex (OpenAI) only"
+echo "3) Both Claude Code and Codex"
+read -p "Enter choice [1-3]: " platform_choice
+
+case $platform_choice in
+    1)
+        INSTALL_CLAUDE=true
+        INSTALL_CODEX=false
+        ;;
+    2)
+        INSTALL_CLAUDE=false
+        INSTALL_CODEX=true
+        ;;
+    3)
+        INSTALL_CLAUDE=true
+        INSTALL_CODEX=true
+        ;;
+    *)
+        echo "Invalid choice. Exiting."
+        exit 1
+        ;;
+esac
+
 echo ""
 
 # Detect installation type
@@ -19,7 +47,7 @@ else
     echo ""
     echo "Please choose installation type:"
     echo "1) Install to current directory (manual project)"
-    echo "2) Install globally to ~/.claude/commands"
+    echo "2) Install globally"
     read -p "Enter choice [1-2]: " choice
 
     case $choice in
@@ -45,14 +73,6 @@ echo ""
 
 # Global installation
 if [ "$INSTALL_TYPE" = "global" ]; then
-    TARGET_DIR="$HOME/.claude/commands"
-
-    echo "Installing globally to: $TARGET_DIR"
-    echo ""
-
-    # Create directory
-    mkdir -p "$TARGET_DIR"
-
     # Create temp directory for cloning
     TEMP_DIR=$(mktemp -d)
     trap "rm -rf $TEMP_DIR" EXIT
@@ -60,17 +80,33 @@ if [ "$INSTALL_TYPE" = "global" ]; then
     echo "📦 Downloading SDD Workflow..."
     git clone --depth 1 "$REPO_URL" "$TEMP_DIR/sdd-workflow"
 
-    echo "📋 Copying command files to global commands directory..."
-    cp "$TEMP_DIR/sdd-workflow/.claude/commands"/*.md "$TARGET_DIR/"
+    TOTAL_FILES=0
 
-    # Count files
-    FILE_COUNT=$(ls -1 "$TARGET_DIR"/sdd-*.md 2>/dev/null | wc -l)
+    # Install Claude Code commands
+    if [ "$INSTALL_CLAUDE" = true ]; then
+        CLAUDE_DIR="$HOME/.claude/commands"
+        echo "Installing Claude Code commands to: $CLAUDE_DIR"
+        mkdir -p "$CLAUDE_DIR"
+        cp "$TEMP_DIR/sdd-workflow/.claude/commands"/*.md "$CLAUDE_DIR/"
+        CLAUDE_COUNT=$(ls -1 "$CLAUDE_DIR"/sdd-*.md 2>/dev/null | wc -l)
+        TOTAL_FILES=$((TOTAL_FILES + CLAUDE_COUNT))
+        echo "✅ Installed $CLAUDE_COUNT Claude Code command files"
+    fi
+
+    # Install Codex commands
+    if [ "$INSTALL_CODEX" = true ]; then
+        CODEX_DIR="$HOME/.codex/commands"
+        echo "Installing Codex commands to: $CODEX_DIR"
+        mkdir -p "$CODEX_DIR"
+        cp "$TEMP_DIR/sdd-workflow/.codex/commands"/*.md "$CODEX_DIR/"
+        CODEX_COUNT=$(ls -1 "$CODEX_DIR"/sdd-*.md 2>/dev/null | wc -l)
+        TOTAL_FILES=$((TOTAL_FILES + CODEX_COUNT))
+        echo "✅ Installed $CODEX_COUNT Codex command files"
+    fi
 
     echo ""
     echo "✅ Global installation complete!"
-    echo ""
-    echo "Installed $FILE_COUNT command files to $TARGET_DIR:"
-    ls -1 "$TARGET_DIR"/sdd-*.md
+    echo "Total files installed: $TOTAL_FILES"
     echo ""
     echo "You can now use SDD commands in any project:"
     echo "  /sdd-auto <requirement>"
@@ -86,15 +122,6 @@ fi
 echo "Installing to current project..."
 echo ""
 
-# Check if .claude/commands already exists
-if [ -d ".claude/commands" ]; then
-    read -p "⚠️  .claude/commands already exists. Overwrite? [y/N]: " confirm
-    if [ "$confirm" != "y" ] && [ "$confirm" != "Y" ]; then
-        echo "Installation cancelled."
-        exit 0
-    fi
-fi
-
 # Create temp directory
 TEMP_DIR=$(mktemp -d)
 trap "rm -rf $TEMP_DIR" EXIT
@@ -102,27 +129,70 @@ trap "rm -rf $TEMP_DIR" EXIT
 echo "📦 Downloading SDD Workflow..."
 git clone --depth 1 "$REPO_URL" "$TEMP_DIR/sdd-workflow"
 
-# Create .claude/commands directory
-mkdir -p .claude/commands
+TOTAL_FILES=0
 
-# Copy only command files
-echo "📋 Copying command files..."
-cp "$TEMP_DIR/sdd-workflow/.claude/commands"/*.md .claude/commands/
+# Install Claude Code commands
+if [ "$INSTALL_CLAUDE" = true ]; then
+    if [ -d ".claude/commands" ]; then
+        read -p "⚠️  .claude/commands already exists. Overwrite? [y/N]: " confirm
+        if [ "$confirm" != "y" ] && [ "$confirm" != "Y" ]; then
+            echo "Skipping Claude Code installation."
+        else
+            mkdir -p .claude/commands
+            echo "📋 Copying Claude Code command files..."
+            cp "$TEMP_DIR/sdd-workflow/.claude/commands"/*.md .claude/commands/
+            CLAUDE_COUNT=$(ls -1 .claude/commands/*.md 2>/dev/null | wc -l)
+            TOTAL_FILES=$((TOTAL_FILES + CLAUDE_COUNT))
+            echo "✅ Installed $CLAUDE_COUNT Claude Code files"
+        fi
+    else
+        mkdir -p .claude/commands
+        echo "📋 Copying Claude Code command files..."
+        cp "$TEMP_DIR/sdd-workflow/.claude/commands"/*.md .claude/commands/
+        CLAUDE_COUNT=$(ls -1 .claude/commands/*.md 2>/dev/null | wc -l)
+        TOTAL_FILES=$((TOTAL_FILES + CLAUDE_COUNT))
+        echo "✅ Installed $CLAUDE_COUNT Claude Code files"
+    fi
+fi
 
-# Count files
-FILE_COUNT=$(ls -1 .claude/commands/*.md 2>/dev/null | wc -l)
+# Install Codex commands
+if [ "$INSTALL_CODEX" = true ]; then
+    if [ -d ".codex/commands" ]; then
+        read -p "⚠️  .codex/commands already exists. Overwrite? [y/N]: " confirm
+        if [ "$confirm" != "y" ] && [ "$confirm" != "Y" ]; then
+            echo "Skipping Codex installation."
+        else
+            mkdir -p .codex/commands
+            echo "📋 Copying Codex command files..."
+            cp "$TEMP_DIR/sdd-workflow/.codex/commands"/*.md .codex/commands/
+            CODEX_COUNT=$(ls -1 .codex/commands/*.md 2>/dev/null | wc -l)
+            TOTAL_FILES=$((TOTAL_FILES + CODEX_COUNT))
+            echo "✅ Installed $CODEX_COUNT Codex files"
+        fi
+    else
+        mkdir -p .codex/commands
+        echo "📋 Copying Codex command files..."
+        cp "$TEMP_DIR/sdd-workflow/.codex/commands"/*.md .codex/commands/
+        CODEX_COUNT=$(ls -1 .codex/commands/*.md 2>/dev/null | wc -l)
+        TOTAL_FILES=$((TOTAL_FILES + CODEX_COUNT))
+        echo "✅ Installed $CODEX_COUNT Codex files"
+    fi
+fi
 
 echo ""
 echo "✅ Installation complete!"
-echo ""
-echo "Installed $FILE_COUNT command files:"
-ls -1 .claude/commands/
+echo "Total files installed: $TOTAL_FILES"
 echo ""
 
 # Check if in git repo
 if [ -d ".git" ]; then
     echo "📝 Note: You may want to commit these commands:"
-    echo "  git add .claude/commands/"
+    if [ "$INSTALL_CLAUDE" = true ]; then
+        echo "  git add .claude/commands/"
+    fi
+    if [ "$INSTALL_CODEX" = true ]; then
+        echo "  git add .codex/commands/"
+    fi
     echo "  git commit -m 'Add SDD workflow commands'"
     echo ""
 fi
