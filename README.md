@@ -11,6 +11,7 @@
 GSI-Protocol 是一個 AI 驅動的工作流程插件，實作了**規格驅動開發（SDD）**。它透過嚴格的四階段流程，將模糊的需求轉化為經過驗證、可用於生產環境的程式碼。
 
 **支援平台：**
+
 - ✅ Claude Code
 - ✅ Codex (OpenAI)
 
@@ -38,7 +39,7 @@ GSI-Protocol 是一個 AI 驅動的工作流程插件，實作了**規格驅動�
 **選項 1：使用 uvx（最推薦，無需安裝）**
 
 ```bash
-uvx gsi-protocol-installer
+uvx --from gsi-protocol-installer gsi-install
 ```
 
 **選項 2：使用 pipx**
@@ -60,6 +61,7 @@ python3 gsi_installer.py
 ```
 
 安裝程式會引導您：
+
 1. 選擇 AI 平台（Claude Code、Codex 或兩者）
 2. 選擇安裝位置（全域或當前專案）
 3. 自動完成安裝
@@ -67,6 +69,7 @@ python3 gsi_installer.py
 **選項 4：手動全域安裝**
 
 **Claude Code:**
+
 ```bash
 mkdir -p ~/.claude/commands
 cd ~/.claude/commands
@@ -78,6 +81,7 @@ curl -sSL https://raw.githubusercontent.com/CodeMachine0121/GSI-Protocol/main/.c
 ```
 
 **Codex (OpenAI):**
+
 ```bash
 mkdir -p ~/.codex/prompts
 cd ~/.codex/prompts
@@ -115,16 +119,16 @@ cd your-project
 
 ## 📚 文件
 
-| 文件 | 說明 |
-|----------|-------------|
-| **[快速入門指南](docs/QUICKSTART.md)** | 5 分鐘教學 |
-| **[安裝指南](docs/INSTALL.md)** | 詳細安裝說明 |
-| **[Python 安裝器](docs/PYTHON_INSTALLER.md)** | uvx 安裝方式（推薦） |
-| **[平台支援](docs/PLATFORM_SUPPORT.md)** | Claude Code vs Codex 比較 |
-| **[指令參考](docs/COMMANDS.md)** | 完整指令文件 |
-| **[語言指南](docs/LANGUAGE_GUIDE.md)** | 多語言支援指南 |
-| **[工作流程定義](docs/expected_workflow.md)** | 詳細方法論 |
-| **[貢獻指南](CONTRIBUTING.md)** | 如何貢獻 |
+| 文件                                          | 說明                      |
+| --------------------------------------------- | ------------------------- |
+| **[快速入門指南](docs/QUICKSTART.md)**        | 5 分鐘教學                |
+| **[安裝指南](docs/INSTALL.md)**               | 詳細安裝說明              |
+| **[Python 安裝器](docs/PYTHON_INSTALLER.md)** | uvx 安裝方式（推薦）      |
+| **[平台支援](docs/PLATFORM_SUPPORT.md)**      | Claude Code vs Codex 比較 |
+| **[指令參考](docs/COMMANDS.md)**              | 完整指令文件              |
+| **[語言指南](docs/LANGUAGE_GUIDE.md)**        | 多語言支援指南            |
+| **[工作流程定義](docs/expected_workflow.md)** | 詳細方法論                |
+| **[貢獻指南](CONTRIBUTING.md)**               | 如何貢獻                  |
 
 ---
 
@@ -152,13 +156,13 @@ Phase 4：驗證（QA）
 
 ### 指令
 
-| 指令 | 用途 | 何時使用 |
-|---------|---------|-------------|
-| `/sdd-auto` | 自動執行全部 4 個階段 | 快速原型、簡單功能 |
-| `/sdd-spec` | 生成 Gherkin 規格 | 定義需求 |
-| `/sdd-arch` | 設計資料模型與介面 | 審查結構 |
-| `/sdd-impl` | 實作邏輯 | 撰寫程式碼 |
-| `/sdd-verify` | 根據規格驗證 | 測試實作 |
+| 指令          | 用途                  | 何時使用           |
+| ------------- | --------------------- | ------------------ |
+| `/sdd-auto`   | 自動執行全部 4 個階段 | 快速原型、簡單功能 |
+| `/sdd-spec`   | 生成 Gherkin 規格     | 定義需求           |
+| `/sdd-arch`   | 設計資料模型與介面    | 審查結構           |
+| `/sdd-impl`   | 實作邏輯              | 撰寫程式碼         |
+| `/sdd-verify` | 根據規格驗證          | 測試實作           |
 
 ---
 
@@ -173,6 +177,7 @@ Phase 4：驗證（QA）
 ### 輸出
 
 **階段 1：規格** (`features/vip_discount.feature`)
+
 ```gherkin
 Feature: VIP Discount
   Scenario: Apply discount to VIP user
@@ -182,22 +187,27 @@ Feature: VIP Discount
 ```
 
 **Phase 2：架構** (`docs/features/vip_discount/architecture.md`)
+
 ```markdown
 # VIP 折扣系統 - 架構設計
 
 ## 1. 專案上下文
+
 - 程式語言：Python
 - 架構模式：Service Layer
 
 ## 3. 資料模型
+
 - UserType（列舉）：VIP, NORMAL
 - DiscountResult（實體）：final_price, discount
 
 ## 4. 服務介面
+
 - calculate_discount(amount, user_type) → DiscountResult
 ```
 
 **Phase 3：實作** （依 architecture.md 指定位置）
+
 ```python
 # src/services/discount_service.py
 def calculate_discount(amount: float, user_type: UserType) -> DiscountResult:
@@ -208,8 +218,10 @@ def calculate_discount(amount: float, user_type: UserType) -> DiscountResult:
 ```
 
 **Phase 4：驗證結論** (`docs/features/vip_discount/conclusion.md`)
+
 ```markdown
 ## 3. 摘要
+
 - 架構：2/2 通過
 - 情境：2/2 通過
 - **狀態：** ✅ 完成
@@ -238,6 +250,7 @@ class IUserService(ABC):
     def authenticate(self, credentials: Credentials) -> User:
         pass
 ```
+
 </details>
 
 <details>
@@ -253,6 +266,7 @@ interface IUserService {
   authenticate(credentials: Credentials): User;
 }
 ```
+
 </details>
 
 <details>
@@ -268,6 +282,7 @@ type UserService interface {
     Authenticate(credentials Credentials) (User, error)
 }
 ```
+
 </details>
 
 更多語言請參閱 [語言指南](docs/LANGUAGE_GUIDE.md)，包含 Rust、Java、C# 等。
@@ -277,6 +292,7 @@ type UserService interface {
 ## 🎓 使用案例
 
 ### 1. API 開發
+
 ```bash
 /sdd-spec Design a RESTful API for blog posts (CRUD operations)
 /sdd-arch features/blog_api.feature
@@ -284,18 +300,21 @@ type UserService interface {
 ```
 
 ### 2. 功能實作
+
 ```bash
 /sdd-auto Implement user authentication with JWT tokens in TypeScript
 # 幾分鐘內獲得可運行、已測試的程式碼
 ```
 
 ### 3. 遺留程式碼重構
+
 ```bash
 /sdd-spec The payment module should support credit card, PayPal, and crypto
 # 在重構前定義清晰的需求
 ```
 
 ### 4. 團隊協作
+
 ```bash
 # PM：定義需求
 /sdd-spec User registration with email verification
@@ -375,16 +394,19 @@ GSI-Protocol/
 ## 🚀 優勢
 
 ### 對開發者
+
 - ✅ **更快開發**：自動生成樣板程式碼和結構
 - ✅ **更高品質**：系統化方法減少 bug
 - ✅ **清晰需求**：Gherkin 規格消除歧義
 
 ### 對團隊
+
 - ✅ **共同語言**：所有人都能理解的 BDD 規格
 - ✅ **更好溝通**：PM、架構師、工程師、QA 各有明確階段
 - ✅ **可維護程式碼**：每一行都可追溯到需求
 
 ### 對專案
+
 - ✅ **語言彈性**：切換語言不需改變方法論
 - ✅ **框架無關**：使用任何函式庫或框架
 - ✅ **可擴展**：適用於簡單功能到複雜系統
@@ -418,6 +440,7 @@ GSI-Protocol/
 我們歡迎貢獻！請參閱 [CONTRIBUTING.md](CONTRIBUTING.md) 了解指南。
 
 ### 貢獻方式
+
 - 🐛 回報 bug
 - 💡 建議功能
 - 📝 改善文件
@@ -435,6 +458,7 @@ MIT 授權 - 詳見 [LICENSE](LICENSE) 檔案。
 ## 🙏 致謝
 
 使用以下工具建置：
+
 - [Claude Code](https://claude.ai/claude-code) - AI 驅動開發
 - [Codex (OpenAI)](https://openai.com/blog/openai-codex) - AI 程式碼生成
 - [Gherkin](https://cucumber.io/docs/gherkin/) - BDD 規格語言
