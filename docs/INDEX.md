@@ -12,6 +12,7 @@ GSI-Protocol（Gherkin-Structure-Implementation）工作流程的完整文件。
 |----------|-------------|------|
 | **[快速入門指南](QUICKSTART.md)** | 5 分鐘快速開始教學 | 5 分鐘 |
 | **[安裝指南](INSTALL.md)** | 所有情境的詳細安裝說明 | 10 分鐘 |
+| **[Python 安裝器](PYTHON_INSTALLER.md)** | 使用 uvx 的現代化安裝方式 | 3 分鐘 |
 | **[平台支援](PLATFORM_SUPPORT.md)** | Claude Code vs Codex 比較 | 5 分鐘 |
 
 ### 參考

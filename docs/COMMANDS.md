@@ -291,11 +291,30 @@
 
 ---
 
+## 安裝指令
+
+詳細安裝說明請參考：
+- [INSTALL.md](INSTALL.md) - 完整安裝指南
+- [PYTHON_INSTALLER.md](PYTHON_INSTALLER.md) - Python 安裝器使用說明
+- [QUICKSTART.md](QUICKSTART.md) - 5 分鐘快速開始
+
+**快速安裝：**
+```bash
+# 使用 uvx（推薦）
+uvx gsi-protocol-installer
+
+# 或使用 pipx
+pipx run gsi-protocol-installer
+```
+
+---
+
 ## 獲取幫助
 
 - 查看 [QUICKSTART.md](QUICKSTART.md) 了解實作指南
 - 查看 [LANGUAGE_GUIDE.md](LANGUAGE_GUIDE.md) 了解特定語言模式
-- 查看 [README.md](README.md) 了解完整文件
+- 查看 [PLATFORM_SUPPORT.md](PLATFORM_SUPPORT.md) 了解 AI 平台比較
+- 查看 [README.md](../README.md) 了解完整文件
 
 ---
 
@@ -305,7 +324,7 @@
 快速原型      → /sdd-auto <需求>
 生產程式碼    → /sdd-spec → /sdd-arch → /sdd-impl → /sdd-verify
 只要規格      → /sdd-spec <需求>
-只要結構      → /sdd-arch <spec.feature>
-只要程式碼    → /sdd-impl <spec> <structure>
-只要驗證      → /sdd-verify <spec> <impl>
+只要架構      → /sdd-arch <spec.feature>
+只要程式碼    → /sdd-impl <spec.feature>
+只要驗證      → /sdd-verify <spec.feature>
 ```

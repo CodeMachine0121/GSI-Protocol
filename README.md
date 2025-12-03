@@ -35,15 +35,36 @@ GSI-Protocol 是一個 AI 驅動的工作流程插件，實作了**規格驅動�
 
 ### 安裝
 
-**選項 1：一鍵安裝（推薦）：**
+**選項 1：使用 uvx（最推薦，無需安裝）**
 
 ```bash
-curl -sSL https://raw.githubusercontent.com/CodeMachine0121/GSI-Protocol/main/install.sh | bash
+uvx gsi-protocol-installer
 ```
 
-安裝腳本會詢問您要安裝哪個 AI 平台（Claude Code、Codex 或兩者），以及選擇全域安裝或專案安裝。
+**選項 2：使用 pipx**
 
-**選項 2：手動全域安裝：**
+```bash
+pipx run gsi-protocol-installer
+```
+
+**選項 3：直接執行 Python**
+
+```bash
+# 下載並執行
+wget https://raw.githubusercontent.com/CodeMachine0121/GSI-Protocol/main/gsi_installer.py
+python3 gsi_installer.py
+
+# 或使用 curl
+curl -O https://raw.githubusercontent.com/CodeMachine0121/GSI-Protocol/main/gsi_installer.py
+python3 gsi_installer.py
+```
+
+安裝程式會引導您：
+1. 選擇 AI 平台（Claude Code、Codex 或兩者）
+2. 選擇安裝位置（全域或當前專案）
+3. 自動完成安裝
+
+**選項 4：手動全域安裝**
 
 **Claude Code:**
 ```bash
@@ -74,6 +95,10 @@ curl -sSL https://raw.githubusercontent.com/CodeMachine0121/GSI-Protocol/main/.c
 ### 第一次使用（2 分鐘）
 
 ```bash
+# 使用 uvx 安裝
+uvx gsi-protocol-installer
+
+# 選擇平台和安裝位置後，進入您的專案
 cd your-project
 
 # 自動模式 - 生成所有內容
@@ -94,6 +119,7 @@ cd your-project
 |----------|-------------|
 | **[快速入門指南](docs/QUICKSTART.md)** | 5 分鐘教學 |
 | **[安裝指南](docs/INSTALL.md)** | 詳細安裝說明 |
+| **[Python 安裝器](docs/PYTHON_INSTALLER.md)** | uvx 安裝方式（推薦） |
 | **[平台支援](docs/PLATFORM_SUPPORT.md)** | Claude Code vs Codex 比較 |
 | **[指令參考](docs/COMMANDS.md)** | 完整指令文件 |
 | **[語言指南](docs/LANGUAGE_GUIDE.md)** | 多語言支援指南 |
@@ -313,7 +339,8 @@ GSI-Protocol/
 ├── README.md                    # 本檔案
 ├── CONTRIBUTING.md              # 貢獻指南
 ├── LICENSE                      # MIT 授權
-├── install.sh                   # 安裝腳本（支援多平台）
+├── gsi_installer.py             # Python 安裝器
+├── pyproject.toml               # Python 專案配置
 ├── .claude/
 │   └── commands/                # Claude Code slash 指令
 │       ├── sdd-auto.md         # 自動工作流程
@@ -331,6 +358,7 @@ GSI-Protocol/
 ├── docs/                        # 文件
 │   ├── QUICKSTART.md           # 快速入門指南
 │   ├── INSTALL.md              # 安裝指南
+│   ├── PYTHON_INSTALLER.md     # Python 安裝器說明
 │   ├── PLATFORM_SUPPORT.md     # 平台支援說明
 │   ├── COMMANDS.md             # 指令參考
 │   ├── LANGUAGE_GUIDE.md       # 語言支援
@@ -368,6 +396,9 @@ GSI-Protocol/
 - **AI 平台（擇一或兩者）：**
   - Claude Code CLI，或
   - Codex (OpenAI)
+- **安裝工具：**
+  - Python 3.10+
+  - uvx/pipx（推薦）或 pip
 - Git
 - 目標語言執行環境（Python 3.8+、Node.js 16+、Go 1.19+ 等）
 

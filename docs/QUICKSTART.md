@@ -4,26 +4,36 @@
 
 ## 安裝
 
-> ⚠️ **不要把整個 repo clone 到專案裡！** 這會複製 examples 到您的專案。
-
-### 最簡單：一鍵安裝（推薦）⚡
+### 最簡單：使用 uvx（推薦）⚡
 
 ```bash
-curl -sSL https://raw.githubusercontent.com/CodeMachine0121/GSI-Protocol/main/install.sh | bash
+uvx gsi-protocol-installer
 ```
 
-腳本會詢問您要全域安裝還是專案內安裝，然後自動完成設定。
+安裝程式會引導您選擇：
+1. AI 平台（Claude Code、Codex 或兩者）
+2. 安裝位置（全域或當前專案）
 
 ### 或者：手動全域安裝
 
+**Claude Code:**
 ```bash
-mkdir -p ~/.claude/commands
+mkdir -p ~/.claude/commands && cd ~/.claude/commands
+wget https://raw.githubusercontent.com/CodeMachine0121/GSI-Protocol/main/.claude/commands/sdd-auto.md
+wget https://raw.githubusercontent.com/CodeMachine0121/GSI-Protocol/main/.claude/commands/sdd-spec.md
+wget https://raw.githubusercontent.com/CodeMachine0121/GSI-Protocol/main/.claude/commands/sdd-arch.md
+wget https://raw.githubusercontent.com/CodeMachine0121/GSI-Protocol/main/.claude/commands/sdd-impl.md
+wget https://raw.githubusercontent.com/CodeMachine0121/GSI-Protocol/main/.claude/commands/sdd-verify.md
+```
 
-curl -sSL https://raw.githubusercontent.com/CodeMachine0121/GSI-Protocol/main/.claude/commands/sdd-auto.md -o ~/.claude/commands/sdd-auto.md
-curl -sSL https://raw.githubusercontent.com/CodeMachine0121/GSI-Protocol/main/.claude/commands/sdd-spec.md -o ~/.claude/commands/sdd-spec.md
-curl -sSL https://raw.githubusercontent.com/CodeMachine0121/GSI-Protocol/main/.claude/commands/sdd-arch.md -o ~/.claude/commands/sdd-arch.md
-curl -sSL https://raw.githubusercontent.com/CodeMachine0121/GSI-Protocol/main/.claude/commands/sdd-impl.md -o ~/.claude/commands/sdd-impl.md
-curl -sSL https://raw.githubusercontent.com/CodeMachine0121/GSI-Protocol/main/.claude/commands/sdd-verify.md -o ~/.claude/commands/sdd-verify.md
+**Codex (OpenAI):**
+```bash
+mkdir -p ~/.codex/commands && cd ~/.codex/commands
+wget https://raw.githubusercontent.com/CodeMachine0121/GSI-Protocol/main/.codex/commands/sdd-auto.md
+wget https://raw.githubusercontent.com/CodeMachine0121/GSI-Protocol/main/.codex/commands/sdd-spec.md
+wget https://raw.githubusercontent.com/CodeMachine0121/GSI-Protocol/main/.codex/commands/sdd-arch.md
+wget https://raw.githubusercontent.com/CodeMachine0121/GSI-Protocol/main/.codex/commands/sdd-impl.md
+wget https://raw.githubusercontent.com/CodeMachine0121/GSI-Protocol/main/.codex/commands/sdd-verify.md
 ```
 
 現在在任何專案都能用！
@@ -31,13 +41,16 @@ curl -sSL https://raw.githubusercontent.com/CodeMachine0121/GSI-Protocol/main/.c
 ### 驗證安裝
 
 ```bash
-# 全域安裝驗證
+# Claude Code 全域安裝驗證
 ls ~/.claude/commands/ | grep sdd
+
+# Codex 全域安裝驗證
+ls ~/.codex/commands/ | grep sdd
 
 # 應該看到: sdd-auto.md, sdd-spec.md, sdd-arch.md, sdd-impl.md, sdd-verify.md
 ```
 
-> 📖 詳細安裝說明請參考 [INSTALL.md](INSTALL.md)
+> 📖 詳細安裝說明請參考 [INSTALL.md](INSTALL.md) 或 [Python 安裝器](PYTHON_INSTALLER.md)
 
 ---
 
@@ -50,7 +63,7 @@ ls ~/.claude/commands/ | grep sdd
 
 ### 步驟 2：執行自動工作流程
 
-在 Claude Code 中，使用 `/sdd-auto` 指令：
+在您的 AI 工具（Claude Code 或 Codex）中，使用 `/sdd-auto` 指令：
 
 ```
 /sdd-auto I need a discount system where VIP users get 20% off purchases over $100
@@ -188,11 +201,23 @@ python implementation/discount_impl.py
 
 ### 找不到指令
 
-確保 Claude Code 能看到指令：
+確保您的 AI 工具能看到指令：
+
+**Claude Code:**
 ```bash
-ls .claude/commands/
-# 應該顯示：sdd-auto.md、sdd-spec.md、sdd-arch.md 等
+ls ~/.claude/commands/ | grep sdd
+# 或專案內
+ls .claude/commands/ | grep sdd
 ```
+
+**Codex:**
+```bash
+ls ~/.codex/commands/ | grep sdd
+# 或專案內
+ls .codex/commands/ | grep sdd
+```
+
+應該顯示：sdd-auto.md、sdd-spec.md、sdd-arch.md 等
 
 ### Python 匯入錯誤
 
@@ -215,32 +240,34 @@ python -c "import sys; sys.path.insert(0, '..'); from structure.feature_structur
 
 ## 下一步
 
-1. **試試範例：** 執行 `examples/referral_bonus/implementation.py`
-2. **閱讀工作流程：** 查看 `docs/expected_workflow.md` 了解詳細方法論
-3. **建立您自己的：** 使用 `/sdd-auto` 與您自己的功能需求
-4. **探索提示：** 查看 `prompts/` 了解每個代理的角色
-5. **貢獻：** 新增您的範例幫助他人！
+1. **閱讀工作流程：** 查看 [expected_workflow.md](expected_workflow.md) 了解詳細方法論
+2. **建立您自己的：** 使用 `/sdd-auto` 與您自己的功能需求
+3. **探索平台：** 閱讀 [PLATFORM_SUPPORT.md](PLATFORM_SUPPORT.md) 了解 Claude Code vs Codex
+4. **進階使用：** 查看 [PYTHON_INSTALLER.md](PYTHON_INSTALLER.md) 了解安裝器功能
+5. **貢獻：** 閱讀 [../CONTRIBUTING.md](../CONTRIBUTING.md) 參與改進！
 
 ---
 
 ## 學習資源
 
-- `README.md` - 完整專案文件
-- `docs/expected_workflow.md` - 詳細的 SDD 方法論
-- `docs/COMMANDS.md` - 完整指令參考
-- `docs/LANGUAGE_GUIDE.md` - 多語言支援
-- `CONTRIBUTING.md` - 如何貢獻
-- `examples/` - 可運作的範例
+- [README.md](../README.md) - 完整專案文件
+- [expected_workflow.md](expected_workflow.md) - 詳細的 SDD 方法論
+- [COMMANDS.md](COMMANDS.md) - 完整指令參考
+- [PYTHON_INSTALLER.md](PYTHON_INSTALLER.md) - Python 安裝器使用指南
+- [PLATFORM_SUPPORT.md](PLATFORM_SUPPORT.md) - AI 平台比較
+- [LANGUAGE_GUIDE.md](LANGUAGE_GUIDE.md) - 多語言支援
+- [INSTALL.md](INSTALL.md) - 詳細安裝指南
+- [../CONTRIBUTING.md](../CONTRIBUTING.md) - 如何貢獻
 
 ---
 
 ## 獲取幫助
 
 如果您遇到問題：
-1. 查看 `examples/` 中的範例
-2. 審查 `prompts/` 中的提示範本
-3. 閱讀 `docs/expected_workflow.md` 中的詳細工作流程
-4. 在 GitHub 上開啟問題
+1. 閱讀 [INSTALL.md](INSTALL.md) 或 [PYTHON_INSTALLER.md](PYTHON_INSTALLER.md) 檢查安裝
+2. 查看 [PLATFORM_SUPPORT.md](PLATFORM_SUPPORT.md) 確認平台設定
+3. 閱讀 [expected_workflow.md](expected_workflow.md) 了解詳細工作流程
+4. 在 [GitHub Issues](https://github.com/CodeMachine0121/GSI-Protocol/issues) 上提問
 
 ---
 

@@ -1,0 +1,42 @@
+[project]
+name = "gsi-protocol-installer"
+version = "1.0.0"
+description = "Installer for GSI-Protocol workflow commands (Claude Code & Codex)"
+authors = [
+    {name = "GSI-Protocol Contributors"}
+]
+readme = "README.md"
+requires-python = ">=3.10"
+license = {text = "MIT"}
+keywords = ["gsi-protocol", "sdd", "bdd", "gherkin", "claude", "codex", "ai"]
+classifiers = [
+    "Development Status :: 4 - Beta",
+    "Intended Audience :: Developers",
+    "License :: OSI Approved :: MIT License",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
+    "Topic :: Software Development :: Code Generators",
+    "Topic :: Software Development :: Testing",
+]
+
+[project.urls]
+Homepage = "https://github.com/CodeMachine0121/GSI-Protocol"
+Documentation = "https://github.com/CodeMachine0121/GSI-Protocol/blob/main/README.md"
+Repository = "https://github.com/CodeMachine0121/GSI-Protocol"
+Issues = "https://github.com/CodeMachine0121/GSI-Protocol/issues"
+
+[project.scripts]
+gsi-install = "gsi_installer:main"
+
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[tool.hatch.build.targets.wheel]
+packages = ["."]
+only-include = ["gsi_installer.py"]
+
+[tool.hatch.build.targets.sdist]
+only-include = ["gsi_installer.py", "pyproject.toml", "README.md", "LICENSE"]
