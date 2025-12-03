@@ -15,7 +15,7 @@ GSI-Protocol 現在支援多個 AI 平台，讓您可以使用您偏好的 AI �
 ### Codex (OpenAI)
 - **開發商：** OpenAI
 - **特色：** 基於 GPT 技術的程式碼生成
-- **指令目錄：** `~/.codex/commands/` (全域) 或 `.codex/commands/` (專案)
+- **指令目錄：** `~/.codex/prompts/` (全域) 或 `.codex/prompts/` (專案)
 - **狀態：** ✅ 完整支援
 
 ---
@@ -83,13 +83,13 @@ curl -sSL https://raw.githubusercontent.com/CodeMachine0121/GSI-Protocol/main/in
 
 ```bash
 # 全域安裝
-mkdir -p ~/.codex/commands
-cd ~/.codex/commands
-curl -sSL https://raw.githubusercontent.com/CodeMachine0121/GSI-Protocol/main/.codex/commands/sdd-auto.md -o sdd-auto.md
-curl -sSL https://raw.githubusercontent.com/CodeMachine0121/GSI-Protocol/main/.codex/commands/sdd-spec.md -o sdd-spec.md
-curl -sSL https://raw.githubusercontent.com/CodeMachine0121/GSI-Protocol/main/.codex/commands/sdd-arch.md -o sdd-arch.md
-curl -sSL https://raw.githubusercontent.com/CodeMachine0121/GSI-Protocol/main/.codex/commands/sdd-impl.md -o sdd-impl.md
-curl -sSL https://raw.githubusercontent.com/CodeMachine0121/GSI-Protocol/main/.codex/commands/sdd-verify.md -o sdd-verify.md
+mkdir -p ~/.codex/prompts
+cd ~/.codex/prompts
+curl -sSL https://raw.githubusercontent.com/CodeMachine0121/GSI-Protocol/main/.codex/prompts/sdd-auto.md -o sdd-auto.md
+curl -sSL https://raw.githubusercontent.com/CodeMachine0121/GSI-Protocol/main/.codex/prompts/sdd-spec.md -o sdd-spec.md
+curl -sSL https://raw.githubusercontent.com/CodeMachine0121/GSI-Protocol/main/.codex/prompts/sdd-arch.md -o sdd-arch.md
+curl -sSL https://raw.githubusercontent.com/CodeMachine0121/GSI-Protocol/main/.codex/prompts/sdd-impl.md -o sdd-impl.md
+curl -sSL https://raw.githubusercontent.com/CodeMachine0121/GSI-Protocol/main/.codex/prompts/sdd-verify.md -o sdd-verify.md
 ```
 
 ### 已安裝 Codex，想加入 Claude Code
@@ -119,7 +119,7 @@ curl -sSL https://raw.githubusercontent.com/CodeMachine0121/GSI-Protocol/main/.c
 ├── sdd-impl.md
 └── sdd-verify.md
 
-~/.codex/commands/         # Codex 全域指令
+~/.codex/prompts/          # Codex 全域 prompts
 ├── sdd-auto.md
 ├── sdd-spec.md
 ├── sdd-arch.md
@@ -138,7 +138,7 @@ your-project/
 ```
 your-project/
 ├── .claude/commands/      # Claude Code 專案指令（可選）
-├── .codex/commands/       # Codex 專案指令（可選）
+├── .codex/prompts/        # Codex 專案 prompts（可選）
 ├── features/
 ├── docs/features/
 └── src/
@@ -150,7 +150,12 @@ your-project/
 
 ### Q: 指令內容有差異嗎？
 
-**A:** 沒有，`.claude/commands/` 和 `.codex/commands/` 中的指令檔案內容完全相同。只是放在不同目錄讓不同的 AI 工具讀取。
+**A:** 有些許差異。兩個平台的**工作流程和輸出格式完全相同**，但指令格式略有不同：
+
+- **Claude Code**: 使用 `{{prompt}}` 變數來接收參數
+- **Codex**: 使用 `argument-hint` 欄位和 `$1` 參數
+
+這些差異是為了符合各平台的技術規範，但不影響實際使用體驗。
 
 ### Q: 可以同時安裝兩個平台嗎？
 

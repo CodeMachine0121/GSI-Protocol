@@ -79,7 +79,7 @@ Enter choice [1-2] (default: 1): 2
 ℹ Downloading GSI-Protocol from GitHub...
 ✓ Downloaded successfully
 ✓ Installed 5 Claude Code commands to ~/.claude/commands
-✓ Installed 5 Codex commands to ~/.codex/commands
+✓ Installed 5 Codex commands to ~/.codex/prompts
 
 ============================================================
 ✓ Installation complete! Total files installed: 10
@@ -117,15 +117,15 @@ wget https://raw.githubusercontent.com/CodeMachine0121/GSI-Protocol/main/.claude
 
 **Codex (OpenAI):**
 ```bash
-mkdir -p ~/.codex/commands
-cd ~/.codex/commands
+mkdir -p ~/.codex/prompts
+cd ~/.codex/prompts
 
 # 下載所有指令檔案
-wget https://raw.githubusercontent.com/CodeMachine0121/GSI-Protocol/main/.codex/commands/sdd-auto.md
-wget https://raw.githubusercontent.com/CodeMachine0121/GSI-Protocol/main/.codex/commands/sdd-spec.md
-wget https://raw.githubusercontent.com/CodeMachine0121/GSI-Protocol/main/.codex/commands/sdd-arch.md
-wget https://raw.githubusercontent.com/CodeMachine0121/GSI-Protocol/main/.codex/commands/sdd-impl.md
-wget https://raw.githubusercontent.com/CodeMachine0121/GSI-Protocol/main/.codex/commands/sdd-verify.md
+wget https://raw.githubusercontent.com/CodeMachine0121/GSI-Protocol/main/.codex/prompts/sdd-auto.md
+wget https://raw.githubusercontent.com/CodeMachine0121/GSI-Protocol/main/.codex/prompts/sdd-spec.md
+wget https://raw.githubusercontent.com/CodeMachine0121/GSI-Protocol/main/.codex/prompts/sdd-arch.md
+wget https://raw.githubusercontent.com/CodeMachine0121/GSI-Protocol/main/.codex/prompts/sdd-impl.md
+wget https://raw.githubusercontent.com/CodeMachine0121/GSI-Protocol/main/.codex/prompts/sdd-verify.md
 ```
 
 ### 手動專案內安裝
@@ -142,16 +142,16 @@ wget https://raw.githubusercontent.com/CodeMachine0121/GSI-Protocol/main/.claude
 wget https://raw.githubusercontent.com/CodeMachine0121/GSI-Protocol/main/.claude/commands/sdd-verify.md
 
 # Codex
-mkdir -p .codex/commands
-cd .codex/commands
-wget https://raw.githubusercontent.com/CodeMachine0121/GSI-Protocol/main/.codex/commands/sdd-auto.md
-wget https://raw.githubusercontent.com/CodeMachine0121/GSI-Protocol/main/.codex/commands/sdd-spec.md
-wget https://raw.githubusercontent.com/CodeMachine0121/GSI-Protocol/main/.codex/commands/sdd-arch.md
-wget https://raw.githubusercontent.com/CodeMachine0121/GSI-Protocol/main/.codex/commands/sdd-impl.md
-wget https://raw.githubusercontent.com/CodeMachine0121/GSI-Protocol/main/.codex/commands/sdd-verify.md
+mkdir -p .codex/prompts
+cd .codex/prompts
+wget https://raw.githubusercontent.com/CodeMachine0121/GSI-Protocol/main/.codex/prompts/sdd-auto.md
+wget https://raw.githubusercontent.com/CodeMachine0121/GSI-Protocol/main/.codex/prompts/sdd-spec.md
+wget https://raw.githubusercontent.com/CodeMachine0121/GSI-Protocol/main/.codex/prompts/sdd-arch.md
+wget https://raw.githubusercontent.com/CodeMachine0121/GSI-Protocol/main/.codex/prompts/sdd-impl.md
+wget https://raw.githubusercontent.com/CodeMachine0121/GSI-Protocol/main/.codex/prompts/sdd-verify.md
 
 # 提交到 Git（可選）
-git add .claude/commands/ .codex/commands/
+git add .claude/commands/ .codex/prompts/
 git commit -m "Add GSI-Protocol workflow commands"
 ```
 
@@ -168,14 +168,14 @@ ls ~/.claude/commands/ | grep sdd
 
 **Codex (全域安裝):**
 ```bash
-ls ~/.codex/commands/ | grep sdd
+ls ~/.codex/prompts/ | grep sdd
 ```
 
 **專案內安裝:**
 ```bash
 ls .claude/commands/ | grep sdd
 # 或
-ls .codex/commands/ | grep sdd
+ls .codex/prompts/ | grep sdd
 ```
 
 應該看到：
@@ -241,7 +241,7 @@ sdd-verify.md
 
 **Codex (OpenAI):**
 ```
-~/.codex/commands/
+~/.codex/prompts/
 ├── sdd-auto.md
 ├── sdd-spec.md
 ├── sdd-arch.md
@@ -300,7 +300,7 @@ your-project/
 
 ### 推薦配置
 
-- ✅ **全域安裝**：`~/.claude/commands/` 或 `~/.codex/commands/` (所有專案共用)
+- ✅ **全域安裝**：`~/.claude/commands/` 或 `~/.codex/prompts/` (所有專案共用)
 - ✅ **專案目錄**：只有 `features/`、`docs/features/`、`src/`（生成的程式碼）
 - ❌ **不要**：把整個 GSI-Protocol repo clone 到專案裡
 
@@ -316,9 +316,9 @@ your-project/
 **方式 2：專案內只包含 commands（Git 管理）**
 ```bash
 # 在專案內安裝並 commit
-mkdir -p .claude/commands .codex/commands
+mkdir -p .claude/commands .codex/prompts
 # 複製命令檔案...
-git add .claude/commands/ .codex/commands/
+git add .claude/commands/ .codex/prompts/
 git commit -m "Add SDD workflow commands"
 ```
 
@@ -347,7 +347,7 @@ rm -f ~/.claude/commands/sdd-*.md
 
 **Codex (OpenAI):**
 ```bash
-rm -f ~/.codex/commands/sdd-*.md
+rm -f ~/.codex/prompts/sdd-*.md
 ```
 
 ### 專案內安裝
@@ -361,7 +361,7 @@ rm -rf .claude/
 
 **Codex (OpenAI):**
 ```bash
-rm -rf .codex/commands/sdd-*.md
+rm -rf .codex/prompts/sdd-*.md
 # 或整個目錄
 rm -rf .codex/
 ```
@@ -384,7 +384,7 @@ rm -rf .codex/
 
 **A：** 取決於您的 AI 工具：
 - 如果使用 Claude Code → 安裝 `.claude/commands/`
-- 如果使用 Codex (OpenAI) → 安裝 `.codex/commands/`
+- 如果使用 Codex (OpenAI) → 安裝 `.codex/prompts/`
 - 可以同時安裝兩者，隨時切換使用
 
 ### Q：Claude Code 和 Codex 的指令內容有差異嗎？
@@ -413,8 +413,8 @@ powershell -c "irm https://astral.sh/uv/install.ps1 | iex"
 ### Q：全域安裝和專案內安裝有什麼區別？
 
 **A：**
-- **全域**：`~/.claude/commands/` 或 `~/.codex/commands/`，所有專案共用，專案保持乾淨
-- **專案內**：`.claude/commands/` 或 `.codex/commands/`，指令隨專案走，團隊成員 clone 後就有
+- **全域**：`~/.claude/commands/` 或 `~/.codex/prompts/`，所有專案共用，專案保持乾淨
+- **專案內**：`.claude/commands/` 或 `.codex/prompts/`，指令隨專案走，團隊成員 clone 後就有
 
 ### Q：團隊成員需要每個人都安裝嗎？
 
@@ -454,12 +454,12 @@ wget https://raw.githubusercontent.com/CodeMachine0121/GSI-Protocol/main/.claude
 
 **手動全域安裝 - Codex (OpenAI)：**
 ```bash
-mkdir -p ~/.codex/commands && cd ~/.codex/commands
-wget https://raw.githubusercontent.com/CodeMachine0121/GSI-Protocol/main/.codex/commands/sdd-auto.md
-wget https://raw.githubusercontent.com/CodeMachine0121/GSI-Protocol/main/.codex/commands/sdd-spec.md
-wget https://raw.githubusercontent.com/CodeMachine0121/GSI-Protocol/main/.codex/commands/sdd-arch.md
-wget https://raw.githubusercontent.com/CodeMachine0121/GSI-Protocol/main/.codex/commands/sdd-impl.md
-wget https://raw.githubusercontent.com/CodeMachine0121/GSI-Protocol/main/.codex/commands/sdd-verify.md
+mkdir -p ~/.codex/prompts && cd ~/.codex/prompts
+wget https://raw.githubusercontent.com/CodeMachine0121/GSI-Protocol/main/.codex/prompts/sdd-auto.md
+wget https://raw.githubusercontent.com/CodeMachine0121/GSI-Protocol/main/.codex/prompts/sdd-spec.md
+wget https://raw.githubusercontent.com/CodeMachine0121/GSI-Protocol/main/.codex/prompts/sdd-arch.md
+wget https://raw.githubusercontent.com/CodeMachine0121/GSI-Protocol/main/.codex/prompts/sdd-impl.md
+wget https://raw.githubusercontent.com/CodeMachine0121/GSI-Protocol/main/.codex/prompts/sdd-verify.md
 ```
 
 開始使用 GSI-Protocol，讓 AI 幫您寫結構化的程式碼！🚀

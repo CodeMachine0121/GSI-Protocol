@@ -1,10 +1,11 @@
 ---
 description: 自動執行完整 SDD 工作流程 (4 Phases)
+argument-hint: <requirement_description>
 ---
 
 # SDD 自動模式
 
-**需求：** {{prompt}}
+**需求：** $1
 
 **目標：** 自動執行 Phase 1-4，從需求到驗證完成，無需手動介入
 

@@ -28,12 +28,12 @@ wget https://raw.githubusercontent.com/CodeMachine0121/GSI-Protocol/main/.claude
 
 **Codex (OpenAI):**
 ```bash
-mkdir -p ~/.codex/commands && cd ~/.codex/commands
-wget https://raw.githubusercontent.com/CodeMachine0121/GSI-Protocol/main/.codex/commands/sdd-auto.md
-wget https://raw.githubusercontent.com/CodeMachine0121/GSI-Protocol/main/.codex/commands/sdd-spec.md
-wget https://raw.githubusercontent.com/CodeMachine0121/GSI-Protocol/main/.codex/commands/sdd-arch.md
-wget https://raw.githubusercontent.com/CodeMachine0121/GSI-Protocol/main/.codex/commands/sdd-impl.md
-wget https://raw.githubusercontent.com/CodeMachine0121/GSI-Protocol/main/.codex/commands/sdd-verify.md
+mkdir -p ~/.codex/prompts && cd ~/.codex/prompts
+wget https://raw.githubusercontent.com/CodeMachine0121/GSI-Protocol/main/.codex/prompts/sdd-auto.md
+wget https://raw.githubusercontent.com/CodeMachine0121/GSI-Protocol/main/.codex/prompts/sdd-spec.md
+wget https://raw.githubusercontent.com/CodeMachine0121/GSI-Protocol/main/.codex/prompts/sdd-arch.md
+wget https://raw.githubusercontent.com/CodeMachine0121/GSI-Protocol/main/.codex/prompts/sdd-impl.md
+wget https://raw.githubusercontent.com/CodeMachine0121/GSI-Protocol/main/.codex/prompts/sdd-verify.md
 ```
 
 現在在任何專案都能用！
@@ -45,7 +45,7 @@ wget https://raw.githubusercontent.com/CodeMachine0121/GSI-Protocol/main/.codex/
 ls ~/.claude/commands/ | grep sdd
 
 # Codex 全域安裝驗證
-ls ~/.codex/commands/ | grep sdd
+ls ~/.codex/prompts/ | grep sdd
 
 # 應該看到: sdd-auto.md, sdd-spec.md, sdd-arch.md, sdd-impl.md, sdd-verify.md
 ```
@@ -212,9 +212,9 @@ ls .claude/commands/ | grep sdd
 
 **Codex:**
 ```bash
-ls ~/.codex/commands/ | grep sdd
+ls ~/.codex/prompts/ | grep sdd
 # 或專案內
-ls .codex/commands/ | grep sdd
+ls .codex/prompts/ | grep sdd
 ```
 
 應該顯示：sdd-auto.md、sdd-spec.md、sdd-arch.md 等

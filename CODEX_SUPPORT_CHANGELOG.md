@@ -20,6 +20,8 @@ GSI-Protocol 現在支援 **Codex (OpenAI)**！除了原有的 Claude Code 支�
 └── sdd-verify.md    # Phase 4: 驗證測試
 ```
 
+**注意：** Codex 的指令檔案實際上應放在 `.codex/prompts/` 目錄（已在最新版本中修正）。
+
 ### 2. 新增文檔
 - **`docs/PLATFORM_SUPPORT.md`** - 平台支援指南
   - Claude Code vs Codex 比較
@@ -149,9 +151,11 @@ your-project/
 ## 🔍 技術細節
 
 ### 指令內容
-- `.claude/commands/` 和 `.codex/commands/` 中的指令檔案內容**完全相同**
-- 只是放在不同目錄讓不同的 AI 工具讀取
-- 這確保了兩個平台有相同的工作流程和輸出格式
+- `.claude/commands/` 和 `.codex/commands/` 中的指令有些許格式差異：
+  - **Claude Code**: 使用 `{{prompt}}` 變數
+  - **Codex**: 使用 `argument-hint` 欄位和 `$1` 參數
+- 這些差異是為了符合各平台的技術規範
+- **工作流程和輸出格式完全相同**，確保兩個平台有相同的開發體驗
 
 ### 安裝腳本邏輯
 1. 先詢問用戶要安裝哪個平台

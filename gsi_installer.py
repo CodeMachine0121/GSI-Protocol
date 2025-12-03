@@ -138,15 +138,15 @@ def install_commands(source_dir: Path, platform: str, location: str) -> int:
             print_success(f"Installed {installed_count} Claude Code commands to {target_dir}")
         
         if platform in ["codex", "both"]:
-            target_dir = Path.home() / ".codex" / "commands"
+            target_dir = Path.home() / ".codex" / "prompts"
             target_dir.mkdir(parents=True, exist_ok=True)
             
-            source = source_dir / ".codex" / "commands"
+            source = source_dir / ".codex" / "prompts"
             for file in source.glob("sdd-*.md"):
                 shutil.copy2(file, target_dir / file.name)
                 installed_count += 1
             
-            print_success(f"Installed {len(list((target_dir).glob('sdd-*.md')))} Codex commands to {target_dir}")
+            print_success(f"Installed {len(list((target_dir).glob('sdd-*.md')))} Codex prompts to {target_dir}")
     
     else:  # project
         if platform in ["claude", "both"]:
@@ -171,25 +171,25 @@ def install_commands(source_dir: Path, platform: str, location: str) -> int:
                 print_success(f"Installed {installed_count} Claude Code commands to {target_dir}")
         
         if platform in ["codex", "both"]:
-            target_dir = Path.cwd() / ".codex" / "commands"
+            target_dir = Path.cwd() / ".codex" / "prompts"
             
             if target_dir.exists():
                 if not prompt_yes_no(f"⚠️  {target_dir} already exists. Overwrite?", default=False):
                     print_warning("Skipping Codex installation")
                 else:
                     target_dir.mkdir(parents=True, exist_ok=True)
-                    source = source_dir / ".codex" / "commands"
+                    source = source_dir / ".codex" / "prompts"
                     for file in source.glob("sdd-*.md"):
                         shutil.copy2(file, target_dir / file.name)
                         installed_count += 1
-                    print_success(f"Installed {len(list((target_dir).glob('sdd-*.md')))} Codex commands to {target_dir}")
+                    print_success(f"Installed {len(list((target_dir).glob('sdd-*.md')))} Codex prompts to {target_dir}")
             else:
                 target_dir.mkdir(parents=True, exist_ok=True)
-                source = source_dir / ".codex" / "commands"
+                source = source_dir / ".codex" / "prompts"
                 for file in source.glob("sdd-*.md"):
                     shutil.copy2(file, target_dir / file.name)
                     installed_count += 1
-                print_success(f"Installed {len(list((target_dir).glob('sdd-*.md')))} Codex commands to {target_dir}")
+                print_success(f"Installed {len(list((target_dir).glob('sdd-*.md')))} Codex prompts to {target_dir}")
     
     return installed_count
 

@@ -79,13 +79,13 @@ curl -sSL https://raw.githubusercontent.com/CodeMachine0121/GSI-Protocol/main/.c
 
 **Codex (OpenAI):**
 ```bash
-mkdir -p ~/.codex/commands
-cd ~/.codex/commands
-curl -sSL https://raw.githubusercontent.com/CodeMachine0121/GSI-Protocol/main/.codex/commands/sdd-auto.md -o sdd-auto.md
-curl -sSL https://raw.githubusercontent.com/CodeMachine0121/GSI-Protocol/main/.codex/commands/sdd-spec.md -o sdd-spec.md
-curl -sSL https://raw.githubusercontent.com/CodeMachine0121/GSI-Protocol/main/.codex/commands/sdd-arch.md -o sdd-arch.md
-curl -sSL https://raw.githubusercontent.com/CodeMachine0121/GSI-Protocol/main/.codex/commands/sdd-impl.md -o sdd-impl.md
-curl -sSL https://raw.githubusercontent.com/CodeMachine0121/GSI-Protocol/main/.codex/commands/sdd-verify.md -o sdd-verify.md
+mkdir -p ~/.codex/prompts
+cd ~/.codex/prompts
+curl -sSL https://raw.githubusercontent.com/CodeMachine0121/GSI-Protocol/main/.codex/prompts/sdd-auto.md -o sdd-auto.md
+curl -sSL https://raw.githubusercontent.com/CodeMachine0121/GSI-Protocol/main/.codex/prompts/sdd-spec.md -o sdd-spec.md
+curl -sSL https://raw.githubusercontent.com/CodeMachine0121/GSI-Protocol/main/.codex/prompts/sdd-arch.md -o sdd-arch.md
+curl -sSL https://raw.githubusercontent.com/CodeMachine0121/GSI-Protocol/main/.codex/prompts/sdd-impl.md -o sdd-impl.md
+curl -sSL https://raw.githubusercontent.com/CodeMachine0121/GSI-Protocol/main/.codex/prompts/sdd-verify.md -o sdd-verify.md
 ```
 
 完成後，可在任何專案中使用 `/sdd-auto`、`/sdd-spec` 等全域指令。
@@ -349,7 +349,7 @@ GSI-Protocol/
 │       ├── sdd-impl.md         # Phase 3
 │       └── sdd-verify.md       # Phase 4
 ├── .codex/
-│   └── commands/                # Codex (OpenAI) 指令
+│   └── prompts/                 # Codex (OpenAI) prompts
 │       ├── sdd-auto.md         # 自動工作流程
 │       ├── sdd-spec.md         # Phase 1
 │       ├── sdd-arch.md         # Phase 2

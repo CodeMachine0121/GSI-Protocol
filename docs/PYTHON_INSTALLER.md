@@ -87,7 +87,7 @@ Enter choice [1-2] (default: 1): 2
 ℹ Downloading GSI-Protocol from GitHub...
 ✓ Downloaded successfully
 ✓ Installed 5 Claude Code commands to ~/.claude/commands
-✓ Installed 5 Codex commands to ~/.codex/commands
+✓ Installed 5 Codex commands to ~/.codex/prompts
 
 ============================================================
 ✓ Installation complete! Total files installed: 10
@@ -238,11 +238,11 @@ curl -LsSf https://astral.sh/uv/install.sh | sh
 ```bash
 # 全域安裝
 rm -rf ~/.claude/commands/sdd-*
-rm -rf ~/.codex/commands/sdd-*
+rm -rf ~/.codex/prompts/sdd-*
 
 # 專案安裝
 rm -rf .claude/commands/sdd-*
-rm -rf .codex/commands/sdd-*
+rm -rf .codex/prompts/sdd-*
 ```
 
 ## 📖 相關文件

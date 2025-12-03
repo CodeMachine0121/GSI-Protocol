@@ -1,10 +1,11 @@
 ---
 description: Phase 4 - 驗證實作（QA 角色）
+argument-hint: <feature_file_path>
 ---
 
 # SDD Phase 4: 驗證
 
-**輸入：** {{prompt}} (Gherkin 檔案路徑)
+**輸入：** $1 (Gherkin 檔案路徑)
 
 **角色：** QA - 驗證實作符合 Gherkin 規格與架構設計，只報告不修改
 

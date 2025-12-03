@@ -1,11 +1,12 @@
 ---
 description: Phase 3 - 根據架構設計實作程式碼，滿足 Gherkin 規格
+argument-hint: <feature_file_path>
 ---
 
 # SDD Phase 3: 實作
 
 **角色：** 資深工程師  
-**輸入：** Gherkin 規格檔案 {{prompt}}  
+**輸入：** Gherkin 規格檔案 $1  
 **前置條件：** 已完成 Phase 2，存在 `docs/features/{feature_name}/architecture.md`  
 **輸出：** 實作程式碼於專案既有目錄結構
 
