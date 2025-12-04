@@ -1,15 +1,16 @@
 ---
-description: 自動執行完整 SDD 工作流程 (4 Phases)
-argument-hint: <requirement_description>
+description: 自動執行完整 SDD 工作流程 (核心 4 階段)
 ---
 
 # SDD 自動模式
 
-**需求：** $1
+**需求：** {{prompt}}
 
-**目標：** 自動執行 Phase 1-4，從需求到驗證完成，無需手動介入
+**目標：** 自動執行核心 4 階段，從需求到驗證完成，無需手動介入
 
 **核心理念：** 規格 → 架構 → 實作 → 驗證（語言無關，專案感知）
+
+> **💡 注意：** 自動模式不包含選用的 integration tests。如需測試先行開發，請使用手動工作流程並加入 `/sdd-integration-test`。
 
 ## 開始前：掃描專案
 
@@ -126,28 +127,35 @@ Feature: {功能名稱}
 
 ## 執行流程
 
+**核心 4 階段（自動執行）：**
+
 1. 掃描專案上下文
-2. Phase 1 → `features/{feature}.feature`
-3. Phase 2 → `docs/features/{feature}/architecture.md`
-4. Phase 3 → 實作檔案（依 architecture.md）
-5. Phase 4 → `docs/features/{feature}/conclusion.md`
+2. **Phase 1** → `features/{feature}.feature`
+3. **Phase 2** → `docs/features/{feature}/architecture.md`
+4. **Phase 3** → 實作檔案（依 architecture.md）
+5. **Phase 4** → `docs/features/{feature}/conclusion.md`
 6. 失敗時返回 Phase 3 重試
+
+**選用階段（不包含在自動模式）：**
+- **Integration Tests**：如需測試先行開發，請使用手動工作流程
+  - `/sdd-spec` → `/sdd-arch` → `/sdd-integration-test` → `/sdd-impl` → `/sdd-verify`
 
 **輸出結構：**
 ```
 project_root/
-├── features/{feature}.feature
+├── features/{feature}.feature          # Phase 1
 ├── docs/features/{feature}/
-│   ├── architecture.md
-│   └── conclusion.md
+│   ├── architecture.md                 # Phase 2
+│   └── conclusion.md                   # Phase 4
 └── {專案目錄}/
-    ├── {模型檔案}
-    └── {服務檔案}
+    ├── {模型檔案}                      # Phase 3
+    └── {服務檔案}                      # Phase 3
 ```
 
 **重要：** 
 - Phase 2 輸出繁體中文 Markdown（語言無關）
 - Phase 3 遵循專案技術棧與架構
 - 每個 Phase 必須完成才進入下一個
+- Integration tests 為選用功能，不包含在自動模式中
 
 開始執行 Phase 1。
