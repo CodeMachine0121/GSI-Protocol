@@ -76,6 +76,7 @@ cd ~/.claude/commands
 curl -sSL https://raw.githubusercontent.com/CodeMachine0121/GSI-Protocol/main/.claude/commands/sdd-auto.md -o sdd-auto.md
 curl -sSL https://raw.githubusercontent.com/CodeMachine0121/GSI-Protocol/main/.claude/commands/sdd-spec.md -o sdd-spec.md
 curl -sSL https://raw.githubusercontent.com/CodeMachine0121/GSI-Protocol/main/.claude/commands/sdd-arch.md -o sdd-arch.md
+curl -sSL https://raw.githubusercontent.com/CodeMachine0121/GSI-Protocol/main/.claude/commands/sdd-integration-test.md -o sdd-integration-test.md
 curl -sSL https://raw.githubusercontent.com/CodeMachine0121/GSI-Protocol/main/.claude/commands/sdd-impl.md -o sdd-impl.md
 curl -sSL https://raw.githubusercontent.com/CodeMachine0121/GSI-Protocol/main/.claude/commands/sdd-verify.md -o sdd-verify.md
 ```
@@ -88,6 +89,7 @@ cd ~/.codex/prompts
 curl -sSL https://raw.githubusercontent.com/CodeMachine0121/GSI-Protocol/main/.codex/prompts/sdd-auto.md -o sdd-auto.md
 curl -sSL https://raw.githubusercontent.com/CodeMachine0121/GSI-Protocol/main/.codex/prompts/sdd-spec.md -o sdd-spec.md
 curl -sSL https://raw.githubusercontent.com/CodeMachine0121/GSI-Protocol/main/.codex/prompts/sdd-arch.md -o sdd-arch.md
+curl -sSL https://raw.githubusercontent.com/CodeMachine0121/GSI-Protocol/main/.codex/prompts/sdd-integration-test.md -o sdd-integration-test.md
 curl -sSL https://raw.githubusercontent.com/CodeMachine0121/GSI-Protocol/main/.codex/prompts/sdd-impl.md -o sdd-impl.md
 curl -sSL https://raw.githubusercontent.com/CodeMachine0121/GSI-Protocol/main/.codex/prompts/sdd-verify.md -o sdd-verify.md
 ```
@@ -156,13 +158,14 @@ Phase 4：驗證（QA）
 
 ### 指令
 
-| 指令          | 用途                  | 何時使用           |
-| ------------- | --------------------- | ------------------ |
-| `/sdd-auto`   | 自動執行全部 4 個階段 | 快速原型、簡單功能 |
-| `/sdd-spec`   | 生成 Gherkin 規格     | 定義需求           |
-| `/sdd-arch`   | 設計資料模型與介面    | 審查結構           |
-| `/sdd-impl`   | 實作邏輯              | 撰寫程式碼         |
-| `/sdd-verify` | 根據規格驗證          | 測試實作           |
+| 指令                    | 用途                             | 何時使用           |
+| ----------------------- | -------------------------------- | ------------------ |
+| `/sdd-auto`             | 自動執行全部 4 個階段            | 快速原型、簡單功能 |
+| `/sdd-spec`             | 生成 Gherkin 規格                | 定義需求           |
+| `/sdd-arch`             | 設計資料模型與介面               | 審查結構           |
+| `/sdd-integration-test` | 生成 Integration Tests（紅燈）   | BDD 測試先行開發   |
+| `/sdd-impl`             | 實作邏輯                         | 撰寫程式碼         |
+| `/sdd-verify`           | 根據規格驗證                     | 測試實作           |
 
 ---
 
@@ -365,6 +368,7 @@ GSI-Protocol/
 │       ├── sdd-auto.md         # 自動工作流程
 │       ├── sdd-spec.md         # Phase 1
 │       ├── sdd-arch.md         # Phase 2
+│       ├── sdd-integration-test.md  # BDD Integration Tests
 │       ├── sdd-impl.md         # Phase 3
 │       └── sdd-verify.md       # Phase 4
 ├── .codex/
@@ -372,6 +376,7 @@ GSI-Protocol/
 │       ├── sdd-auto.md         # 自動工作流程
 │       ├── sdd-spec.md         # Phase 1
 │       ├── sdd-arch.md         # Phase 2
+│       ├── sdd-integration-test.md  # BDD Integration Tests
 │       ├── sdd-impl.md         # Phase 3
 │       └── sdd-verify.md       # Phase 4
 ├── docs/                        # 文件

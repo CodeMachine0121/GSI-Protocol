@@ -5,11 +5,12 @@
 ## 指令概覽
 
 ```
-/sdd-auto           → 自動模式：自動執行全部 4 個 Phase
-/sdd-spec           → Phase 1：生成 Gherkin 規格
-/sdd-arch           → Phase 2：設計架構（繁中文件）
-/sdd-impl           → Phase 3：實作邏輯
-/sdd-verify         → Phase 4：驗證實作
+/sdd-auto              → 自動模式：自動執行全部 4 個 Phase
+/sdd-spec              → Phase 1：生成 Gherkin 規格
+/sdd-arch              → Phase 2：設計架構（繁中文件）
+/sdd-integration-test  → BDD：生成 Integration Tests（測試先行）
+/sdd-impl              → Phase 3：實作邏輯
+/sdd-verify            → Phase 4：驗證實作
 ```
 
 ---
@@ -106,6 +107,56 @@
 - ✅ 您想審查技術架構
 - ✅ 需要與團隊驗證資料模型
 - ✅ 想確保架構與系統設計一致
+
+---
+
+## `/sdd-integration-test` - BDD Integration Tests
+
+**目的：** 從 feature file 和 architecture.md 生成 integration tests（測試先行），測試會失敗（紅燈），等待實作後轉為通過（綠燈）。
+
+**用法：**
+```bash
+/sdd-integration-test <feature_file_path>
+```
+
+**範例：**
+```bash
+/sdd-integration-test features/shopping_cart.feature
+
+/sdd-integration-test features/user_authentication.feature
+```
+
+**輸出：**
+- 生成 `tests/integration/<feature>.test.<ext>` 測試檔案
+- 根據 architecture.md 使用正確的資料模型與介面
+- 根據 feature file 的所有 Scenario 生成測試
+- Given-When-Then 結構清晰
+- 測試會失敗（紅燈），因為功能尚未實作
+
+**核心原則：**
+- **BDD**：測試描述業務行為，非技術實作
+- **Integration**：測試真實整合場景（API/DB/Service）
+- **Scenario-driven**：每個 Scenario 對應一個測試案例
+- **測試先行**：先寫測試（紅燈）→ 再實作（綠燈）
+
+**BDD 工作流程：**
+1. **規格階段**：定義 feature file（`/sdd-spec`）
+2. **架構階段**：設計技術架構（`/sdd-arch`）
+3. **測試階段**（本指令）：生成 integration tests（🔴 紅燈）
+4. **實作階段**：實作功能（`/sdd-impl`）
+5. **驗證階段**：確認測試通過（`/sdd-verify` → 🟢 綠燈）
+
+**何時使用：**
+- ✅ 完成 `/sdd-spec` 和 `/sdd-arch` 後
+- ✅ 需要先定義測試場景
+- ✅ 確保實作符合業務需求
+- ✅ 建立整合測試框架
+- ✅ 與 `/sdd-impl` 搭配使用（測試先行開發）
+
+**支援框架：**
+- **TypeScript**: Jest/Vitest + Supertest
+- **Python**: pytest + httpx
+- **Go**: testing + testify
 
 ---
 
@@ -233,6 +284,8 @@
 | "測試想法" | `/sdd-auto` |
 | "遷移現有程式碼" | 先使用 `/sdd-spec` |
 | "需要利害關係人批准" | 手動階段 |
+| "BDD 測試先行開發" | `/sdd-integration-test` + `/sdd-impl` |
+| "建立整合測試" | `/sdd-integration-test` |
 
 ---
 
@@ -321,10 +374,12 @@ pipx run gsi-protocol-installer
 **快速參考卡：**
 
 ```
-快速原型      → /sdd-auto <需求>
-生產程式碼    → /sdd-spec → /sdd-arch → /sdd-impl → /sdd-verify
-只要規格      → /sdd-spec <需求>
-只要架構      → /sdd-arch <spec.feature>
-只要程式碼    → /sdd-impl <spec.feature>
-只要驗證      → /sdd-verify <spec.feature>
+快速原型          → /sdd-auto <需求>
+生產程式碼        → /sdd-spec → /sdd-arch → /sdd-impl → /sdd-verify
+BDD 測試先行開發  → /sdd-spec → /sdd-arch → /sdd-integration-test → /sdd-impl → /sdd-verify
+只要規格          → /sdd-spec <需求>
+只要架構          → /sdd-arch <spec.feature>
+只要整合測試      → /sdd-integration-test <spec.feature>
+只要程式碼        → /sdd-impl <spec.feature>
+只要驗證          → /sdd-verify <spec.feature>
 ```
