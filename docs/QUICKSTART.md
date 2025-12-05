@@ -40,12 +40,12 @@ wget https://raw.githubusercontent.com/CodeMachine0121/GSI-Protocol/main/.codex/
 **GitHub Copilot:**
 ```bash
 mkdir -p ~/.github/prompts && cd ~/.github/prompts
-wget https://raw.githubusercontent.com/CodeMachine0121/GSI-Protocol/main/.github/prompts/sdd-auto.prompts.md
-wget https://raw.githubusercontent.com/CodeMachine0121/GSI-Protocol/main/.github/prompts/sdd-spec.prompts.md
-wget https://raw.githubusercontent.com/CodeMachine0121/GSI-Protocol/main/.github/prompts/sdd-arch.prompts.md
-wget https://raw.githubusercontent.com/CodeMachine0121/GSI-Protocol/main/.github/prompts/sdd-integration-test.prompts.md
-wget https://raw.githubusercontent.com/CodeMachine0121/GSI-Protocol/main/.github/prompts/sdd-impl.prompts.md
-wget https://raw.githubusercontent.com/CodeMachine0121/GSI-Protocol/main/.github/prompts/sdd-verify.prompts.md
+wget https://raw.githubusercontent.com/CodeMachine0121/GSI-Protocol/main/.github/prompts/sdd-auto.prompt.md
+wget https://raw.githubusercontent.com/CodeMachine0121/GSI-Protocol/main/.github/prompts/sdd-spec.prompt.md
+wget https://raw.githubusercontent.com/CodeMachine0121/GSI-Protocol/main/.github/prompts/sdd-arch.prompt.md
+wget https://raw.githubusercontent.com/CodeMachine0121/GSI-Protocol/main/.github/prompts/sdd-integration-test.prompt.md
+wget https://raw.githubusercontent.com/CodeMachine0121/GSI-Protocol/main/.github/prompts/sdd-impl.prompt.md
+wget https://raw.githubusercontent.com/CodeMachine0121/GSI-Protocol/main/.github/prompts/sdd-verify.prompt.md
 ```
 
 現在在任何專案都能用！
@@ -54,13 +54,13 @@ wget https://raw.githubusercontent.com/CodeMachine0121/GSI-Protocol/main/.github
 
 ```bash
 # Claude Code 全域安裝驗證
-ls ~/.claude/commands/ | grep "sdd.*.prompts.md"
+ls ~/.claude/commands/ | grep "sdd.*.prompt.md"
 
 # Codex 全域安裝驗證
-ls ~/.codex/prompts/ | grep "sdd.*.prompts.md"
+ls ~/.codex/prompts/ | grep "sdd.*.prompt.md"
 
 # GitHub Copilot 全域安裝驗證
-ls ~/.github/prompts/ | grep "sdd.*.prompts.md"
+ls ~/.github/prompts/ | grep "sdd.*.prompt.md"
 
 # 應該看到: sdd-auto.md, sdd-spec.md, sdd-arch.md, sdd-integration-test.md, sdd-impl.md, sdd-verify.md
 ```
@@ -226,16 +226,16 @@ python implementation/discount_impl.py
 
 **Claude Code:**
 ```bash
-ls ~/.claude/commands/ | grep "sdd.*.prompts.md"
+ls ~/.claude/commands/ | grep "sdd.*.prompt.md"
 # 或專案內
-ls .claude/commands/ | grep "sdd.*.prompts.md"
+ls .claude/commands/ | grep "sdd.*.prompt.md"
 ```
 
 **Codex:**
 ```bash
-ls ~/.codex/prompts/ | grep "sdd.*.prompts.md"
+ls ~/.codex/prompts/ | grep "sdd.*.prompt.md"
 # 或專案內
-ls .codex/prompts/ | grep "sdd.*.prompts.md"
+ls .codex/prompts/ | grep "sdd.*.prompt.md"
 ```
 
 應該顯示：sdd-auto.md、sdd-spec.md、sdd-arch.md 等

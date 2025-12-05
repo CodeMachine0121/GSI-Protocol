@@ -7,12 +7,12 @@
 ```
 .github/prompts/
 ├── README.md                           # 本檔案
-├── sdd-auto.prompts.md                 # 自動工作流程
-├── sdd-spec.prompts.md                 # Phase 1: 規格
-├── sdd-arch.prompts.md                 # Phase 2: 架構
-├── sdd-integration-test.prompts.md     # Phase 2.5: 整合測試（選用）
-├── sdd-impl.prompts.md                 # Phase 3: 實作
-└── sdd-verify.prompts.md               # Phase 4: 驗證
+├── sdd-auto.prompt.md                 # 自動工作流程
+├── sdd-spec.prompt.md                 # Phase 1: 規格
+├── sdd-arch.prompt.md                 # Phase 2: 架構
+├── sdd-integration-test.prompt.md     # Phase 2.5: 整合測試（選用）
+├── sdd-impl.prompt.md                 # Phase 3: 實作
+└── sdd-verify.prompt.md               # Phase 4: 驗證
 ```
 
 ## 安裝
@@ -22,12 +22,12 @@
 ```bash
 mkdir -p ~/.github/prompts
 cd ~/.github/prompts
-curl -sSL https://raw.githubusercontent.com/CodeMachine0121/GSI-Protocol/main/.github/prompts/sdd-auto.prompts.md -o sdd-auto.prompts.md
-curl -sSL https://raw.githubusercontent.com/CodeMachine0121/GSI-Protocol/main/.github/prompts/sdd-spec.prompts.md -o sdd-spec.prompts.md
-curl -sSL https://raw.githubusercontent.com/CodeMachine0121/GSI-Protocol/main/.github/prompts/sdd-arch.prompts.md -o sdd-arch.prompts.md
-curl -sSL https://raw.githubusercontent.com/CodeMachine0121/GSI-Protocol/main/.github/prompts/sdd-integration-test.prompts.md -o sdd-integration-test.prompts.md
-curl -sSL https://raw.githubusercontent.com/CodeMachine0121/GSI-Protocol/main/.github/prompts/sdd-impl.prompts.md -o sdd-impl.prompts.md
-curl -sSL https://raw.githubusercontent.com/CodeMachine0121/GSI-Protocol/main/.github/prompts/sdd-verify.prompts.md -o sdd-verify.prompts.md
+curl -sSL https://raw.githubusercontent.com/CodeMachine0121/GSI-Protocol/main/.github/prompts/sdd-auto.prompt.md -o sdd-auto.prompt.md
+curl -sSL https://raw.githubusercontent.com/CodeMachine0121/GSI-Protocol/main/.github/prompts/sdd-spec.prompt.md -o sdd-spec.prompt.md
+curl -sSL https://raw.githubusercontent.com/CodeMachine0121/GSI-Protocol/main/.github/prompts/sdd-arch.prompt.md -o sdd-arch.prompt.md
+curl -sSL https://raw.githubusercontent.com/CodeMachine0121/GSI-Protocol/main/.github/prompts/sdd-integration-test.prompt.md -o sdd-integration-test.prompt.md
+curl -sSL https://raw.githubusercontent.com/CodeMachine0121/GSI-Protocol/main/.github/prompts/sdd-impl.prompt.md -o sdd-impl.prompt.md
+curl -sSL https://raw.githubusercontent.com/CodeMachine0121/GSI-Protocol/main/.github/prompts/sdd-verify.prompt.md -o sdd-verify.prompt.md
 ```
 
 ### 專案安裝
@@ -108,9 +108,9 @@ Phase 4: 驗證（QA）
 
 ## 命名規範
 
-GitHub Copilot 的 prompt 檔案使用 `.prompts.md` 副檔名：
-- ✅ `sdd-auto.prompts.md`
-- ✅ `sdd-spec.prompts.md`
+GitHub Copilot 的 prompt 檔案使用 `.prompt.md` 副檔名：
+- ✅ `sdd-auto.prompt.md`
+- ✅ `sdd-spec.prompt.md`
 - ❌ `sdd-auto.md` （不正確）
 
 ## 詳細文檔
@@ -123,4 +123,4 @@ GitHub Copilot 的 prompt 檔案使用 `.prompts.md` 副檔名：
 |------|---------|---------|
 | Claude Code | `~/.claude/commands/` | `sdd-*.md` |
 | Codex (OpenAI) | `~/.codex/prompts/` | `sdd-*.md` |
-| GitHub Copilot | `~/.github/prompts/` | `sdd-*.prompts.md` |
+| GitHub Copilot | `~/.github/prompts/` | `sdd-*.prompt.md` |

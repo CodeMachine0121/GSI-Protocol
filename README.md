@@ -100,12 +100,12 @@ curl -sSL https://raw.githubusercontent.com/CodeMachine0121/GSI-Protocol/main/.c
 ```bash
 mkdir -p ~/.github/prompts
 cd ~/.github/prompts
-curl -sSL https://raw.githubusercontent.com/CodeMachine0121/GSI-Protocol/main/.github/prompts/sdd-auto.prompts.md -o sdd-auto.prompts.md
-curl -sSL https://raw.githubusercontent.com/CodeMachine0121/GSI-Protocol/main/.github/prompts/sdd-spec.prompts.md -o sdd-spec.prompts.md
-curl -sSL https://raw.githubusercontent.com/CodeMachine0121/GSI-Protocol/main/.github/prompts/sdd-arch.prompts.md -o sdd-arch.prompts.md
-curl -sSL https://raw.githubusercontent.com/CodeMachine0121/GSI-Protocol/main/.github/prompts/sdd-integration-test.prompts.md -o sdd-integration-test.prompts.md
-curl -sSL https://raw.githubusercontent.com/CodeMachine0121/GSI-Protocol/main/.github/prompts/sdd-impl.prompts.md -o sdd-impl.prompts.md
-curl -sSL https://raw.githubusercontent.com/CodeMachine0121/GSI-Protocol/main/.github/prompts/sdd-verify.prompts.md -o sdd-verify.prompts.md
+curl -sSL https://raw.githubusercontent.com/CodeMachine0121/GSI-Protocol/main/.github/prompts/sdd-auto.prompt.md -o sdd-auto.prompt.md
+curl -sSL https://raw.githubusercontent.com/CodeMachine0121/GSI-Protocol/main/.github/prompts/sdd-spec.prompt.md -o sdd-spec.prompt.md
+curl -sSL https://raw.githubusercontent.com/CodeMachine0121/GSI-Protocol/main/.github/prompts/sdd-arch.prompt.md -o sdd-arch.prompt.md
+curl -sSL https://raw.githubusercontent.com/CodeMachine0121/GSI-Protocol/main/.github/prompts/sdd-integration-test.prompt.md -o sdd-integration-test.prompt.md
+curl -sSL https://raw.githubusercontent.com/CodeMachine0121/GSI-Protocol/main/.github/prompts/sdd-impl.prompt.md -o sdd-impl.prompt.md
+curl -sSL https://raw.githubusercontent.com/CodeMachine0121/GSI-Protocol/main/.github/prompts/sdd-verify.prompt.md -o sdd-verify.prompt.md
 ```
 
 完成後，可在任何專案中使用 `/sdd-auto`、`/sdd-spec` 等全域指令（Claude/Codex）或 `@workspace /sdd-auto`、`@workspace /sdd-spec`（Copilot）。
@@ -420,12 +420,12 @@ GSI-Protocol/
 │       └── sdd-verify.md       # Phase 4
 ├── .github/
 │   └── prompts/                 # GitHub Copilot prompts
-│       ├── sdd-auto.prompts.md         # 自動工作流程
-│       ├── sdd-spec.prompts.md         # Phase 1
-│       ├── sdd-arch.prompts.md         # Phase 2
-│       ├── sdd-integration-test.prompts.md  # BDD Integration Tests
-│       ├── sdd-impl.prompts.md         # Phase 3
-│       └── sdd-verify.prompts.md       # Phase 4
+│       ├── sdd-auto.prompt.md         # 自動工作流程
+│       ├── sdd-spec.prompt.md         # Phase 1
+│       ├── sdd-arch.prompt.md         # Phase 2
+│       ├── sdd-integration-test.prompt.md  # BDD Integration Tests
+│       ├── sdd-impl.prompt.md         # Phase 3
+│       └── sdd-verify.prompt.md       # Phase 4
 ├── docs/                        # 文件
 │   ├── QUICKSTART.md           # 快速入門指南
 │   ├── INSTALL.md              # 安裝指南

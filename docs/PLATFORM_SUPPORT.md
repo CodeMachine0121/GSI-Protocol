@@ -116,12 +116,12 @@ curl -sSL https://raw.githubusercontent.com/CodeMachine0121/GSI-Protocol/main/.c
 # 全域安裝
 mkdir -p ~/.github/prompts
 cd ~/.github/prompts
-curl -sSL https://raw.githubusercontent.com/CodeMachine0121/GSI-Protocol/main/.github/prompts/sdd-auto.prompts.md -o sdd-auto.prompts.md
-curl -sSL https://raw.githubusercontent.com/CodeMachine0121/GSI-Protocol/main/.github/prompts/sdd-spec.prompts.md -o sdd-spec.prompts.md
-curl -sSL https://raw.githubusercontent.com/CodeMachine0121/GSI-Protocol/main/.github/prompts/sdd-arch.prompts.md -o sdd-arch.prompts.md
-curl -sSL https://raw.githubusercontent.com/CodeMachine0121/GSI-Protocol/main/.github/prompts/sdd-integration-test.prompts.md -o sdd-integration-test.prompts.md
-curl -sSL https://raw.githubusercontent.com/CodeMachine0121/GSI-Protocol/main/.github/prompts/sdd-impl.prompts.md -o sdd-impl.prompts.md
-curl -sSL https://raw.githubusercontent.com/CodeMachine0121/GSI-Protocol/main/.github/prompts/sdd-verify.prompts.md -o sdd-verify.prompts.md
+curl -sSL https://raw.githubusercontent.com/CodeMachine0121/GSI-Protocol/main/.github/prompts/sdd-auto.prompt.md -o sdd-auto.prompt.md
+curl -sSL https://raw.githubusercontent.com/CodeMachine0121/GSI-Protocol/main/.github/prompts/sdd-spec.prompt.md -o sdd-spec.prompt.md
+curl -sSL https://raw.githubusercontent.com/CodeMachine0121/GSI-Protocol/main/.github/prompts/sdd-arch.prompt.md -o sdd-arch.prompt.md
+curl -sSL https://raw.githubusercontent.com/CodeMachine0121/GSI-Protocol/main/.github/prompts/sdd-integration-test.prompt.md -o sdd-integration-test.prompt.md
+curl -sSL https://raw.githubusercontent.com/CodeMachine0121/GSI-Protocol/main/.github/prompts/sdd-impl.prompt.md -o sdd-impl.prompt.md
+curl -sSL https://raw.githubusercontent.com/CodeMachine0121/GSI-Protocol/main/.github/prompts/sdd-verify.prompt.md -o sdd-verify.prompt.md
 ```
 
 ### 已安裝 Codex，想加入 Claude Code
@@ -162,12 +162,12 @@ curl -sSL https://raw.githubusercontent.com/CodeMachine0121/GSI-Protocol/main/.c
 └── sdd-verify.md
 
 ~/.github/prompts/       # GitHub Copilot 全域 prompts
-├── sdd-auto.prompts.md
-├── sdd-spec.prompts.md
-├── sdd-arch.prompts.md
-├── sdd-integration-test.prompts.md
-├── sdd-impl.prompts.md
-└── sdd-verify.prompts.md
+├── sdd-auto.prompt.md
+├── sdd-spec.prompt.md
+├── sdd-arch.prompt.md
+├── sdd-integration-test.prompt.md
+├── sdd-impl.prompt.md
+└── sdd-verify.prompt.md
 
 # 專案保持乾淨
 your-project/

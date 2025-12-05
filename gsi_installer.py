@@ -179,11 +179,11 @@ def install_commands(source_dir: Path, platforms: list[str], location: str) -> i
             target_dir.mkdir(parents=True, exist_ok=True)
             
             source = source_dir / ".github" / "prompts"
-            for file in source.glob("sdd-*.prompts.md"):
+            for file in source.glob("sdd-*.prompt.md"):
                 shutil.copy2(file, target_dir / file.name)
                 installed_count += 1
             
-            print_success(f"Installed {len(list((target_dir).glob('sdd-*.prompts.md')))} GitHub Copilot prompts to {target_dir}")
+            print_success(f"Installed {len(list((target_dir).glob('sdd-*.prompt.md')))} GitHub Copilot prompts to {target_dir}")
     
     else:  # project
         if "claude" in platforms:
@@ -237,17 +237,17 @@ def install_commands(source_dir: Path, platforms: list[str], location: str) -> i
                 else:
                     target_dir.mkdir(parents=True, exist_ok=True)
                     source = source_dir / ".github" / "prompts"
-                    for file in source.glob("sdd-*.prompts.md"):
+                    for file in source.glob("sdd-*.prompt.md"):
                         shutil.copy2(file, target_dir / file.name)
                         installed_count += 1
-                    print_success(f"Installed {len(list((target_dir).glob('sdd-*.prompts.md')))} GitHub Copilot prompts to {target_dir}")
+                    print_success(f"Installed {len(list((target_dir).glob('sdd-*.prompt.md')))} GitHub Copilot prompts to {target_dir}")
             else:
                 target_dir.mkdir(parents=True, exist_ok=True)
                 source = source_dir / ".github" / "prompts"
-                for file in source.glob("sdd-*.prompts.md"):
+                for file in source.glob("sdd-*.prompt.md"):
                     shutil.copy2(file, target_dir / file.name)
                     installed_count += 1
-                print_success(f"Installed {len(list((target_dir).glob('sdd-*.prompts.md')))} GitHub Copilot prompts to {target_dir}")
+                print_success(f"Installed {len(list((target_dir).glob('sdd-*.prompt.md')))} GitHub Copilot prompts to {target_dir}")
     
     return installed_count
 

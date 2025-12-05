@@ -135,12 +135,12 @@ mkdir -p ~/.github/prompts
 cd ~/.github/prompts
 
 # 下載所有指令檔案
-wget https://raw.githubusercontent.com/CodeMachine0121/GSI-Protocol/main/.github/prompts/sdd-auto.prompts.md
-wget https://raw.githubusercontent.com/CodeMachine0121/GSI-Protocol/main/.github/prompts/sdd-spec.prompts.md
-wget https://raw.githubusercontent.com/CodeMachine0121/GSI-Protocol/main/.github/prompts/sdd-arch.prompts.md
-wget https://raw.githubusercontent.com/CodeMachine0121/GSI-Protocol/main/.github/prompts/sdd-integration-test.prompts.md
-wget https://raw.githubusercontent.com/CodeMachine0121/GSI-Protocol/main/.github/prompts/sdd-impl.prompts.md
-wget https://raw.githubusercontent.com/CodeMachine0121/GSI-Protocol/main/.github/prompts/sdd-verify.prompts.md
+wget https://raw.githubusercontent.com/CodeMachine0121/GSI-Protocol/main/.github/prompts/sdd-auto.prompt.md
+wget https://raw.githubusercontent.com/CodeMachine0121/GSI-Protocol/main/.github/prompts/sdd-spec.prompt.md
+wget https://raw.githubusercontent.com/CodeMachine0121/GSI-Protocol/main/.github/prompts/sdd-arch.prompt.md
+wget https://raw.githubusercontent.com/CodeMachine0121/GSI-Protocol/main/.github/prompts/sdd-integration-test.prompt.md
+wget https://raw.githubusercontent.com/CodeMachine0121/GSI-Protocol/main/.github/prompts/sdd-impl.prompt.md
+wget https://raw.githubusercontent.com/CodeMachine0121/GSI-Protocol/main/.github/prompts/sdd-verify.prompt.md
 ```
 
 ### 手動專案內安裝
@@ -168,12 +168,12 @@ wget https://raw.githubusercontent.com/CodeMachine0121/GSI-Protocol/main/.codex/
 # GitHub Copilot
 mkdir -p .github/prompts
 cd .github/prompts
-wget https://raw.githubusercontent.com/CodeMachine0121/GSI-Protocol/main/.github/prompts/sdd-auto.prompts.md
-wget https://raw.githubusercontent.com/CodeMachine0121/GSI-Protocol/main/.github/prompts/sdd-spec.prompts.md
-wget https://raw.githubusercontent.com/CodeMachine0121/GSI-Protocol/main/.github/prompts/sdd-arch.prompts.md
-wget https://raw.githubusercontent.com/CodeMachine0121/GSI-Protocol/main/.github/prompts/sdd-integration-test.prompts.md
-wget https://raw.githubusercontent.com/CodeMachine0121/GSI-Protocol/main/.github/prompts/sdd-impl.prompts.md
-wget https://raw.githubusercontent.com/CodeMachine0121/GSI-Protocol/main/.github/prompts/sdd-verify.prompts.md
+wget https://raw.githubusercontent.com/CodeMachine0121/GSI-Protocol/main/.github/prompts/sdd-auto.prompt.md
+wget https://raw.githubusercontent.com/CodeMachine0121/GSI-Protocol/main/.github/prompts/sdd-spec.prompt.md
+wget https://raw.githubusercontent.com/CodeMachine0121/GSI-Protocol/main/.github/prompts/sdd-arch.prompt.md
+wget https://raw.githubusercontent.com/CodeMachine0121/GSI-Protocol/main/.github/prompts/sdd-integration-test.prompt.md
+wget https://raw.githubusercontent.com/CodeMachine0121/GSI-Protocol/main/.github/prompts/sdd-impl.prompt.md
+wget https://raw.githubusercontent.com/CodeMachine0121/GSI-Protocol/main/.github/prompts/sdd-verify.prompt.md
 
 # 提交到 Git（可選）
 git add .claude/commands/ .codex/prompts/ .github/prompts/
@@ -188,26 +188,26 @@ git commit -m "Add GSI-Protocol workflow commands"
 
 **Claude Code (全域安裝):**
 ```bash
-ls ~/.claude/commands/ | grep "sdd.*.prompts.md"
+ls ~/.claude/commands/ | grep "sdd.*.prompt.md"
 ```
 
 **Codex (全域安裝):**
 ```bash
-ls ~/.codex/prompts/ | grep "sdd.*.prompts.md"
+ls ~/.codex/prompts/ | grep "sdd.*.prompt.md"
 ```
 
 **GitHub Copilot (全域安裝):**
 ```bash
-ls ~/.github/prompts/ | grep "sdd.*.prompts.md"
+ls ~/.github/prompts/ | grep "sdd.*.prompt.md"
 ```
 
 **專案內安裝:**
 ```bash
-ls .claude/commands/ | grep "sdd.*.prompts.md"
+ls .claude/commands/ | grep "sdd.*.prompt.md"
 # 或
-ls .codex/prompts/ | grep "sdd.*.prompts.md"
+ls .codex/prompts/ | grep "sdd.*.prompt.md"
 # 或
-ls .github/prompts/ | grep "sdd.*.prompts.md"
+ls .github/prompts/ | grep "sdd.*.prompt.md"
 ```
 
 應該看到：
@@ -306,12 +306,12 @@ sdd-verify.md
 **GitHub Copilot:**
 ```
 ~/.github/prompts/
-├── sdd-auto.prompts.md
-├── sdd-spec.prompts.md
-├── sdd-arch.prompts.md
-├── sdd-integration-test.prompts.md
-├── sdd-impl.prompts.md
-└── sdd-verify.prompts.md
+├── sdd-auto.prompt.md
+├── sdd-spec.prompt.md
+├── sdd-arch.prompt.md
+├── sdd-integration-test.prompt.md
+├── sdd-impl.prompt.md
+└── sdd-verify.prompt.md
 ```
 
 **您的專案保持乾淨，只有生成的程式碼:**
