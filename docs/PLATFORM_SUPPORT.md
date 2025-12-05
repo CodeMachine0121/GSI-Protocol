@@ -24,7 +24,7 @@ GSI-Protocol 現在支援多個 AI 平台，讓您可以使用您偏好的 AI �
 - **開發商：** GitHub (Microsoft)
 - **特色：** 整合 VS Code 與 CLI 的 AI 程式輔助
 - **指令格式：** `@workspace /sdd-*`
-- **指令目錄：** `~/.copilot/commands/` (全域) 或 `.copilot/commands/` (專案)
+- **指令目錄：** `~/.github/prompts/` (全域) 或 `.github/prompts/` (專案)
 - **狀態：** ✅ 完整支援
 
 ---
@@ -114,14 +114,14 @@ curl -sSL https://raw.githubusercontent.com/CodeMachine0121/GSI-Protocol/main/.c
 
 ```bash
 # 全域安裝
-mkdir -p ~/.copilot/commands
-cd ~/.copilot/commands
-curl -sSL https://raw.githubusercontent.com/CodeMachine0121/GSI-Protocol/main/.copilot/commands/sdd-auto.md -o sdd-auto.md
-curl -sSL https://raw.githubusercontent.com/CodeMachine0121/GSI-Protocol/main/.copilot/commands/sdd-spec.md -o sdd-spec.md
-curl -sSL https://raw.githubusercontent.com/CodeMachine0121/GSI-Protocol/main/.copilot/commands/sdd-arch.md -o sdd-arch.md
-curl -sSL https://raw.githubusercontent.com/CodeMachine0121/GSI-Protocol/main/.copilot/commands/sdd-integration-test.md -o sdd-integration-test.md
-curl -sSL https://raw.githubusercontent.com/CodeMachine0121/GSI-Protocol/main/.copilot/commands/sdd-impl.md -o sdd-impl.md
-curl -sSL https://raw.githubusercontent.com/CodeMachine0121/GSI-Protocol/main/.copilot/commands/sdd-verify.md -o sdd-verify.md
+mkdir -p ~/.github/prompts
+cd ~/.github/prompts
+curl -sSL https://raw.githubusercontent.com/CodeMachine0121/GSI-Protocol/main/.github/prompts/sdd-auto.prompts.md -o sdd-auto.prompts.md
+curl -sSL https://raw.githubusercontent.com/CodeMachine0121/GSI-Protocol/main/.github/prompts/sdd-spec.prompts.md -o sdd-spec.prompts.md
+curl -sSL https://raw.githubusercontent.com/CodeMachine0121/GSI-Protocol/main/.github/prompts/sdd-arch.prompts.md -o sdd-arch.prompts.md
+curl -sSL https://raw.githubusercontent.com/CodeMachine0121/GSI-Protocol/main/.github/prompts/sdd-integration-test.prompts.md -o sdd-integration-test.prompts.md
+curl -sSL https://raw.githubusercontent.com/CodeMachine0121/GSI-Protocol/main/.github/prompts/sdd-impl.prompts.md -o sdd-impl.prompts.md
+curl -sSL https://raw.githubusercontent.com/CodeMachine0121/GSI-Protocol/main/.github/prompts/sdd-verify.prompts.md -o sdd-verify.prompts.md
 ```
 
 ### 已安裝 Codex，想加入 Claude Code
@@ -161,13 +161,13 @@ curl -sSL https://raw.githubusercontent.com/CodeMachine0121/GSI-Protocol/main/.c
 ├── sdd-impl.md
 └── sdd-verify.md
 
-~/.copilot/commands/       # GitHub Copilot 全域指令
-├── sdd-auto.md
-├── sdd-spec.md
-├── sdd-arch.md
-├── sdd-integration-test.md
-├── sdd-impl.md
-└── sdd-verify.md
+~/.github/prompts/       # GitHub Copilot 全域 prompts
+├── sdd-auto.prompts.md
+├── sdd-spec.prompts.md
+├── sdd-arch.prompts.md
+├── sdd-integration-test.prompts.md
+├── sdd-impl.prompts.md
+└── sdd-verify.prompts.md
 
 # 專案保持乾淨
 your-project/
@@ -182,7 +182,7 @@ your-project/
 your-project/
 ├── .claude/commands/      # Claude Code 專案指令（可選）
 ├── .codex/prompts/        # Codex 專案 prompts（可選）
-├── .copilot/commands/     # GitHub Copilot 專案指令（可選）
+├── .github/prompts/       # GitHub Copilot 專案 prompts（可選）
 ├── features/
 ├── docs/features/
 └── src/

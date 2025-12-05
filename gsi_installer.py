@@ -175,15 +175,15 @@ def install_commands(source_dir: Path, platforms: list[str], location: str) -> i
             print_success(f"Installed {len(list((target_dir).glob('sdd-*.md')))} Codex prompts to {target_dir}")
         
         if "copilot" in platforms:
-            target_dir = Path.home() / ".copilot" / "commands"
+            target_dir = Path.home() / ".github" / "prompts"
             target_dir.mkdir(parents=True, exist_ok=True)
             
-            source = source_dir / ".copilot" / "commands"
-            for file in source.glob("sdd-*.md"):
+            source = source_dir / ".github" / "prompts"
+            for file in source.glob("sdd-*.prompts.md"):
                 shutil.copy2(file, target_dir / file.name)
                 installed_count += 1
             
-            print_success(f"Installed {len(list((target_dir).glob('sdd-*.md')))} GitHub Copilot commands to {target_dir}")
+            print_success(f"Installed {len(list((target_dir).glob('sdd-*.prompts.md')))} GitHub Copilot prompts to {target_dir}")
     
     else:  # project
         if "claude" in platforms:
@@ -229,25 +229,25 @@ def install_commands(source_dir: Path, platforms: list[str], location: str) -> i
                 print_success(f"Installed {len(list((target_dir).glob('sdd-*.md')))} Codex prompts to {target_dir}")
         
         if "copilot" in platforms:
-            target_dir = Path.cwd() / ".copilot" / "commands"
+            target_dir = Path.cwd() / ".github" / "prompts"
             
             if target_dir.exists():
                 if not prompt_yes_no(f"⚠️  {target_dir} already exists. Overwrite?", default=False):
                     print_warning("Skipping GitHub Copilot installation")
                 else:
                     target_dir.mkdir(parents=True, exist_ok=True)
-                    source = source_dir / ".copilot" / "commands"
-                    for file in source.glob("sdd-*.md"):
+                    source = source_dir / ".github" / "prompts"
+                    for file in source.glob("sdd-*.prompts.md"):
                         shutil.copy2(file, target_dir / file.name)
                         installed_count += 1
-                    print_success(f"Installed {len(list((target_dir).glob('sdd-*.md')))} GitHub Copilot commands to {target_dir}")
+                    print_success(f"Installed {len(list((target_dir).glob('sdd-*.prompts.md')))} GitHub Copilot prompts to {target_dir}")
             else:
                 target_dir.mkdir(parents=True, exist_ok=True)
-                source = source_dir / ".copilot" / "commands"
-                for file in source.glob("sdd-*.md"):
+                source = source_dir / ".github" / "prompts"
+                for file in source.glob("sdd-*.prompts.md"):
                     shutil.copy2(file, target_dir / file.name)
                     installed_count += 1
-                print_success(f"Installed {len(list((target_dir).glob('sdd-*.md')))} GitHub Copilot commands to {target_dir}")
+                print_success(f"Installed {len(list((target_dir).glob('sdd-*.prompts.md')))} GitHub Copilot prompts to {target_dir}")
     
     return installed_count
 
