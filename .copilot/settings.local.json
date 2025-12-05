@@ -1,0 +1,18 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(tree:*)",
+      "Bash(python3:*)",
+      "Bash(pip3 install:*)",
+      "Bash(xargs:*)",
+      "Bash(chmod:*)",
+      "Bash(cat:*)",
+      "Bash(__NEW_LINE__ cat <<'EOF'\n\n### 文檔（用戶參考）\nEOF)",
+      "Bash(__NEW_LINE__ cat <<'EOF'\n\n### 工具\nEOF)",
+      "Bash(__NEW_LINE__ cat <<'EOF'\n\n### 範例（只在 repo，不會安裝到用戶專案）\nEOF)",
+      "Bash(find:*)"
+    ],
+    "deny": [],
+    "ask": []
+  }
+}

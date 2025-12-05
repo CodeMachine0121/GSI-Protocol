@@ -14,6 +14,7 @@ GSI-Protocol 是一個 AI 驅動的工作流程插件，實作了**規格驅動�
 
 - ✅ Claude Code
 - ✅ Codex (OpenAI)
+- ✅ GitHub Copilot
 
 ### 核心理念
 
@@ -94,7 +95,20 @@ curl -sSL https://raw.githubusercontent.com/CodeMachine0121/GSI-Protocol/main/.c
 curl -sSL https://raw.githubusercontent.com/CodeMachine0121/GSI-Protocol/main/.codex/prompts/sdd-verify.md -o sdd-verify.md
 ```
 
-完成後，可在任何專案中使用 `/sdd-auto`、`/sdd-spec` 等全域指令。
+**GitHub Copilot:**
+
+```bash
+mkdir -p ~/.copilot/commands
+cd ~/.copilot/commands
+curl -sSL https://raw.githubusercontent.com/CodeMachine0121/GSI-Protocol/main/.copilot/commands/sdd-auto.md -o sdd-auto.md
+curl -sSL https://raw.githubusercontent.com/CodeMachine0121/GSI-Protocol/main/.copilot/commands/sdd-spec.md -o sdd-spec.md
+curl -sSL https://raw.githubusercontent.com/CodeMachine0121/GSI-Protocol/main/.copilot/commands/sdd-arch.md -o sdd-arch.md
+curl -sSL https://raw.githubusercontent.com/CodeMachine0121/GSI-Protocol/main/.copilot/commands/sdd-integration-test.md -o sdd-integration-test.md
+curl -sSL https://raw.githubusercontent.com/CodeMachine0121/GSI-Protocol/main/.copilot/commands/sdd-impl.md -o sdd-impl.md
+curl -sSL https://raw.githubusercontent.com/CodeMachine0121/GSI-Protocol/main/.copilot/commands/sdd-verify.md -o sdd-verify.md
+```
+
+完成後，可在任何專案中使用 `/sdd-auto`、`/sdd-spec` 等全域指令（Claude/Codex）或 `@workspace /sdd-auto`、`@workspace /sdd-spec`（Copilot）。
 
 > 📖 查看 [安裝指南](docs/INSTALL.md) 了解詳細說明
 
@@ -109,12 +123,19 @@ cd your-project
 
 # 自動模式 - 生成所有內容
 /sdd-auto Create a shopping cart in TypeScript with add, remove, checkout functions
+# 或使用 Copilot
+@workspace /sdd-auto Create a shopping cart in TypeScript with add, remove, checkout functions
 
 # 手動模式 - 逐步執行
 /sdd-spec Create a shopping cart with add, remove, checkout
 /sdd-arch features/shopping_cart.feature
 /sdd-impl features/shopping_cart.feature
 /sdd-verify features/shopping_cart.feature
+# 或使用 Copilot
+@workspace /sdd-spec Create a shopping cart with add, remove, checkout
+@workspace /sdd-arch features/shopping_cart.feature
+@workspace /sdd-impl features/shopping_cart.feature
+@workspace /sdd-verify features/shopping_cart.feature
 ```
 
 ---
@@ -397,6 +418,14 @@ GSI-Protocol/
 │       ├── sdd-integration-test.md  # BDD Integration Tests
 │       ├── sdd-impl.md         # Phase 3
 │       └── sdd-verify.md       # Phase 4
+├── .copilot/
+│   └── commands/                # GitHub Copilot 指令
+│       ├── sdd-auto.md         # 自動工作流程
+│       ├── sdd-spec.md         # Phase 1
+│       ├── sdd-arch.md         # Phase 2
+│       ├── sdd-integration-test.md  # BDD Integration Tests
+│       ├── sdd-impl.md         # Phase 3
+│       └── sdd-verify.md       # Phase 4
 ├── docs/                        # 文件
 │   ├── QUICKSTART.md           # 快速入門指南
 │   ├── INSTALL.md              # 安裝指南
@@ -438,9 +467,10 @@ GSI-Protocol/
 
 ## 🔧 需求
 
-- **AI 平台（擇一或兩者）：**
+- **AI 平台（擇一或多個）：**
   - Claude Code CLI，或
-  - Codex (OpenAI)
+  - Codex (OpenAI)，或
+  - GitHub Copilot
 - **安裝工具：**
   - Python 3.10+
   - uvx/pipx（推薦）或 pip
@@ -484,6 +514,7 @@ MIT 授權 - 詳見 [LICENSE](LICENSE) 檔案。
 
 - [Claude Code](https://claude.ai/claude-code) - AI 驅動開發
 - [Codex (OpenAI)](https://openai.com/blog/openai-codex) - AI 程式碼生成
+- [GitHub Copilot](https://github.com/features/copilot) - AI 程式輔助
 - [Gherkin](https://cucumber.io/docs/gherkin/) - BDD 規格語言
 - 靈感來自測試驅動開發和行為驅動開發原則
 

@@ -57,6 +57,32 @@ def print_info(message: str):
     print(f"{Colors.OKCYAN}ℹ{Colors.ENDC} {message}")
 
 
+def prompt_multi_choice(question: str, choices: list[str], default: list[int] = None) -> list[int]:
+    """Prompt user for multiple choices."""
+    print(f"\n{Colors.BOLD}{question}{Colors.ENDC}")
+    for i, choice in enumerate(choices, 1):
+        print(f"{i}) {choice}")
+    
+    default_str = ",".join(map(str, default)) if default else "all"
+    while True:
+        try:
+            response = input(f"Enter choices (comma-separated, e.g., 1,2,3) or 'all' (default: {default_str}): ").strip().lower()
+            if not response:
+                return default if default else list(range(1, len(choices) + 1))
+            if response == 'all':
+                return list(range(1, len(choices) + 1))
+            
+            selected = [int(x.strip()) for x in response.split(',')]
+            if all(1 <= x <= len(choices) for x in selected):
+                return selected
+            print_error(f"Please enter numbers between 1 and {len(choices)}")
+        except ValueError:
+            print_error("Please enter valid numbers separated by commas")
+        except KeyboardInterrupt:
+            print("\n\nInstallation cancelled.")
+            sys.exit(0)
+
+
 def prompt_choice(question: str, choices: list[str], default: int = 1) -> int:
     """Prompt user for a choice."""
     print(f"\n{Colors.BOLD}{question}{Colors.ENDC}")
@@ -121,12 +147,12 @@ def download_commands(repo_url: str = "https://github.com/CodeMachine0121/GSI-Pr
         sys.exit(1)
 
 
-def install_commands(source_dir: Path, platform: str, location: str) -> int:
+def install_commands(source_dir: Path, platforms: list[str], location: str) -> int:
     """Install commands to the specified location."""
     installed_count = 0
     
     if location == "global":
-        if platform in ["claude", "both"]:
+        if "claude" in platforms:
             target_dir = Path.home() / ".claude" / "commands"
             target_dir.mkdir(parents=True, exist_ok=True)
             
@@ -135,9 +161,9 @@ def install_commands(source_dir: Path, platform: str, location: str) -> int:
                 shutil.copy2(file, target_dir / file.name)
                 installed_count += 1
             
-            print_success(f"Installed {installed_count} Claude Code commands to {target_dir}")
+            print_success(f"Installed {len(list((target_dir).glob('sdd-*.md')))} Claude Code commands to {target_dir}")
         
-        if platform in ["codex", "both"]:
+        if "codex" in platforms:
             target_dir = Path.home() / ".codex" / "prompts"
             target_dir.mkdir(parents=True, exist_ok=True)
             
@@ -147,9 +173,20 @@ def install_commands(source_dir: Path, platform: str, location: str) -> int:
                 installed_count += 1
             
             print_success(f"Installed {len(list((target_dir).glob('sdd-*.md')))} Codex prompts to {target_dir}")
+        
+        if "copilot" in platforms:
+            target_dir = Path.home() / ".copilot" / "commands"
+            target_dir.mkdir(parents=True, exist_ok=True)
+            
+            source = source_dir / ".copilot" / "commands"
+            for file in source.glob("sdd-*.md"):
+                shutil.copy2(file, target_dir / file.name)
+                installed_count += 1
+            
+            print_success(f"Installed {len(list((target_dir).glob('sdd-*.md')))} GitHub Copilot commands to {target_dir}")
     
     else:  # project
-        if platform in ["claude", "both"]:
+        if "claude" in platforms:
             target_dir = Path.cwd() / ".claude" / "commands"
             
             if target_dir.exists():
@@ -161,16 +198,16 @@ def install_commands(source_dir: Path, platform: str, location: str) -> int:
                     for file in source.glob("sdd-*.md"):
                         shutil.copy2(file, target_dir / file.name)
                         installed_count += 1
-                    print_success(f"Installed {installed_count} Claude Code commands to {target_dir}")
+                    print_success(f"Installed {len(list((target_dir).glob('sdd-*.md')))} Claude Code commands to {target_dir}")
             else:
                 target_dir.mkdir(parents=True, exist_ok=True)
                 source = source_dir / ".claude" / "commands"
                 for file in source.glob("sdd-*.md"):
                     shutil.copy2(file, target_dir / file.name)
                     installed_count += 1
-                print_success(f"Installed {installed_count} Claude Code commands to {target_dir}")
+                print_success(f"Installed {len(list((target_dir).glob('sdd-*.md')))} Claude Code commands to {target_dir}")
         
-        if platform in ["codex", "both"]:
+        if "codex" in platforms:
             target_dir = Path.cwd() / ".codex" / "prompts"
             
             if target_dir.exists():
@@ -190,6 +227,27 @@ def install_commands(source_dir: Path, platform: str, location: str) -> int:
                     shutil.copy2(file, target_dir / file.name)
                     installed_count += 1
                 print_success(f"Installed {len(list((target_dir).glob('sdd-*.md')))} Codex prompts to {target_dir}")
+        
+        if "copilot" in platforms:
+            target_dir = Path.cwd() / ".copilot" / "commands"
+            
+            if target_dir.exists():
+                if not prompt_yes_no(f"⚠️  {target_dir} already exists. Overwrite?", default=False):
+                    print_warning("Skipping GitHub Copilot installation")
+                else:
+                    target_dir.mkdir(parents=True, exist_ok=True)
+                    source = source_dir / ".copilot" / "commands"
+                    for file in source.glob("sdd-*.md"):
+                        shutil.copy2(file, target_dir / file.name)
+                        installed_count += 1
+                    print_success(f"Installed {len(list((target_dir).glob('sdd-*.md')))} GitHub Copilot commands to {target_dir}")
+            else:
+                target_dir.mkdir(parents=True, exist_ok=True)
+                source = source_dir / ".copilot" / "commands"
+                for file in source.glob("sdd-*.md"):
+                    shutil.copy2(file, target_dir / file.name)
+                    installed_count += 1
+                print_success(f"Installed {len(list((target_dir).glob('sdd-*.md')))} GitHub Copilot commands to {target_dir}")
     
     return installed_count
 
@@ -211,19 +269,19 @@ def main():
     """Main installation flow."""
     print_header()
     
-    # Step 1: Choose platform
-    platform_choice = prompt_choice(
+    # Step 1: Choose platforms
+    platform_choices = prompt_multi_choice(
         "Select AI platform(s) to install:",
         [
-            "Claude Code only",
-            "Codex (OpenAI) only",
-            "Both Claude Code and Codex"
+            "Claude Code",
+            "Codex (OpenAI)",
+            "GitHub Copilot"
         ],
-        default=3
+        default=[1, 2, 3]
     )
     
-    platform_map = {1: "claude", 2: "codex", 3: "both"}
-    platform = platform_map[platform_choice]
+    platform_map = {1: "claude", 2: "codex", 3: "copilot"}
+    platforms = [platform_map[choice] for choice in platform_choices]
     
     # Step 2: Choose installation location
     detected = detect_installation_type()
@@ -257,7 +315,7 @@ def main():
     
     # Step 4: Install
     print()
-    installed_count = install_commands(source_dir, platform, location)
+    installed_count = install_commands(source_dir, platforms, location)
     
     # Step 5: Cleanup
     shutil.rmtree(source_dir.parent)
@@ -267,13 +325,26 @@ def main():
     print("=" * 60)
     print_success(f"Installation complete! Total files installed: {installed_count}")
     print()
-    print("You can now use SDD commands:")
-    print("  /sdd-auto <requirement>")
-    print("  /sdd-spec <requirement>")
-    print("  /sdd-arch <feature.feature>")
-    print("  /sdd-impl <feature.feature>")
-    print("  /sdd-verify <feature.feature>")
-    print()
+    
+    # Platform-specific usage instructions
+    if "claude" in platforms or "codex" in platforms:
+        print("Claude Code / Codex usage:")
+        print("  /sdd-auto <requirement>")
+        print("  /sdd-spec <requirement>")
+        print("  /sdd-arch <feature.feature>")
+        print("  /sdd-impl <feature.feature>")
+        print("  /sdd-verify <feature.feature>")
+        print()
+    
+    if "copilot" in platforms:
+        print("GitHub Copilot usage:")
+        print("  @workspace /sdd-auto <requirement>")
+        print("  @workspace /sdd-spec <requirement>")
+        print("  @workspace /sdd-arch <feature.feature>")
+        print("  @workspace /sdd-impl <feature.feature>")
+        print("  @workspace /sdd-verify <feature.feature>")
+        print()
+    
     print(f"📖 Documentation: {Colors.OKCYAN}https://github.com/CodeMachine0121/GSI-Protocol{Colors.ENDC}")
     print()
 
