@@ -5,6 +5,7 @@
 **支援平台：**
 - ✅ Claude Code
 - ✅ Codex (OpenAI)
+- ✅ GitHub Copilot
 
 ---
 
@@ -25,7 +26,7 @@ curl -sSL https://raw.githubusercontent.com/CodeMachine0121/GSI-Protocol/main/in
 ```
 
 安裝腳本會引導您完成：
-1. 選擇 AI 平台（Claude Code、Codex 或兩者）
+1. 選擇 AI 平台（Claude Code、Codex、GitHub Copilot 或多個）
 2. 選擇安裝位置（全域或當前專案）
 3. 自動完成設定
 
@@ -128,6 +129,20 @@ wget https://raw.githubusercontent.com/CodeMachine0121/GSI-Protocol/main/.codex/
 wget https://raw.githubusercontent.com/CodeMachine0121/GSI-Protocol/main/.codex/prompts/sdd-verify.md
 ```
 
+**GitHub Copilot:**
+```bash
+mkdir -p ~/.copilot/commands
+cd ~/.copilot/commands
+
+# 下載所有指令檔案
+wget https://raw.githubusercontent.com/CodeMachine0121/GSI-Protocol/main/.copilot/commands/sdd-auto.md
+wget https://raw.githubusercontent.com/CodeMachine0121/GSI-Protocol/main/.copilot/commands/sdd-spec.md
+wget https://raw.githubusercontent.com/CodeMachine0121/GSI-Protocol/main/.copilot/commands/sdd-arch.md
+wget https://raw.githubusercontent.com/CodeMachine0121/GSI-Protocol/main/.copilot/commands/sdd-integration-test.md
+wget https://raw.githubusercontent.com/CodeMachine0121/GSI-Protocol/main/.copilot/commands/sdd-impl.md
+wget https://raw.githubusercontent.com/CodeMachine0121/GSI-Protocol/main/.copilot/commands/sdd-verify.md
+```
+
 ### 手動專案內安裝
 
 **在當前專案中：**
@@ -150,8 +165,18 @@ wget https://raw.githubusercontent.com/CodeMachine0121/GSI-Protocol/main/.codex/
 wget https://raw.githubusercontent.com/CodeMachine0121/GSI-Protocol/main/.codex/prompts/sdd-impl.md
 wget https://raw.githubusercontent.com/CodeMachine0121/GSI-Protocol/main/.codex/prompts/sdd-verify.md
 
+# GitHub Copilot
+mkdir -p .copilot/commands
+cd .copilot/commands
+wget https://raw.githubusercontent.com/CodeMachine0121/GSI-Protocol/main/.copilot/commands/sdd-auto.md
+wget https://raw.githubusercontent.com/CodeMachine0121/GSI-Protocol/main/.copilot/commands/sdd-spec.md
+wget https://raw.githubusercontent.com/CodeMachine0121/GSI-Protocol/main/.copilot/commands/sdd-arch.md
+wget https://raw.githubusercontent.com/CodeMachine0121/GSI-Protocol/main/.copilot/commands/sdd-integration-test.md
+wget https://raw.githubusercontent.com/CodeMachine0121/GSI-Protocol/main/.copilot/commands/sdd-impl.md
+wget https://raw.githubusercontent.com/CodeMachine0121/GSI-Protocol/main/.copilot/commands/sdd-verify.md
+
 # 提交到 Git（可選）
-git add .claude/commands/ .codex/prompts/
+git add .claude/commands/ .codex/prompts/ .copilot/commands/
 git commit -m "Add GSI-Protocol workflow commands"
 ```
 
@@ -171,11 +196,18 @@ ls ~/.claude/commands/ | grep sdd
 ls ~/.codex/prompts/ | grep sdd
 ```
 
+**GitHub Copilot (全域安裝):**
+```bash
+ls ~/.copilot/commands/ | grep sdd
+```
+
 **專案內安裝:**
 ```bash
 ls .claude/commands/ | grep sdd
 # 或
 ls .codex/prompts/ | grep sdd
+# 或
+ls .copilot/commands/ | grep sdd
 ```
 
 應該看到：
@@ -201,12 +233,19 @@ sdd-verify.md
 
 ### 快速模式（推薦）
 
+**Claude Code / Codex:**
 ```bash
 /sdd-auto Create a shopping cart in TypeScript with add, remove, and checkout functions
 ```
 
+**GitHub Copilot:**
+```bash
+@workspace /sdd-auto Create a shopping cart in TypeScript with add, remove, and checkout functions
+```
+
 ### 手動模式（逐步執行）
 
+**Claude Code / Codex:**
 ```bash
 # 步驟 1：定義規格
 /sdd-spec Create a shopping cart with add, remove, checkout
@@ -219,6 +258,21 @@ sdd-verify.md
 
 # 步驟 4：驗證實作（審查 src/ 後）
 /sdd-verify features/shopping_cart.feature
+```
+
+**GitHub Copilot:**
+```bash
+# 步驟 1：定義規格
+@workspace /sdd-spec Create a shopping cart with add, remove, checkout
+
+# 步驟 2：設計架構（審查 features/shopping_cart.feature 後）
+@workspace /sdd-arch features/shopping_cart.feature
+
+# 步驟 3：實作程式碼（審查 docs/ 後）
+@workspace /sdd-impl features/shopping_cart.feature
+
+# 步驟 4：驗證實作（審查 src/ 後）
+@workspace /sdd-verify features/shopping_cart.feature
 ```
 
 ---
@@ -245,6 +299,17 @@ sdd-verify.md
 ├── sdd-auto.md
 ├── sdd-spec.md
 ├── sdd-arch.md
+├── sdd-impl.md
+└── sdd-verify.md
+```
+
+**GitHub Copilot:**
+```
+~/.copilot/commands/
+├── sdd-auto.md
+├── sdd-spec.md
+├── sdd-arch.md
+├── sdd-integration-test.md
 ├── sdd-impl.md
 └── sdd-verify.md
 ```

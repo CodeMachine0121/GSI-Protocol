@@ -2,6 +2,18 @@
 
 本文件說明所有可用的 SDD 工作流程指令以及何時使用它們。
 
+## 平台差異
+
+不同 AI 平台使用不同的指令格式：
+
+| 平台 | 格式 | 範例 |
+|------|------|------|
+| Claude Code | `/sdd-*` | `/sdd-auto Create a user login` |
+| Codex (OpenAI) | `/sdd-*` | `/sdd-auto Create a user login` |
+| GitHub Copilot | `@workspace /sdd-*` | `@workspace /sdd-auto Create a user login` |
+
+> 本文件使用 Claude/Codex 格式 (`/sdd-*`)。如使用 GitHub Copilot，請在指令前加上 `@workspace`。
+
 ## 指令概覽
 
 ### 核心工作流程（必需）
@@ -34,12 +46,23 @@
 ```
 
 **範例：**
+
+**Claude Code / Codex:**
 ```bash
 /sdd-auto Implement a VIP discount system in Python where VIP users get 20% off purchases over $100
 
 /sdd-auto Create a referral bonus system in TypeScript. When an invited user makes a purchase over $50, the inviter gets 100 points
 
 /sdd-auto Build a task manager in Go with create, update, delete, and list operations
+```
+
+**GitHub Copilot:**
+```bash
+@workspace /sdd-auto Implement a VIP discount system in Python where VIP users get 20% off purchases over $100
+
+@workspace /sdd-auto Create a referral bonus system in TypeScript. When an invited user makes a purchase over $50, the inviter gets 100 points
+
+@workspace /sdd-auto Build a task manager in Go with create, update, delete, and list operations
 ```
 
 **它會做什麼：**

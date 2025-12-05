@@ -72,10 +72,10 @@ gsi-install
 ============================================================
 
 Select AI platform(s) to install:
-1) Claude Code only
-2) Codex (OpenAI) only
-3) Both Claude Code and Codex
-Enter choice [1-3] (default: 3): 3
+1) Claude Code
+2) Codex (OpenAI)
+3) GitHub Copilot
+Enter choices (comma-separated, e.g., 1,2,3) or 'all' (default: 1,2,3): 1,3
 
 ✓ Git repository detected
 
@@ -86,18 +86,25 @@ Enter choice [1-2] (default: 1): 2
 
 ℹ Downloading GSI-Protocol from GitHub...
 ✓ Downloaded successfully
-✓ Installed 5 Claude Code commands to ~/.claude/commands
-✓ Installed 5 Codex commands to ~/.codex/prompts
+✓ Installed 6 Claude Code commands to ~/.claude/commands
+✓ Installed 6 GitHub Copilot commands to ~/.copilot/commands
 
 ============================================================
-✓ Installation complete! Total files installed: 10
+✓ Installation complete! Total files installed: 12
 
-You can now use SDD commands:
+Claude Code / Codex usage:
   /sdd-auto <requirement>
   /sdd-spec <requirement>
   /sdd-arch <feature.feature>
   /sdd-impl <feature.feature>
   /sdd-verify <feature.feature>
+
+GitHub Copilot usage:
+  @workspace /sdd-auto <requirement>
+  @workspace /sdd-spec <requirement>
+  @workspace /sdd-arch <feature.feature>
+  @workspace /sdd-impl <feature.feature>
+  @workspace /sdd-verify <feature.feature>
 
 📖 Documentation: https://github.com/CodeMachine0121/GSI-Protocol
 ```
@@ -113,6 +120,7 @@ You can now use SDD commands:
 2. **智能偵測**
    - 自動偵測是否在 Git repository
    - 根據環境建議最佳安裝方式
+   - 支援多平台選擇（可選擇安裝一個或多個平台）
 
 3. **安全確認**
    - 覆蓋現有檔案前會詢問確認

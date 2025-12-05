@@ -9,31 +9,42 @@ GSI-Protocol 現在支援多個 AI 平台，讓您可以使用您偏好的 AI �
 ### Claude Code
 - **開發商：** Anthropic
 - **特色：** 強大的程式碼理解與生成能力
+- **指令格式：** `/sdd-*`
 - **指令目錄：** `~/.claude/commands/` (全域) 或 `.claude/commands/` (專案)
 - **狀態：** ✅ 完整支援
 
 ### Codex (OpenAI)
 - **開發商：** OpenAI
 - **特色：** 基於 GPT 技術的程式碼生成
+- **指令格式：** `/sdd-*`
 - **指令目錄：** `~/.codex/prompts/` (全域) 或 `.codex/prompts/` (專案)
+- **狀態：** ✅ 完整支援
+
+### GitHub Copilot
+- **開發商：** GitHub (Microsoft)
+- **特色：** 整合 VS Code 與 CLI 的 AI 程式輔助
+- **指令格式：** `@workspace /sdd-*`
+- **指令目錄：** `~/.copilot/commands/` (全域) 或 `.copilot/commands/` (專案)
 - **狀態：** ✅ 完整支援
 
 ---
 
 ## 📊 平台比較
 
-| 特性 | Claude Code | Codex (OpenAI) |
-|------|------------|----------------|
-| SDD 工作流程 | ✅ | ✅ |
-| Gherkin 規格生成 | ✅ | ✅ |
-| 架構設計 | ✅ | ✅ |
-| 程式碼實作 | ✅ | ✅ |
-| 驗證測試 | ✅ | ✅ |
-| 多語言支援 | ✅ | ✅ |
-| 框架無關 | ✅ | ✅ |
-| 專案感知 | ✅ | ✅ |
+| 特性 | Claude Code | Codex (OpenAI) | GitHub Copilot |
+|------|------------|----------------|----------------|
+| SDD 工作流程 | ✅ | ✅ | ✅ |
+| Gherkin 規格生成 | ✅ | ✅ | ✅ |
+| 架構設計 | ✅ | ✅ | ✅ |
+| 程式碼實作 | ✅ | ✅ | ✅ |
+| 驗證測試 | ✅ | ✅ | ✅ |
+| 多語言支援 | ✅ | ✅ | ✅ |
+| 框架無關 | ✅ | ✅ | ✅ |
+| 專案感知 | ✅ | ✅ | ✅ |
+| 指令格式 | `/sdd-*` | `/sdd-*` | `@workspace /sdd-*` |
+| VS Code 整合 | - | - | ✅ |
 
-**結論：** 兩個平台在 GSI-Protocol 工作流程中功能完全相同，選擇您偏好的平台即可。
+**結論：** 三個平台在 GSI-Protocol 工作流程中功能完全相同，選擇您偏好的平台即可。
 
 ---
 
@@ -44,14 +55,15 @@ GSI-Protocol 現在支援多個 AI 平台，讓您可以使用您偏好的 AI �
 **只用一個平台：**
 ```bash
 # 安裝時選擇您要使用的平台
-curl -sSL https://raw.githubusercontent.com/CodeMachine0121/GSI-Protocol/main/install.sh | bash
-# 選擇選項 1 (Claude Code) 或 2 (Codex)
+uvx gsi-protocol-installer
+# 選擇選項 1 (Claude Code)、2 (Codex) 或 3 (GitHub Copilot)
 ```
 
-**同時使用兩個平台：**
+**同時使用多個平台：**
 ```bash
-# 安裝時選擇選項 3 (Both)
-curl -sSL https://raw.githubusercontent.com/CodeMachine0121/GSI-Protocol/main/install.sh | bash
+# 安裝時可以選擇多個平台（用逗號分隔）
+uvx gsi-protocol-installer
+# 輸入 1,2,3 或 all 來安裝所有平台
 # 可以在不同專案中使用不同的 AI 工具
 ```
 
@@ -69,11 +81,16 @@ curl -sSL https://raw.githubusercontent.com/CodeMachine0121/GSI-Protocol/main/in
 - 標準化程式碼生成
 - OpenAI 生態系整合
 
+### 何時使用 GitHub Copilot
+- VS Code 開發環境
+- CLI 工作流程整合
+- 需要 GitHub 生態系整合
+
 ### 混合使用
 您可以在同一專案中混合使用：
 - Phase 1-2 用 Claude Code（規格與架構）
-- Phase 3-4 用 Codex（實作與驗證）
-- 或反之
+- Phase 3-4 用 Copilot（實作與驗證）
+- 或任意組合
 
 ---
 
@@ -88,8 +105,23 @@ cd ~/.codex/prompts
 curl -sSL https://raw.githubusercontent.com/CodeMachine0121/GSI-Protocol/main/.codex/prompts/sdd-auto.md -o sdd-auto.md
 curl -sSL https://raw.githubusercontent.com/CodeMachine0121/GSI-Protocol/main/.codex/prompts/sdd-spec.md -o sdd-spec.md
 curl -sSL https://raw.githubusercontent.com/CodeMachine0121/GSI-Protocol/main/.codex/prompts/sdd-arch.md -o sdd-arch.md
+curl -sSL https://raw.githubusercontent.com/CodeMachine0121/GSI-Protocol/main/.codex/prompts/sdd-integration-test.md -o sdd-integration-test.md
 curl -sSL https://raw.githubusercontent.com/CodeMachine0121/GSI-Protocol/main/.codex/prompts/sdd-impl.md -o sdd-impl.md
 curl -sSL https://raw.githubusercontent.com/CodeMachine0121/GSI-Protocol/main/.codex/prompts/sdd-verify.md -o sdd-verify.md
+```
+
+### 想加入 GitHub Copilot
+
+```bash
+# 全域安裝
+mkdir -p ~/.copilot/commands
+cd ~/.copilot/commands
+curl -sSL https://raw.githubusercontent.com/CodeMachine0121/GSI-Protocol/main/.copilot/commands/sdd-auto.md -o sdd-auto.md
+curl -sSL https://raw.githubusercontent.com/CodeMachine0121/GSI-Protocol/main/.copilot/commands/sdd-spec.md -o sdd-spec.md
+curl -sSL https://raw.githubusercontent.com/CodeMachine0121/GSI-Protocol/main/.copilot/commands/sdd-arch.md -o sdd-arch.md
+curl -sSL https://raw.githubusercontent.com/CodeMachine0121/GSI-Protocol/main/.copilot/commands/sdd-integration-test.md -o sdd-integration-test.md
+curl -sSL https://raw.githubusercontent.com/CodeMachine0121/GSI-Protocol/main/.copilot/commands/sdd-impl.md -o sdd-impl.md
+curl -sSL https://raw.githubusercontent.com/CodeMachine0121/GSI-Protocol/main/.copilot/commands/sdd-verify.md -o sdd-verify.md
 ```
 
 ### 已安裝 Codex，想加入 Claude Code
@@ -101,6 +133,7 @@ cd ~/.claude/commands
 curl -sSL https://raw.githubusercontent.com/CodeMachine0121/GSI-Protocol/main/.claude/commands/sdd-auto.md -o sdd-auto.md
 curl -sSL https://raw.githubusercontent.com/CodeMachine0121/GSI-Protocol/main/.claude/commands/sdd-spec.md -o sdd-spec.md
 curl -sSL https://raw.githubusercontent.com/CodeMachine0121/GSI-Protocol/main/.claude/commands/sdd-arch.md -o sdd-arch.md
+curl -sSL https://raw.githubusercontent.com/CodeMachine0121/GSI-Protocol/main/.claude/commands/sdd-integration-test.md -o sdd-integration-test.md
 curl -sSL https://raw.githubusercontent.com/CodeMachine0121/GSI-Protocol/main/.claude/commands/sdd-impl.md -o sdd-impl.md
 curl -sSL https://raw.githubusercontent.com/CodeMachine0121/GSI-Protocol/main/.claude/commands/sdd-verify.md -o sdd-verify.md
 ```
@@ -116,6 +149,7 @@ curl -sSL https://raw.githubusercontent.com/CodeMachine0121/GSI-Protocol/main/.c
 ├── sdd-auto.md
 ├── sdd-spec.md
 ├── sdd-arch.md
+├── sdd-integration-test.md
 ├── sdd-impl.md
 └── sdd-verify.md
 
@@ -123,6 +157,15 @@ curl -sSL https://raw.githubusercontent.com/CodeMachine0121/GSI-Protocol/main/.c
 ├── sdd-auto.md
 ├── sdd-spec.md
 ├── sdd-arch.md
+├── sdd-integration-test.md
+├── sdd-impl.md
+└── sdd-verify.md
+
+~/.copilot/commands/       # GitHub Copilot 全域指令
+├── sdd-auto.md
+├── sdd-spec.md
+├── sdd-arch.md
+├── sdd-integration-test.md
 ├── sdd-impl.md
 └── sdd-verify.md
 
@@ -139,6 +182,7 @@ your-project/
 your-project/
 ├── .claude/commands/      # Claude Code 專案指令（可選）
 ├── .codex/prompts/        # Codex 專案 prompts（可選）
+├── .copilot/commands/     # GitHub Copilot 專案指令（可選）
 ├── features/
 ├── docs/features/
 └── src/
@@ -150,22 +194,24 @@ your-project/
 
 ### Q: 指令內容有差異嗎？
 
-**A:** 有些許差異。兩個平台的**工作流程和輸出格式完全相同**，但指令格式略有不同：
+**A:** 有些許差異。三個平台的**工作流程和輸出格式完全相同**，但指令格式略有不同：
 
-- **Claude Code**: 使用 `{{prompt}}` 變數來接收參數
-- **Codex**: 使用 `argument-hint` 欄位和 `$1` 參數
+- **Claude Code**: 使用 `{{prompt}}` 變數，指令前綴為 `/sdd-*`
+- **Codex**: 使用 `{{prompt}}` 變數，指令前綴為 `/sdd-*`
+- **GitHub Copilot**: 使用 `{{ARG}}` 變數，指令前綴為 `@workspace /sdd-*`
 
 這些差異是為了符合各平台的技術規範，但不影響實際使用體驗。
 
-### Q: 可以同時安裝兩個平台嗎？
+### Q: 可以同時安裝多個平台嗎？
 
-**A:** 可以！您可以同時安裝，然後根據需求選擇使用哪個 AI 工具。
+**A:** 可以！您可以同時安裝所有三個平台，然後根據需求選擇使用哪個 AI 工具。
 
 ### Q: 哪個平台比較好？
 
-**A:** 兩者都很優秀，取決於您的偏好和使用情境：
+**A:** 三者都很優秀，取決於您的偏好和使用情境：
 - 如果您已經在使用 Claude Code → 繼續使用
 - 如果您偏好 OpenAI 生態系 → 使用 Codex
+- 如果您喜歡 VS Code 與 CLI 整合 → 使用 GitHub Copilot
 - 不確定 → 同時安裝，實際使用後再決定
 
 ### Q: 生成的檔案格式相容嗎？

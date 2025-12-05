@@ -11,7 +11,7 @@ uvx gsi-protocol-installer
 ```
 
 安裝程式會引導您選擇：
-1. AI 平台（Claude Code、Codex 或兩者）
+1. AI 平台（Claude Code、Codex、GitHub Copilot 或多個）
 2. 安裝位置（全域或當前專案）
 
 ### 或者：手動全域安裝
@@ -32,8 +32,20 @@ mkdir -p ~/.codex/prompts && cd ~/.codex/prompts
 wget https://raw.githubusercontent.com/CodeMachine0121/GSI-Protocol/main/.codex/prompts/sdd-auto.md
 wget https://raw.githubusercontent.com/CodeMachine0121/GSI-Protocol/main/.codex/prompts/sdd-spec.md
 wget https://raw.githubusercontent.com/CodeMachine0121/GSI-Protocol/main/.codex/prompts/sdd-arch.md
+wget https://raw.githubusercontent.com/CodeMachine0121/GSI-Protocol/main/.codex/prompts/sdd-integration-test.md
 wget https://raw.githubusercontent.com/CodeMachine0121/GSI-Protocol/main/.codex/prompts/sdd-impl.md
 wget https://raw.githubusercontent.com/CodeMachine0121/GSI-Protocol/main/.codex/prompts/sdd-verify.md
+```
+
+**GitHub Copilot:**
+```bash
+mkdir -p ~/.copilot/commands && cd ~/.copilot/commands
+wget https://raw.githubusercontent.com/CodeMachine0121/GSI-Protocol/main/.copilot/commands/sdd-auto.md
+wget https://raw.githubusercontent.com/CodeMachine0121/GSI-Protocol/main/.copilot/commands/sdd-spec.md
+wget https://raw.githubusercontent.com/CodeMachine0121/GSI-Protocol/main/.copilot/commands/sdd-arch.md
+wget https://raw.githubusercontent.com/CodeMachine0121/GSI-Protocol/main/.copilot/commands/sdd-integration-test.md
+wget https://raw.githubusercontent.com/CodeMachine0121/GSI-Protocol/main/.copilot/commands/sdd-impl.md
+wget https://raw.githubusercontent.com/CodeMachine0121/GSI-Protocol/main/.copilot/commands/sdd-verify.md
 ```
 
 現在在任何專案都能用！
@@ -47,7 +59,10 @@ ls ~/.claude/commands/ | grep sdd
 # Codex 全域安裝驗證
 ls ~/.codex/prompts/ | grep sdd
 
-# 應該看到: sdd-auto.md, sdd-spec.md, sdd-arch.md, sdd-impl.md, sdd-verify.md
+# GitHub Copilot 全域安裝驗證
+ls ~/.copilot/commands/ | grep sdd
+
+# 應該看到: sdd-auto.md, sdd-spec.md, sdd-arch.md, sdd-integration-test.md, sdd-impl.md, sdd-verify.md
 ```
 
 > 📖 詳細安裝說明請參考 [INSTALL.md](INSTALL.md) 或 [Python 安裝器](PYTHON_INSTALLER.md)
@@ -63,10 +78,16 @@ ls ~/.codex/prompts/ | grep sdd
 
 ### 步驟 2：執行自動工作流程
 
-在您的 AI 工具（Claude Code 或 Codex）中，使用 `/sdd-auto` 指令：
+在您的 AI 工具（Claude Code、Codex 或 GitHub Copilot）中，使用 `/sdd-auto` 或 `@workspace /sdd-auto` 指令：
 
+**Claude Code / Codex:**
 ```
 /sdd-auto I need a discount system where VIP users get 20% off purchases over $100
+```
+
+**GitHub Copilot:**
+```
+@workspace /sdd-auto I need a discount system where VIP users get 20% off purchases over $100
 ```
 
 代理會自動：
