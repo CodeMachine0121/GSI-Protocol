@@ -4,8 +4,8 @@ description: BDD - 從 feature file 和架構文件生成 integration tests（�
 
 # SDD-INTEGRATION-TEST: BDD Integration Tests
 
-**輸入：** {{prompt}}  
-格式：`<feature_file_path>`  
+**輸入：** $1
+格式：`<feature_file_path>`
 範例：`features/shopping_cart.feature`
 
 **角色：** 協助開發者實踐 BDD（行為驅動開發）測試先行
