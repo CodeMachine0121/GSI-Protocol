@@ -93,17 +93,34 @@ echo ""
 
 # Detect installation type
 if [ -d ".git" ]; then
-    echo "✅ Git repository detected - Installing to current project"
-    INSTALL_TYPE="project"
+    echo "✅ Git repository detected"
+    echo ""
+    echo "Please choose installation type:"
+    echo "1) Install to current project"
+    echo "2) Install globally"
+    read -p "Enter choice [1-2] (default: 1): " choice < /dev/tty
+    
+    case ${choice:-1} in
+        1)
+            INSTALL_TYPE="project"
+            ;;
+        2)
+            INSTALL_TYPE="global"
+            ;;
+        *)
+            echo "Invalid choice. Exiting."
+            exit 1
+            ;;
+    esac
 else
     echo "❌ Not a git repository"
     echo ""
     echo "Please choose installation type:"
     echo "1) Install to current directory (manual project)"
     echo "2) Install globally"
-    read -p "Enter choice [1-2]: " choice < /dev/tty
+    read -p "Enter choice [1-2] (default: 2): " choice < /dev/tty
 
-    case $choice in
+    case ${choice:-2} in
         1)
             INSTALL_TYPE="project"
             ;;
@@ -123,6 +140,13 @@ echo ""
 echo "Repository: $REPO_URL"
 echo "(Set SDD_REPO_URL environment variable to override)"
 echo ""
+
+# Check if git is available
+if ! command -v git &> /dev/null; then
+    echo "❌ Git is not installed. Please install git first."
+    echo "   You can download git from: https://git-scm.com/downloads"
+    exit 1
+fi
 
 # Global installation
 if [ "$INSTALL_TYPE" = "global" ]; then

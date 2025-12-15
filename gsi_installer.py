@@ -142,9 +142,6 @@ def download_commands(repo_url: str = "https://github.com/CodeMachine0121/GSI-Pr
     except subprocess.CalledProcessError as e:
         print_error(f"Failed to download: {e.stderr}")
         sys.exit(1)
-    except FileNotFoundError:
-        print_error("Git is not installed. Please install git first.")
-        sys.exit(1)
 
 
 def install_commands(source_dir: Path, platforms: list[str], location: str, claude_type: str = "both") -> int:
@@ -306,6 +303,19 @@ def detect_installation_type() -> str:
         return "unknown"
 
 
+def check_git_available() -> bool:
+    """Check if git is available."""
+    try:
+        subprocess.run(
+            ["git", "--version"],
+            capture_output=True,
+            check=True
+        )
+        return True
+    except (subprocess.CalledProcessError, FileNotFoundError):
+        return False
+
+
 def main():
     """Main installation flow."""
     print_header()
@@ -365,18 +375,24 @@ def main():
     
     location = "project" if location_choice == 1 else "global"
     
-    # Step 3: Download
+    # Step 3: Check git availability (only needed for downloading)
+    if not check_git_available():
+        print_error("Git is not installed. Please install git first.")
+        print_info("You can download git from: https://git-scm.com/downloads")
+        sys.exit(1)
+    
+    # Step 4: Download
     print()
     source_dir = download_commands()
     
-    # Step 4: Install
+    # Step 5: Install
     print()
     installed_count = install_commands(source_dir, platforms, location, claude_type)
     
-    # Step 5: Cleanup
+    # Step 6: Cleanup
     shutil.rmtree(source_dir.parent)
     
-    # Step 6: Success message
+    # Step 7: Success message
     print()
     print("=" * 60)
     print_success(f"Installation complete! Total files installed: {installed_count}")
