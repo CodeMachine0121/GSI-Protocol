@@ -1,3 +1,10 @@
+---
+name: SDD 編排器
+description: 協調 PM、架構師、工程師和 QA,自動執行完整的 SDD 開發流程
+model: sonnet
+color: purple
+---
+
 # SDD 編排器 (SDD Orchestrator)
 
 ## 角色定位

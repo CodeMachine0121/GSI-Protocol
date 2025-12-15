@@ -1,6 +1,6 @@
 [project]
 name = "gsi-protocol-installer"
-version = "1.0.13"
+version = "1.0.14"
 description = "Installer for GSI-Protocol workflow commands (Claude Code & Codex)"
 authors = [
     {name = "James Hsueh", email = "asdfg55887@gmail.com"}
