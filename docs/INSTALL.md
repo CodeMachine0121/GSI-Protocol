@@ -27,14 +27,20 @@ curl -sSL https://raw.githubusercontent.com/CodeMachine0121/GSI-Protocol/main/in
 
 安裝腳本會引導您完成：
 1. 選擇 AI 平台（Claude Code、Codex、GitHub Copilot 或多個）
-2. 選擇安裝位置（全域或當前專案）
-3. 自動完成設定
+2. **對於 Claude Code**：選擇要安裝的組件
+   - Commands only（slash 指令）
+   - Sub-agents only（專業 AI 代理）
+   - Both（推薦：完整功能）
+3. 選擇安裝位置（全域或當前專案）
+4. 自動完成設定
 
 ---
 
 ## 方法二：手動全域安裝
 
 這是最乾淨的方式，安裝一次後所有專案都能使用，不會污染任何專案目錄。
+
+**Claude Code - Commands（推薦）:**
 
 ```bash
 # 1. 創建全域指令目錄
@@ -44,8 +50,24 @@ mkdir -p ~/.claude/commands
 curl -sSL https://raw.githubusercontent.com/CodeMachine0121/GSI-Protocol/main/.claude/commands/sdd-auto.md -o ~/.claude/commands/sdd-auto.md
 curl -sSL https://raw.githubusercontent.com/CodeMachine0121/GSI-Protocol/main/.claude/commands/sdd-spec.md -o ~/.claude/commands/sdd-spec.md
 curl -sSL https://raw.githubusercontent.com/CodeMachine0121/GSI-Protocol/main/.claude/commands/sdd-arch.md -o ~/.claude/commands/sdd-arch.md
+curl -sSL https://raw.githubusercontent.com/CodeMachine0121/GSI-Protocol/main/.claude/commands/sdd-integration-test.md -o ~/.claude/commands/sdd-integration-test.md
 curl -sSL https://raw.githubusercontent.com/CodeMachine0121/GSI-Protocol/main/.claude/commands/sdd-impl.md -o ~/.claude/commands/sdd-impl.md
 curl -sSL https://raw.githubusercontent.com/CodeMachine0121/GSI-Protocol/main/.claude/commands/sdd-verify.md -o ~/.claude/commands/sdd-verify.md
+```
+
+**Claude Code - Sub-Agents（可選，提供更高品質）:**
+
+```bash
+# 1. 創建全域 agents 目錄
+mkdir -p ~/.claude/agents
+
+# 2. 下載專業 AI 代理定義
+curl -sSL https://raw.githubusercontent.com/CodeMachine0121/GSI-Protocol/main/.claude/agents/sdd-orchestrator.md -o ~/.claude/agents/sdd-orchestrator.md
+curl -sSL https://raw.githubusercontent.com/CodeMachine0121/GSI-Protocol/main/.claude/agents/pm-spec-writer.md -o ~/.claude/agents/pm-spec-writer.md
+curl -sSL https://raw.githubusercontent.com/CodeMachine0121/GSI-Protocol/main/.claude/agents/architect-designer.md -o ~/.claude/agents/architect-designer.md
+curl -sSL https://raw.githubusercontent.com/CodeMachine0121/GSI-Protocol/main/.claude/agents/bdd-test-engineer.md -o ~/.claude/agents/bdd-test-engineer.md
+curl -sSL https://raw.githubusercontent.com/CodeMachine0121/GSI-Protocol/main/.claude/agents/implementation-engineer.md -o ~/.claude/agents/implementation-engineer.md
+curl -sSL https://raw.githubusercontent.com/CodeMachine0121/GSI-Protocol/main/.claude/agents/qa-verifier.md -o ~/.claude/agents/qa-verifier.md
 
 # 3. 完成！現在在任何專案都能使用
 cd ~/your-project
@@ -65,9 +87,15 @@ cd ~/your-project
 ============================================================
 
 Select AI platform(s) to install:
-1) Claude Code only
-2) Codex (OpenAI) only
-3) Both Claude Code and Codex
+1) Claude Code
+2) Codex (OpenAI)
+3) GitHub Copilot
+Enter choices (comma-separated, e.g., 1,2,3) or 'all' (default: all): 1
+
+What would you like to install for Claude Code?
+1) Commands only
+2) Sub-agents only
+3) Both commands and sub-agents
 Enter choice [1-3] (default: 3): 3
 
 ✓ Git repository detected
@@ -79,13 +107,13 @@ Enter choice [1-2] (default: 1): 2
 
 ℹ Downloading GSI-Protocol from GitHub...
 ✓ Downloaded successfully
-✓ Installed 5 Claude Code commands to ~/.claude/commands
-✓ Installed 5 Codex commands to ~/.codex/prompts
+✓ Installed 6 Claude Code commands to ~/.claude/commands
+✓ Installed 6 Claude Code agents to ~/.claude/agents
 
 ============================================================
-✓ Installation complete! Total files installed: 10
+✓ Installation complete! Total files installed: 12
 
-You can now use SDD commands:
+Claude Code / Codex usage:
   /sdd-auto <requirement>
   /sdd-spec <requirement>
   /sdd-arch <feature.feature>
@@ -285,12 +313,21 @@ sdd-verify.md
 
 **Claude Code:**
 ```
-~/.claude/commands/
-├── sdd-auto.md
-├── sdd-spec.md
-├── sdd-arch.md
-├── sdd-impl.md
-└── sdd-verify.md
+~/.claude/
+├── commands/                    # Slash 指令
+│   ├── sdd-auto.md
+│   ├── sdd-spec.md
+│   ├── sdd-arch.md
+│   ├── sdd-integration-test.md
+│   ├── sdd-impl.md
+│   └── sdd-verify.md
+└── agents/                      # 專業 AI 代理（可選）
+    ├── sdd-orchestrator.md
+    ├── pm-spec-writer.md
+    ├── architect-designer.md
+    ├── bdd-test-engineer.md
+    ├── implementation-engineer.md
+    └── qa-verifier.md
 ```
 
 **Codex (OpenAI):**
@@ -332,18 +369,27 @@ your-project/
 
 ```
 your-project/
-├── .claude/               # Claude Code 指令（可選）
-│   └── commands/
-│       ├── sdd-auto.md
-│       ├── sdd-spec.md
-│       ├── sdd-arch.md
-│       ├── sdd-impl.md
-│       └── sdd-verify.md
+├── .claude/               # Claude Code（可選）
+│   ├── commands/          # Slash 指令
+│   │   ├── sdd-auto.md
+│   │   ├── sdd-spec.md
+│   │   ├── sdd-arch.md
+│   │   ├── sdd-integration-test.md
+│   │   ├── sdd-impl.md
+│   │   └── sdd-verify.md
+│   └── agents/            # 專業 AI 代理（可選）
+│       ├── sdd-orchestrator.md
+│       ├── pm-spec-writer.md
+│       ├── architect-designer.md
+│       ├── bdd-test-engineer.md
+│       ├── implementation-engineer.md
+│       └── qa-verifier.md
 ├── .codex/                # Codex 指令（可選）
-│   └── commands/
+│   └── prompts/
 │       ├── sdd-auto.md
 │       ├── sdd-spec.md
 │       ├── sdd-arch.md
+│       ├── sdd-integration-test.md
 │       ├── sdd-impl.md
 │       └── sdd-verify.md
 ├── features/              # Phase 1：Gherkin 規格
@@ -407,7 +453,16 @@ uvx gsi-protocol-installer
 
 **Claude Code:**
 ```bash
+# 移除 commands
 rm -f ~/.claude/commands/sdd-*.md
+
+# 移除 agents（如果有安裝）
+rm -f ~/.claude/agents/sdd-*.md
+rm -f ~/.claude/agents/pm-*.md
+rm -f ~/.claude/agents/architect-*.md
+rm -f ~/.claude/agents/bdd-*.md
+rm -f ~/.claude/agents/implementation-*.md
+rm -f ~/.claude/agents/qa-*.md
 ```
 
 **Codex (OpenAI):**
@@ -455,6 +510,15 @@ rm -rf .codex/
 ### Q：Claude Code 和 Codex 的指令內容有差異嗎？
 
 **A：** 沒有，兩個平台的指令內容完全相同，只是目錄位置不同。這樣設計是為了讓兩個平台都能使用相同的工作流程。
+
+### Q：Claude Code 的 Commands 和 Sub-Agents 有什麼差異？
+
+**A：**
+- **Commands（Slash 指令）**：簡單直接的工作流程執行，使用 `/sdd-*` 指令快速完成任務
+- **Sub-Agents（專業 AI 代理）**：6 個專業角色（PM、架構師、BDD 工程師、實作工程師、QA、編排器）協同工作，提供更高品質與一致性
+- **推薦安裝兩者**：Commands 用於快速開發，Sub-Agents 用於需要高品質產出的場景
+
+詳見 [Sub-Agents 說明文件](SUB_AGENTS.md)
 
 ### Q：需要安裝 Python 嗎？
 

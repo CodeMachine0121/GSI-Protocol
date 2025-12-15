@@ -63,13 +63,17 @@ python3 gsi_installer.py
 
 安裝程式會引導您：
 
-1. 選擇 AI 平台（Claude Code、Codex 或兩者）
-2. 選擇安裝位置（全域或當前專案）
-3. 自動完成安裝
+1. 選擇 AI 平台（Claude Code、Codex、GitHub Copilot 或多個）
+2. **對於 Claude Code**：選擇要安裝的組件
+   - Commands only（slash 指令）
+   - Sub-agents only（專業 AI 代理）
+   - Both（推薦：完整功能）
+3. 選擇安裝位置（全域或當前專案）
+4. 自動完成安裝
 
 **選項 4：手動全域安裝**
 
-**Claude Code:**
+**Claude Code - Commands（Slash 指令）:**
 
 ```bash
 mkdir -p ~/.claude/commands
@@ -80,6 +84,19 @@ curl -sSL https://raw.githubusercontent.com/CodeMachine0121/GSI-Protocol/main/.c
 curl -sSL https://raw.githubusercontent.com/CodeMachine0121/GSI-Protocol/main/.claude/commands/sdd-integration-test.md -o sdd-integration-test.md
 curl -sSL https://raw.githubusercontent.com/CodeMachine0121/GSI-Protocol/main/.claude/commands/sdd-impl.md -o sdd-impl.md
 curl -sSL https://raw.githubusercontent.com/CodeMachine0121/GSI-Protocol/main/.claude/commands/sdd-verify.md -o sdd-verify.md
+```
+
+**Claude Code - Sub-Agents（專業 AI 代理）:**
+
+```bash
+mkdir -p ~/.claude/agents
+cd ~/.claude/agents
+curl -sSL https://raw.githubusercontent.com/CodeMachine0121/GSI-Protocol/main/.claude/agents/sdd-orchestrator.md -o sdd-orchestrator.md
+curl -sSL https://raw.githubusercontent.com/CodeMachine0121/GSI-Protocol/main/.claude/agents/pm-spec-writer.md -o pm-spec-writer.md
+curl -sSL https://raw.githubusercontent.com/CodeMachine0121/GSI-Protocol/main/.claude/agents/architect-designer.md -o architect-designer.md
+curl -sSL https://raw.githubusercontent.com/CodeMachine0121/GSI-Protocol/main/.claude/agents/bdd-test-engineer.md -o bdd-test-engineer.md
+curl -sSL https://raw.githubusercontent.com/CodeMachine0121/GSI-Protocol/main/.claude/agents/implementation-engineer.md -o implementation-engineer.md
+curl -sSL https://raw.githubusercontent.com/CodeMachine0121/GSI-Protocol/main/.claude/agents/qa-verifier.md -o qa-verifier.md
 ```
 
 **Codex (OpenAI):**
@@ -109,6 +126,15 @@ curl -sSL https://raw.githubusercontent.com/CodeMachine0121/GSI-Protocol/main/.g
 ```
 
 完成後，可在任何專案中使用 `/sdd-auto`、`/sdd-spec` 等全域指令（Claude/Codex）或 `@workspace /sdd-auto`、`@workspace /sdd-spec`（Copilot）。
+
+**💡 Claude Code 用戶提示：Commands vs Sub-Agents**
+
+Claude Code 支援兩種模式：
+- **Commands（Slash 指令）**：簡單直接的工作流程執行，適合快速開發
+- **Sub-Agents（專業 AI 代理）**：6 個專業角色代理協同工作，提供更高品質與一致性
+- **推薦安裝兩者**：獲得完整功能和最佳開發體驗
+
+詳見 [Sub-Agents 說明文件](docs/SUB_AGENTS.md)
 
 > 📖 查看 [安裝指南](docs/INSTALL.md) 了解詳細說明
 
@@ -148,6 +174,7 @@ cd your-project
 | **[安裝指南](docs/INSTALL.md)**               | 詳細安裝說明              |
 | **[Python 安裝器](docs/PYTHON_INSTALLER.md)** | uvx 安裝方式（推薦）      |
 | **[平台支援](docs/PLATFORM_SUPPORT.md)**      | Claude Code vs Codex 比較 |
+| **[Sub-Agents 專業代理](docs/SUB_AGENTS.md)** | 6 個專業 AI 代理系統說明  |
 | **[指令參考](docs/COMMANDS.md)**              | 完整指令文件              |
 | **[語言指南](docs/LANGUAGE_GUIDE.md)**        | 多語言支援指南            |
 | **[工作流程定義](docs/expected_workflow.md)** | 詳細方法論                |
@@ -156,6 +183,8 @@ cd your-project
 ---
 
 ## 🔄 工作流程概覽
+
+> 💡 每個階段由專業的 [Sub-Agent](docs/SUB_AGENTS.md) 執行，確保輸出品質與一致性
 
 ### 核心四階段（必需）
 
@@ -403,13 +432,20 @@ GSI-Protocol/
 ├── gsi_installer.py             # Python 安裝器
 ├── pyproject.toml               # Python 專案配置
 ├── .claude/
-│   └── commands/                # Claude Code slash 指令
-│       ├── sdd-auto.md         # 自動工作流程
-│       ├── sdd-spec.md         # Phase 1
-│       ├── sdd-arch.md         # Phase 2
-│       ├── sdd-integration-test.md  # BDD Integration Tests
-│       ├── sdd-impl.md         # Phase 3
-│       └── sdd-verify.md       # Phase 4
+│   ├── commands/                # Claude Code slash 指令
+│   │   ├── sdd-auto.md         # 自動工作流程
+│   │   ├── sdd-spec.md         # Phase 1
+│   │   ├── sdd-arch.md         # Phase 2
+│   │   ├── sdd-integration-test.md  # BDD Integration Tests
+│   │   ├── sdd-impl.md         # Phase 3
+│   │   └── sdd-verify.md       # Phase 4
+│   └── agents/                  # 專業 Sub-Agents 定義
+│       ├── sdd-orchestrator.md      # SDD 編排器
+│       ├── pm-spec-writer.md        # PM 規格撰寫專家
+│       ├── architect-designer.md    # 系統架構設計師
+│       ├── bdd-test-engineer.md     # BDD 測試工程師
+│       ├── implementation-engineer.md  # 實作工程師
+│       └── qa-verifier.md           # QA 驗證師
 ├── .codex/
 │   └── prompts/                 # Codex (OpenAI) prompts
 │       ├── sdd-auto.md         # 自動工作流程
@@ -431,6 +467,7 @@ GSI-Protocol/
 │   ├── INSTALL.md              # 安裝指南
 │   ├── PYTHON_INSTALLER.md     # Python 安裝器說明
 │   ├── PLATFORM_SUPPORT.md     # 平台支援說明
+│   ├── SUB_AGENTS.md           # Sub-Agents 專業代理系統說明
 │   ├── COMMANDS.md             # 指令參考
 │   ├── LANGUAGE_GUIDE.md       # 語言支援
 │   └── expected_workflow.md    # 工作流程細節
@@ -483,6 +520,7 @@ GSI-Protocol/
 
 - 📝 [快速入門（5 分鐘）](docs/QUICKSTART.md)
 - 📚 [完整文件](docs/)
+- ⚙️ [Sub-Agents 專業代理系統](docs/SUB_AGENTS.md)
 - 🌍 [語言支援](docs/LANGUAGE_GUIDE.md)
 - 💬 [GitHub 討論](https://github.com/CodeMachine0121/GSI-Protocol/discussions)
 

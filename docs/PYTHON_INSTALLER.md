@@ -75,7 +75,13 @@ Select AI platform(s) to install:
 1) Claude Code
 2) Codex (OpenAI)
 3) GitHub Copilot
-Enter choices (comma-separated, e.g., 1,2,3) or 'all' (default: 1,2,3): 1,3
+Enter choices (comma-separated, e.g., 1,2,3) or 'all' (default: all): 1
+
+What would you like to install for Claude Code?
+1) Commands only
+2) Sub-agents only
+3) Both commands and sub-agents
+Enter choice [1-3] (default: 3): 3
 
 ✓ Git repository detected
 
@@ -87,7 +93,7 @@ Enter choice [1-2] (default: 1): 2
 ℹ Downloading GSI-Protocol from GitHub...
 ✓ Downloaded successfully
 ✓ Installed 6 Claude Code commands to ~/.claude/commands
-✓ Installed 6 GitHub Copilot commands to ~/.copilot/commands
+✓ Installed 6 Claude Code agents to ~/.claude/agents
 
 ============================================================
 ✓ Installation complete! Total files installed: 12
@@ -121,6 +127,7 @@ GitHub Copilot usage:
    - 自動偵測是否在 Git repository
    - 根據環境建議最佳安裝方式
    - 支援多平台選擇（可選擇安裝一個或多個平台）
+   - Claude Code 支援選擇安裝 Commands、Sub-Agents 或兩者
 
 3. **安全確認**
    - 覆蓋現有檔案前會詢問確認
@@ -240,16 +247,27 @@ curl -LsSf https://astral.sh/uv/install.sh | sh
 
 **A:** 目前不行，安裝器需要從 GitHub 下載指令檔案。未來可能會支援離線安裝包。
 
+### Q: Claude Code 的 Commands 和 Sub-Agents 有什麼差異？
+
+**A:**
+- **Commands（Slash 指令）**：簡單直接的工作流程執行，使用 `/sdd-*` 指令快速完成任務
+- **Sub-Agents（專業 AI 代理）**：6 個專業角色代理協同工作，提供更高品質與一致性
+- **推薦安裝兩者**：獲得完整功能和最佳開發體驗
+
+詳見 [Sub-Agents 說明文件](SUB_AGENTS.md)
+
 ### Q: 如何卸載？
 
 **A:** 手動刪除指令目錄：
 ```bash
 # 全域安裝
 rm -rf ~/.claude/commands/sdd-*
+rm -rf ~/.claude/agents/*.md  # 如果有安裝 agents
 rm -rf ~/.codex/prompts/sdd-*
 
 # 專案安裝
 rm -rf .claude/commands/sdd-*
+rm -rf .claude/agents/*.md  # 如果有安裝 agents
 rm -rf .codex/prompts/sdd-*
 ```
 

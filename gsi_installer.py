@@ -147,21 +147,36 @@ def download_commands(repo_url: str = "https://github.com/CodeMachine0121/GSI-Pr
         sys.exit(1)
 
 
-def install_commands(source_dir: Path, platforms: list[str], location: str) -> int:
+def install_commands(source_dir: Path, platforms: list[str], location: str, claude_type: str = "both") -> int:
     """Install commands to the specified location."""
     installed_count = 0
-    
+
     if location == "global":
         if "claude" in platforms:
-            target_dir = Path.home() / ".claude" / "commands"
-            target_dir.mkdir(parents=True, exist_ok=True)
-            
-            source = source_dir / ".claude" / "commands"
-            for file in source.glob("sdd-*.md"):
-                shutil.copy2(file, target_dir / file.name)
-                installed_count += 1
-            
-            print_success(f"Installed {len(list((target_dir).glob('sdd-*.md')))} Claude Code commands to {target_dir}")
+            # Install commands if requested
+            if claude_type in ["commands", "both"]:
+                target_dir = Path.home() / ".claude" / "commands"
+                target_dir.mkdir(parents=True, exist_ok=True)
+
+                source = source_dir / ".claude" / "commands"
+                for file in source.glob("sdd-*.md"):
+                    shutil.copy2(file, target_dir / file.name)
+                    installed_count += 1
+
+                print_success(f"Installed {len(list((target_dir).glob('sdd-*.md')))} Claude Code commands to {target_dir}")
+
+            # Install agents if requested
+            if claude_type in ["agents", "both"]:
+                target_dir = Path.home() / ".claude" / "agents"
+                target_dir.mkdir(parents=True, exist_ok=True)
+
+                source = source_dir / ".claude" / "agents"
+                if source.exists():
+                    for file in source.glob("*.md"):
+                        shutil.copy2(file, target_dir / file.name)
+                        installed_count += 1
+
+                    print_success(f"Installed {len(list((target_dir).glob('*.md')))} Claude Code agents to {target_dir}")
         
         if "codex" in platforms:
             target_dir = Path.home() / ".codex" / "prompts"
@@ -187,11 +202,20 @@ def install_commands(source_dir: Path, platforms: list[str], location: str) -> i
     
     else:  # project
         if "claude" in platforms:
-            target_dir = Path.cwd() / ".claude" / "commands"
-            
-            if target_dir.exists():
-                if not prompt_yes_no(f"⚠️  {target_dir} already exists. Overwrite?", default=False):
-                    print_warning("Skipping Claude Code installation")
+            # Install commands if requested
+            if claude_type in ["commands", "both"]:
+                target_dir = Path.cwd() / ".claude" / "commands"
+
+                if target_dir.exists():
+                    if not prompt_yes_no(f"⚠️  {target_dir} already exists. Overwrite?", default=False):
+                        print_warning("Skipping Claude Code commands installation")
+                    else:
+                        target_dir.mkdir(parents=True, exist_ok=True)
+                        source = source_dir / ".claude" / "commands"
+                        for file in source.glob("sdd-*.md"):
+                            shutil.copy2(file, target_dir / file.name)
+                            installed_count += 1
+                        print_success(f"Installed {len(list((target_dir).glob('sdd-*.md')))} Claude Code commands to {target_dir}")
                 else:
                     target_dir.mkdir(parents=True, exist_ok=True)
                     source = source_dir / ".claude" / "commands"
@@ -199,13 +223,30 @@ def install_commands(source_dir: Path, platforms: list[str], location: str) -> i
                         shutil.copy2(file, target_dir / file.name)
                         installed_count += 1
                     print_success(f"Installed {len(list((target_dir).glob('sdd-*.md')))} Claude Code commands to {target_dir}")
-            else:
-                target_dir.mkdir(parents=True, exist_ok=True)
-                source = source_dir / ".claude" / "commands"
-                for file in source.glob("sdd-*.md"):
-                    shutil.copy2(file, target_dir / file.name)
-                    installed_count += 1
-                print_success(f"Installed {len(list((target_dir).glob('sdd-*.md')))} Claude Code commands to {target_dir}")
+
+            # Install agents if requested
+            if claude_type in ["agents", "both"]:
+                target_dir = Path.cwd() / ".claude" / "agents"
+
+                if target_dir.exists():
+                    if not prompt_yes_no(f"⚠️  {target_dir} already exists. Overwrite?", default=False):
+                        print_warning("Skipping Claude Code agents installation")
+                    else:
+                        target_dir.mkdir(parents=True, exist_ok=True)
+                        source = source_dir / ".claude" / "agents"
+                        if source.exists():
+                            for file in source.glob("*.md"):
+                                shutil.copy2(file, target_dir / file.name)
+                                installed_count += 1
+                            print_success(f"Installed {len(list((target_dir).glob('*.md')))} Claude Code agents to {target_dir}")
+                else:
+                    target_dir.mkdir(parents=True, exist_ok=True)
+                    source = source_dir / ".claude" / "agents"
+                    if source.exists():
+                        for file in source.glob("*.md"):
+                            shutil.copy2(file, target_dir / file.name)
+                            installed_count += 1
+                        print_success(f"Installed {len(list((target_dir).glob('*.md')))} Claude Code agents to {target_dir}")
         
         if "codex" in platforms:
             target_dir = Path.cwd() / ".codex" / "prompts"
@@ -282,7 +323,22 @@ def main():
     
     platform_map = {1: "claude", 2: "codex", 3: "copilot"}
     platforms = [platform_map[choice] for choice in platform_choices]
-    
+
+    # Step 1.5: If Claude is selected, choose what to install
+    claude_type = "both"
+    if "claude" in platforms:
+        claude_choice = prompt_choice(
+            "What would you like to install for Claude Code?",
+            [
+                "Commands only",
+                "Sub-agents only",
+                "Both commands and sub-agents"
+            ],
+            default=3
+        )
+        claude_type_map = {1: "commands", 2: "agents", 3: "both"}
+        claude_type = claude_type_map[claude_choice]
+
     # Step 2: Choose installation location
     detected = detect_installation_type()
     
@@ -315,7 +371,7 @@ def main():
     
     # Step 4: Install
     print()
-    installed_count = install_commands(source_dir, platforms, location)
+    installed_count = install_commands(source_dir, platforms, location, claude_type)
     
     # Step 5: Cleanup
     shutil.rmtree(source_dir.parent)
