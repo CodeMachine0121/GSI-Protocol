@@ -1,6 +1,5 @@
 ---
 description: 階段 1 - 從使用者需求生成 Gherkin 行為規格（PM 角色）
-argument-hint: <requirement_description>
 ---
 
 # SDD 階段 1：需求規格（靈魂）

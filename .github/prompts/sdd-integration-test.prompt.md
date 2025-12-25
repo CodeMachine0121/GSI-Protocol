@@ -107,17 +107,17 @@ npm test / pytest -v / go test -v
 
 ```bash
 # 先執行 sdd-spec 和 sdd-arch
-@workspace /sdd-spec Create a shopping cart with add, remove, checkout
-@workspace /sdd-arch features/shopping_cart.feature
+/sdd-spec Create a shopping cart with add, remove, checkout
+/sdd-arch features/shopping_cart.feature
 
 # 生成 integration tests（測試會失敗/紅燈）
-@workspace /sdd-bds features/shopping_cart.feature
+/sdd-bds features/shopping_cart.feature
 
 # 實作功能
-@workspace /sdd-impl features/shopping_cart.feature
+/sdd-impl features/shopping_cart.feature
 
 # 驗證（測試應該通過/綠燈）
-@workspace /sdd-verify features/shopping_cart.feature
+/sdd-verify features/shopping_cart.feature
 ```
 
 開始讀取檔案並生成 integration tests。

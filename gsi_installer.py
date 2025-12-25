@@ -4,7 +4,7 @@ GSI-Protocol Installer
 A simple CLI tool to install GSI-Protocol workflow commands for Claude Code and/or Codex.
 
 Usage:
-    uvx gsi-protocol-installer
+    uvx --from gsi-protocol-installer gsi-install
     # or
     pipx run gsi-protocol-installer
 """
@@ -144,9 +144,59 @@ def download_commands(repo_url: str = "https://github.com/CodeMachine0121/GSI-Pr
         sys.exit(1)
 
 
+def transform_template_for_claude(content: str) -> str:
+    """Transform template for Claude Code format."""
+    # Claude Code 使用 {{prompt}}，不需要轉換
+    return content
+
+
+def transform_template_for_codex(content: str, filename: str) -> str:
+    """Transform template for Codex format."""
+    # Codex 使用 $1 並需要 argument-hint
+    result = content.replace('{{prompt}}', '$1')
+
+    # 在 frontmatter 中加入 argument-hint
+    if content.startswith('---\n'):
+        parts = result.split('---\n')
+        if len(parts) >= 3:
+            # 根據不同的指令設置不同的 argument-hint
+            hint = ''
+            if 'arch' in filename:
+                hint = 'argument-hint: <feature_file_path>\n'
+            elif 'impl' in filename:
+                hint = 'argument-hint: <feature_file_path>\n'
+            elif 'verify' in filename:
+                hint = 'argument-hint: <feature_file_path>\n'
+            elif 'integration-test' in filename:
+                hint = 'argument-hint: <feature_file_path>\n'
+
+            parts[1] = hint + parts[1]
+            result = '---\n'.join(parts)
+
+    return result
+
+
+def transform_template_for_github(content: str) -> str:
+    """Transform template for GitHub Copilot format."""
+    # GitHub prompts 使用 {{ARG}} 和 @workspace 前綴
+    result = content.replace('{{prompt}}', '{{ARG}}')
+
+    # 替換命令引用為 @workspace 格式
+    result = result.replace('`/sdd-', '`@workspace /sdd-')
+
+    return result
+
+
 def install_commands(source_dir: Path, platforms: list[str], location: str, claude_type: str = "both") -> int:
     """Install commands to the specified location."""
     installed_count = 0
+
+    # 模板目錄
+    templates_dir = source_dir / "scripts" / "templates"
+
+    if not templates_dir.exists():
+        print_error(f"Templates directory not found: {templates_dir}")
+        sys.exit(1)
 
     if location == "global":
         if "claude" in platforms:
@@ -155,9 +205,13 @@ def install_commands(source_dir: Path, platforms: list[str], location: str, clau
                 target_dir = Path.home() / ".claude" / "commands"
                 target_dir.mkdir(parents=True, exist_ok=True)
 
-                source = source_dir / ".claude" / "commands"
-                for file in source.glob("sdd-*.md"):
-                    shutil.copy2(file, target_dir / file.name)
+                # 從模板轉換並安裝
+                for template_file in templates_dir.glob("sdd-*.md"):
+                    content = template_file.read_text(encoding='utf-8')
+                    transformed = transform_template_for_claude(content)
+
+                    output_file = target_dir / template_file.name
+                    output_file.write_text(transformed, encoding='utf-8')
                     installed_count += 1
 
                 print_success(f"Installed {len(list((target_dir).glob('sdd-*.md')))} Claude Code commands to {target_dir}")
@@ -178,23 +232,33 @@ def install_commands(source_dir: Path, platforms: list[str], location: str, clau
         if "codex" in platforms:
             target_dir = Path.home() / ".codex" / "prompts"
             target_dir.mkdir(parents=True, exist_ok=True)
-            
-            source = source_dir / ".codex" / "prompts"
-            for file in source.glob("sdd-*.md"):
-                shutil.copy2(file, target_dir / file.name)
+
+            # 從模板轉換並安裝
+            for template_file in templates_dir.glob("sdd-*.md"):
+                content = template_file.read_text(encoding='utf-8')
+                transformed = transform_template_for_codex(content, template_file.name)
+
+                output_file = target_dir / template_file.name
+                output_file.write_text(transformed, encoding='utf-8')
                 installed_count += 1
-            
+
             print_success(f"Installed {len(list((target_dir).glob('sdd-*.md')))} Codex prompts to {target_dir}")
         
         if "copilot" in platforms:
             target_dir = Path.home() / ".github" / "prompts"
             target_dir.mkdir(parents=True, exist_ok=True)
-            
-            source = source_dir / ".github" / "prompts"
-            for file in source.glob("sdd-*.prompt.md"):
-                shutil.copy2(file, target_dir / file.name)
+
+            # 從模板轉換並安裝
+            for template_file in templates_dir.glob("sdd-*.md"):
+                content = template_file.read_text(encoding='utf-8')
+                transformed = transform_template_for_github(content)
+
+                # GitHub Copilot 使用 .prompt.md 擴展名
+                output_filename = template_file.stem + '.prompt.md'
+                output_file = target_dir / output_filename
+                output_file.write_text(transformed, encoding='utf-8')
                 installed_count += 1
-            
+
             print_success(f"Installed {len(list((target_dir).glob('sdd-*.prompt.md')))} GitHub Copilot prompts to {target_dir}")
     
     else:  # project
@@ -208,16 +272,24 @@ def install_commands(source_dir: Path, platforms: list[str], location: str, clau
                         print_warning("Skipping Claude Code commands installation")
                     else:
                         target_dir.mkdir(parents=True, exist_ok=True)
-                        source = source_dir / ".claude" / "commands"
-                        for file in source.glob("sdd-*.md"):
-                            shutil.copy2(file, target_dir / file.name)
+                        # 從模板轉換並安裝
+                        for template_file in templates_dir.glob("sdd-*.md"):
+                            content = template_file.read_text(encoding='utf-8')
+                            transformed = transform_template_for_claude(content)
+
+                            output_file = target_dir / template_file.name
+                            output_file.write_text(transformed, encoding='utf-8')
                             installed_count += 1
                         print_success(f"Installed {len(list((target_dir).glob('sdd-*.md')))} Claude Code commands to {target_dir}")
                 else:
                     target_dir.mkdir(parents=True, exist_ok=True)
-                    source = source_dir / ".claude" / "commands"
-                    for file in source.glob("sdd-*.md"):
-                        shutil.copy2(file, target_dir / file.name)
+                    # 從模板轉換並安裝
+                    for template_file in templates_dir.glob("sdd-*.md"):
+                        content = template_file.read_text(encoding='utf-8')
+                        transformed = transform_template_for_claude(content)
+
+                        output_file = target_dir / template_file.name
+                        output_file.write_text(transformed, encoding='utf-8')
                         installed_count += 1
                     print_success(f"Installed {len(list((target_dir).glob('sdd-*.md')))} Claude Code commands to {target_dir}")
 
@@ -247,43 +319,63 @@ def install_commands(source_dir: Path, platforms: list[str], location: str, clau
         
         if "codex" in platforms:
             target_dir = Path.cwd() / ".codex" / "prompts"
-            
+
             if target_dir.exists():
                 if not prompt_yes_no(f"⚠️  {target_dir} already exists. Overwrite?", default=False):
                     print_warning("Skipping Codex installation")
                 else:
                     target_dir.mkdir(parents=True, exist_ok=True)
-                    source = source_dir / ".codex" / "prompts"
-                    for file in source.glob("sdd-*.md"):
-                        shutil.copy2(file, target_dir / file.name)
+                    # 從模板轉換並安裝
+                    for template_file in templates_dir.glob("sdd-*.md"):
+                        content = template_file.read_text(encoding='utf-8')
+                        transformed = transform_template_for_codex(content, template_file.name)
+
+                        output_file = target_dir / template_file.name
+                        output_file.write_text(transformed, encoding='utf-8')
                         installed_count += 1
                     print_success(f"Installed {len(list((target_dir).glob('sdd-*.md')))} Codex prompts to {target_dir}")
             else:
                 target_dir.mkdir(parents=True, exist_ok=True)
-                source = source_dir / ".codex" / "prompts"
-                for file in source.glob("sdd-*.md"):
-                    shutil.copy2(file, target_dir / file.name)
+                # 從模板轉換並安裝
+                for template_file in templates_dir.glob("sdd-*.md"):
+                    content = template_file.read_text(encoding='utf-8')
+                    transformed = transform_template_for_codex(content, template_file.name)
+
+                    output_file = target_dir / template_file.name
+                    output_file.write_text(transformed, encoding='utf-8')
                     installed_count += 1
                 print_success(f"Installed {len(list((target_dir).glob('sdd-*.md')))} Codex prompts to {target_dir}")
         
         if "copilot" in platforms:
             target_dir = Path.cwd() / ".github" / "prompts"
-            
+
             if target_dir.exists():
                 if not prompt_yes_no(f"⚠️  {target_dir} already exists. Overwrite?", default=False):
                     print_warning("Skipping GitHub Copilot installation")
                 else:
                     target_dir.mkdir(parents=True, exist_ok=True)
-                    source = source_dir / ".github" / "prompts"
-                    for file in source.glob("sdd-*.prompt.md"):
-                        shutil.copy2(file, target_dir / file.name)
+                    # 從模板轉換並安裝
+                    for template_file in templates_dir.glob("sdd-*.md"):
+                        content = template_file.read_text(encoding='utf-8')
+                        transformed = transform_template_for_github(content)
+
+                        # GitHub Copilot 使用 .prompt.md 擴展名
+                        output_filename = template_file.stem + '.prompt.md'
+                        output_file = target_dir / output_filename
+                        output_file.write_text(transformed, encoding='utf-8')
                         installed_count += 1
                     print_success(f"Installed {len(list((target_dir).glob('sdd-*.prompt.md')))} GitHub Copilot prompts to {target_dir}")
             else:
                 target_dir.mkdir(parents=True, exist_ok=True)
-                source = source_dir / ".github" / "prompts"
-                for file in source.glob("sdd-*.prompt.md"):
-                    shutil.copy2(file, target_dir / file.name)
+                # 從模板轉換並安裝
+                for template_file in templates_dir.glob("sdd-*.md"):
+                    content = template_file.read_text(encoding='utf-8')
+                    transformed = transform_template_for_github(content)
+
+                    # GitHub Copilot 使用 .prompt.md 擴展名
+                    output_filename = template_file.stem + '.prompt.md'
+                    output_file = target_dir / output_filename
+                    output_file.write_text(transformed, encoding='utf-8')
                     installed_count += 1
                 print_success(f"Installed {len(list((target_dir).glob('sdd-*.prompt.md')))} GitHub Copilot prompts to {target_dir}")
     

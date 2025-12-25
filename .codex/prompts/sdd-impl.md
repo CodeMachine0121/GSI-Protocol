@@ -1,6 +1,6 @@
 ---
-description: Phase 3 - 根據架構設計實作程式碼，滿足 Gherkin 規格
 argument-hint: <feature_file_path>
+description: Phase 3 - 根據架構設計實作程式碼，滿足 Gherkin 規格
 ---
 
 # SDD Phase 3: 實作

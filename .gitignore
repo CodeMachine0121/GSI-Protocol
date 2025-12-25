@@ -72,3 +72,9 @@ Thumbs.db
 # Virtual environments for testing
 test_env/
 
+# Auto-generated command files (optional - can be regenerated from scripts/templates/)
+# Uncomment these lines if you want to ignore auto-generated files:
+# .claude/commands/sdd-*.md
+# .codex/prompts/sdd-*.md
+# .github/prompts/sdd-*.prompt.md
+

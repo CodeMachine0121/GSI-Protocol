@@ -1,6 +1,6 @@
 ---
-description: Phase 4 - 驗證實作（QA 角色）
 argument-hint: <feature_file_path>
+description: Phase 4 - 驗證實作（QA 角色）
 ---
 
 # SDD Phase 4: 驗證

@@ -1,6 +1,6 @@
 ---
-description: Phase 2 - 分析 Gherkin 規格，設計高階架構（資料模型與服務介面），輸出到 docs/features/{feature_name}/
 argument-hint: <feature_file_path>
+description: Phase 2 - 分析 Gherkin 規格，設計高階架構（資料模型與服務介面），輸出到 docs/features/{feature_name}/
 ---
 
 # SDD Phase 2: 架構設計
