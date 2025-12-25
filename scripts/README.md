@@ -1,88 +1,92 @@
-# GSI-Protocol 開發工作流程
+# GSI-Protocol Development Workflow
 
-## 問題
-修改 GSI command 內容時，需要同時維護三個位置：
+[中文版本](./README.zh-TW.md) | **English**
+
+## Problem
+When modifying GSI command content, you need to maintain three locations:
 - `.claude/commands/` (Claude Code)
 - `.codex/prompts/` (Codex)
 - `.github/prompts/` (GitHub Copilot)
 
-## 解決方案
-使用單一來源 + 自動同步腳本
+## Solution
+Single source + automatic sync script
 
-## 目錄結構
+## Directory Structure
 ```
 scripts/
-  ├── templates/        # 📝 唯一需要維護的模板來源
+  ├── templates/        # 📝 Single source of truth for templates
   │   ├── sdd-spec.md
   │   ├── sdd-arch.md
   │   ├── sdd-impl.md
   │   ├── sdd-verify.md
   │   ├── sdd-integration-test.md
   │   └── sdd-auto.md
-  ├── sync_commands.py  # 🔄 同步腳本
-  └── README.md         # 📖 本文件
+  ├── dev_sync.py       # 🔧 Local development testing tool (for developers only)
+  └── README.md         # 📖 This file
 ```
 
-## 開發工作流程
+## Development Workflow
 
-### 1. 修改模板
-只需要修改 `scripts/templates/` 中的檔案，使用通用佔位符：
+### 1. Edit Templates
+Only need to modify files in `scripts/templates/`, using generic placeholders:
 
 ```markdown
-## 使用者需求
+## User Requirements
 
 __PROMPT__
 
-## 下一步
-- 使用指令：`__CMD_PREFIX__sdd-arch features/xxx.feature`
+## Next Steps
+- Use command: `__CMD_PREFIX__sdd-arch features/xxx.feature`
 ```
 
-**佔位符說明：**
-- `__PROMPT__` - 用戶輸入的參數
-- `__CMD_PREFIX__` - 命令前綴（會根據平台自動轉換）
+**Placeholder Explanation:**
+- `__PROMPT__` - User input parameter
+- `__CMD_PREFIX__` - Command prefix (automatically converted per platform)
 
-### 2. 同步到三個平台
-運行同步腳本：
+### 2. Sync to Three Platforms
+Run the development sync tool:
 
 ```bash
-python3 scripts/sync_commands.py
+python3 scripts/dev_sync.py
 ```
 
-這會自動轉換佔位符並同步：
-- 轉換並同步到 `.claude/commands/`：`__PROMPT__` → `{{prompt}}`，`__CMD_PREFIX__` → `/`
-- 轉換並同步到 `.codex/prompts/`：`__PROMPT__` → `$1`，`__CMD_PREFIX__` → `/`
-- 轉換並同步到 `.github/prompts/`：`__PROMPT__` → `{{ARG}}`，`__CMD_PREFIX__` → `@workspace /`
+⚠️ **Note**: This tool is for development testing only, end users don't need it
 
-### 3. 測試
-在本地測試各平台的命令是否正常運作
+This will automatically convert placeholders and sync:
+- Convert and sync to `.claude/commands/`: `__PROMPT__` → `{{prompt}}`, `__CMD_PREFIX__` → `/`
+- Convert and sync to `.codex/prompts/`: `__PROMPT__` → `$1`, `__CMD_PREFIX__` → `/`
+- Convert and sync to `.github/prompts/`: `__PROMPT__` → `{{ARG}}`, `__CMD_PREFIX__` → `@workspace /`
 
-### 4. 提交
-提交所有變更到 Git
+### 3. Test
+Test commands on each platform locally
 
-## 用戶安裝流程
+### 4. Commit
+Commit all changes to Git
 
-當用戶執行：
+## User Installation Flow
+
+When users run:
 ```bash
 uvx --from gsi-protocol-installer gsi-install
 ```
 
-`gsi_installer.py` 會：
-1. 從 GitHub 下載 repo
-2. 讀取 `scripts/templates/` 中的模板
-3. 根據用戶選擇的平台自動轉換並安裝
+`gsi_installer.py` will:
+1. Download the repo from GitHub
+2. Read templates from `scripts/templates/`
+3. Automatically convert and install based on user's platform choice
 
-## 佔位符轉換對照表
+## Placeholder Conversion Table
 
-| 平台 | `__PROMPT__` 轉換為 | `__CMD_PREFIX__` 轉換為 | 檔案副檔名 |
-|------|-------------------|----------------------|-----------|
-| 模板 | `__PROMPT__` | `__CMD_PREFIX__` | `.md` |
+| Platform | `__PROMPT__` converts to | `__CMD_PREFIX__` converts to | File Extension |
+|----------|-------------------------|------------------------------|----------------|
+| Template | `__PROMPT__` | `__CMD_PREFIX__` | `.md` |
 | Claude Code | `{{prompt}}` | `/` | `.md` |
 | Codex | `$1` | `/` | `.md` |
 | GitHub Copilot | `{{ARG}}` | `@workspace /` | `.prompt.md` |
 
-## 優點
+## Benefits
 
-✅ 只需維護一個地方 (`scripts/templates/`)
-✅ 自動處理平台差異
-✅ 降低維護成本
-✅ 減少人為錯誤
+✅ Only maintain one location (`scripts/templates/`)
+✅ Automatically handle platform differences
+✅ Reduce maintenance cost
+✅ Minimize human errors
