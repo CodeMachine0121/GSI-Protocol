@@ -7,6 +7,9 @@ Usage:
     uvx --from gsi-protocol-installer gsi-install
     # or
     pipx run gsi-protocol-installer
+
+    # 本地同步模式（用於開發）：
+    python gsi_installer.py --sync
 """
 
 import os
@@ -16,6 +19,7 @@ from typing import Optional
 import shutil
 import tempfile
 import subprocess
+import argparse
 
 
 class Colors:
@@ -146,14 +150,17 @@ def download_commands(repo_url: str = "https://github.com/CodeMachine0121/GSI-Pr
 
 def transform_template_for_claude(content: str) -> str:
     """Transform template for Claude Code format."""
-    # Claude Code 使用 {{prompt}}，不需要轉換
-    return content
+    # 替換佔位符為 Claude Code 格式
+    result = content.replace('__PROMPT__', '{{prompt}}')
+    result = result.replace('__CMD_PREFIX__', '/')
+    return result
 
 
 def transform_template_for_codex(content: str, filename: str) -> str:
     """Transform template for Codex format."""
-    # Codex 使用 $1 並需要 argument-hint
-    result = content.replace('{{prompt}}', '$1')
+    # 替換佔位符為 Codex 格式
+    result = content.replace('__PROMPT__', '$1')
+    result = result.replace('__CMD_PREFIX__', '/')
 
     # 在 frontmatter 中加入 argument-hint
     if content.startswith('---\n'):
@@ -178,11 +185,9 @@ def transform_template_for_codex(content: str, filename: str) -> str:
 
 def transform_template_for_github(content: str) -> str:
     """Transform template for GitHub Copilot format."""
-    # GitHub prompts 使用 {{ARG}} 和 @workspace 前綴
-    result = content.replace('{{prompt}}', '{{ARG}}')
-
-    # 替換命令引用為 @workspace 格式
-    result = result.replace('`/sdd-', '`@workspace /sdd-')
+    # 替換佔位符為 GitHub Copilot 格式
+    result = content.replace('__PROMPT__', '{{ARG}}')
+    result = result.replace('__CMD_PREFIX__', '@workspace /')
 
     return result
 
