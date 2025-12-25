@@ -6,6 +6,8 @@
 [![Python Version](https://img.shields.io/badge/python-3.10%2B-blue)](https://www.python.org/)
 [![Version](https://img.shields.io/badge/version-1.0.14-green)](https://github.com/CodeMachine0121/GSI-Protocol)
 
+**Language**: English | [繁體中文](./README.zh-TW.md)
+
 GSI-Protocol is an automated Specification-Driven Development (SDD) workflow system that transforms user requirements into production-ready code through a structured 4-phase process: Specification → Architecture → Implementation → Verification.
 
 ## Features

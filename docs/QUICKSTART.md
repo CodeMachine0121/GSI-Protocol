@@ -1,5 +1,7 @@
 # GSI-Protocol Quick Start Guide
 
+**Language**: English | [繁體中文](./quickstart.zh-TW.md)
+
 This guide will help you get started with GSI-Protocol in minutes.
 
 ## Prerequisites

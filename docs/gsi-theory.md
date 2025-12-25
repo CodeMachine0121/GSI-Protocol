@@ -1,5 +1,7 @@
 # GSI-Protocol Theory
 
+**Language**: English | [繁體中文](./gsi-theory.zh-TW.md)
+
 ## What is GSI?
 
 GSI-Protocol is a systematic approach to software development that emphasizes **specification-driven, architecture-first development**. The acronym GSI represents the three core pillars of this methodology:
