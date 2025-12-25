@@ -42,13 +42,9 @@ The installer will ask you several questions:
    - Default: All platforms
 
 2. **Choose Installation Type**
-   - **Project**: Install to current project (`.claude/`, `.codex/`, `.github/`)
+   - **Project**: Install to current project (`.claude/`, `.github/`)
    - **Global**: Install to home directory (`~/.claude/`, `~/.codex/`, `~/.github/`)
-
-3. **For Claude Code: Select Components**
-   - Commands only
-   - Sub-agents only
-   - Both (recommended)
+   - **Note**: Codex only supports global installation
 
 ### Step 3: Verify Installation
 
@@ -167,14 +163,8 @@ Contains:
 
 ### Claude Code
 
-If you installed commands:
 ```bash
 /sdd-auto <requirement>
-```
-
-If you installed sub-agents:
-```bash
-# Sub-agents run automatically when you invoke commands
 ```
 
 ### Codex (OpenAI)
@@ -310,7 +300,7 @@ GSI-Protocol automatically detects:
 
 Now that you've completed your first workflow, you can:
 
-- Explore advanced features (sub-agents, custom templates)
+- Explore advanced features and custom templates
 - Integrate with your existing CI/CD pipeline
 - Collaborate with your team using Gherkin specifications
 - Build complex features using the multi-phase workflow

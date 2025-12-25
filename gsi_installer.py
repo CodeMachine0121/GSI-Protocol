@@ -192,7 +192,7 @@ def transform_template_for_github(content: str) -> str:
     return result
 
 
-def install_commands(source_dir: Path, platforms: list[str], location: str, claude_type: str = "both") -> int:
+def install_commands(source_dir: Path, platforms: list[str], location: str) -> int:
     """Install commands to the specified location."""
     installed_count = 0
 
@@ -203,52 +203,38 @@ def install_commands(source_dir: Path, platforms: list[str], location: str, clau
         print_error(f"Templates directory not found: {templates_dir}")
         sys.exit(1)
 
+    # Codex always installs globally
+    if "codex" in platforms:
+        target_dir = Path.home() / ".codex" / "prompts"
+        target_dir.mkdir(parents=True, exist_ok=True)
+
+        # 從模板轉換並安裝
+        for template_file in templates_dir.glob("sdd-*.md"):
+            content = template_file.read_text(encoding='utf-8')
+            transformed = transform_template_for_codex(content, template_file.name)
+
+            output_file = target_dir / template_file.name
+            output_file.write_text(transformed, encoding='utf-8')
+            installed_count += 1
+
+        print_success(f"Installed {len(list((target_dir).glob('sdd-*.md')))} Codex prompts to {target_dir}")
+
     if location == "global":
         if "claude" in platforms:
-            # Install commands if requested
-            if claude_type in ["commands", "both"]:
-                target_dir = Path.home() / ".claude" / "commands"
-                target_dir.mkdir(parents=True, exist_ok=True)
-
-                # 從模板轉換並安裝
-                for template_file in templates_dir.glob("sdd-*.md"):
-                    content = template_file.read_text(encoding='utf-8')
-                    transformed = transform_template_for_claude(content)
-
-                    output_file = target_dir / template_file.name
-                    output_file.write_text(transformed, encoding='utf-8')
-                    installed_count += 1
-
-                print_success(f"Installed {len(list((target_dir).glob('sdd-*.md')))} Claude Code commands to {target_dir}")
-
-            # Install agents if requested
-            if claude_type in ["agents", "both"]:
-                target_dir = Path.home() / ".claude" / "agents"
-                target_dir.mkdir(parents=True, exist_ok=True)
-
-                source = source_dir / ".claude" / "agents"
-                if source.exists():
-                    for file in source.glob("*.md"):
-                        shutil.copy2(file, target_dir / file.name)
-                        installed_count += 1
-
-                    print_success(f"Installed {len(list((target_dir).glob('*.md')))} Claude Code agents to {target_dir}")
-        
-        if "codex" in platforms:
-            target_dir = Path.home() / ".codex" / "prompts"
+            target_dir = Path.home() / ".claude" / "commands"
             target_dir.mkdir(parents=True, exist_ok=True)
 
             # 從模板轉換並安裝
             for template_file in templates_dir.glob("sdd-*.md"):
                 content = template_file.read_text(encoding='utf-8')
-                transformed = transform_template_for_codex(content, template_file.name)
+                transformed = transform_template_for_claude(content)
 
                 output_file = target_dir / template_file.name
                 output_file.write_text(transformed, encoding='utf-8')
                 installed_count += 1
 
-            print_success(f"Installed {len(list((target_dir).glob('sdd-*.md')))} Codex prompts to {target_dir}")
-        
+            print_success(f"Installed {len(list((target_dir).glob('sdd-*.md')))} Claude Code commands to {target_dir}")
+
         if "copilot" in platforms:
             target_dir = Path.home() / ".github" / "prompts"
             target_dir.mkdir(parents=True, exist_ok=True)
@@ -268,24 +254,11 @@ def install_commands(source_dir: Path, platforms: list[str], location: str, clau
     
     else:  # project
         if "claude" in platforms:
-            # Install commands if requested
-            if claude_type in ["commands", "both"]:
-                target_dir = Path.cwd() / ".claude" / "commands"
+            target_dir = Path.cwd() / ".claude" / "commands"
 
-                if target_dir.exists():
-                    if not prompt_yes_no(f"⚠️  {target_dir} already exists. Overwrite?", default=False):
-                        print_warning("Skipping Claude Code commands installation")
-                    else:
-                        target_dir.mkdir(parents=True, exist_ok=True)
-                        # 從模板轉換並安裝
-                        for template_file in templates_dir.glob("sdd-*.md"):
-                            content = template_file.read_text(encoding='utf-8')
-                            transformed = transform_template_for_claude(content)
-
-                            output_file = target_dir / template_file.name
-                            output_file.write_text(transformed, encoding='utf-8')
-                            installed_count += 1
-                        print_success(f"Installed {len(list((target_dir).glob('sdd-*.md')))} Claude Code commands to {target_dir}")
+            if target_dir.exists():
+                if not prompt_yes_no(f"⚠️  {target_dir} already exists. Overwrite?", default=False):
+                    print_warning("Skipping Claude Code commands installation")
                 else:
                     target_dir.mkdir(parents=True, exist_ok=True)
                     # 從模板轉換並安裝
@@ -297,59 +270,17 @@ def install_commands(source_dir: Path, platforms: list[str], location: str, clau
                         output_file.write_text(transformed, encoding='utf-8')
                         installed_count += 1
                     print_success(f"Installed {len(list((target_dir).glob('sdd-*.md')))} Claude Code commands to {target_dir}")
-
-            # Install agents if requested
-            if claude_type in ["agents", "both"]:
-                target_dir = Path.cwd() / ".claude" / "agents"
-
-                if target_dir.exists():
-                    if not prompt_yes_no(f"⚠️  {target_dir} already exists. Overwrite?", default=False):
-                        print_warning("Skipping Claude Code agents installation")
-                    else:
-                        target_dir.mkdir(parents=True, exist_ok=True)
-                        source = source_dir / ".claude" / "agents"
-                        if source.exists():
-                            for file in source.glob("*.md"):
-                                shutil.copy2(file, target_dir / file.name)
-                                installed_count += 1
-                            print_success(f"Installed {len(list((target_dir).glob('*.md')))} Claude Code agents to {target_dir}")
-                else:
-                    target_dir.mkdir(parents=True, exist_ok=True)
-                    source = source_dir / ".claude" / "agents"
-                    if source.exists():
-                        for file in source.glob("*.md"):
-                            shutil.copy2(file, target_dir / file.name)
-                            installed_count += 1
-                        print_success(f"Installed {len(list((target_dir).glob('*.md')))} Claude Code agents to {target_dir}")
-        
-        if "codex" in platforms:
-            target_dir = Path.cwd() / ".codex" / "prompts"
-
-            if target_dir.exists():
-                if not prompt_yes_no(f"⚠️  {target_dir} already exists. Overwrite?", default=False):
-                    print_warning("Skipping Codex installation")
-                else:
-                    target_dir.mkdir(parents=True, exist_ok=True)
-                    # 從模板轉換並安裝
-                    for template_file in templates_dir.glob("sdd-*.md"):
-                        content = template_file.read_text(encoding='utf-8')
-                        transformed = transform_template_for_codex(content, template_file.name)
-
-                        output_file = target_dir / template_file.name
-                        output_file.write_text(transformed, encoding='utf-8')
-                        installed_count += 1
-                    print_success(f"Installed {len(list((target_dir).glob('sdd-*.md')))} Codex prompts to {target_dir}")
             else:
                 target_dir.mkdir(parents=True, exist_ok=True)
                 # 從模板轉換並安裝
                 for template_file in templates_dir.glob("sdd-*.md"):
                     content = template_file.read_text(encoding='utf-8')
-                    transformed = transform_template_for_codex(content, template_file.name)
+                    transformed = transform_template_for_claude(content)
 
                     output_file = target_dir / template_file.name
                     output_file.write_text(transformed, encoding='utf-8')
                     installed_count += 1
-                print_success(f"Installed {len(list((target_dir).glob('sdd-*.md')))} Codex prompts to {target_dir}")
+                print_success(f"Installed {len(list((target_dir).glob('sdd-*.md')))} Claude Code commands to {target_dir}")
         
         if "copilot" in platforms:
             target_dir = Path.cwd() / ".github" / "prompts"
@@ -431,21 +362,6 @@ def main():
     platform_map = {1: "claude", 2: "codex", 3: "copilot"}
     platforms = [platform_map[choice] for choice in platform_choices]
 
-    # Step 1.5: If Claude is selected, choose what to install
-    claude_type = "both"
-    if "claude" in platforms:
-        claude_choice = prompt_choice(
-            "What would you like to install for Claude Code?",
-            [
-                "Commands only",
-                "Sub-agents only",
-                "Both commands and sub-agents"
-            ],
-            default=3
-        )
-        claude_type_map = {1: "commands", 2: "agents", 3: "both"}
-        claude_type = claude_type_map[claude_choice]
-
     # Step 2: Choose installation location
     detected = detect_installation_type()
     
@@ -471,7 +387,12 @@ def main():
         )
     
     location = "project" if location_choice == 1 else "global"
-    
+
+    # Step 2.5: Warn if Codex is selected for project installation
+    if location == "project" and "codex" in platforms:
+        print_warning("Codex only supports global installation. Codex will be installed globally.")
+        print_info("Other selected platforms will be installed to the current project.")
+
     # Step 3: Check git availability (only needed for downloading)
     if not check_git_available():
         print_error("Git is not installed. Please install git first.")
@@ -484,7 +405,7 @@ def main():
     
     # Step 5: Install
     print()
-    installed_count = install_commands(source_dir, platforms, location, claude_type)
+    installed_count = install_commands(source_dir, platforms, location)
     
     # Step 6: Cleanup
     shutil.rmtree(source_dir.parent)
