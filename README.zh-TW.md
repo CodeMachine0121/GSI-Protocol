@@ -94,6 +94,7 @@ pipx run gsi-protocol-installer
    ```bash
    /sdd-unit-test <feature_file_path>
    ```
+   從 feature file 篩選適合單元測試的業務情境，建立測試方法框架（只有 TODO 註解的空方法）。
 
 6. **產生整合測試**（選用）
    ```bash
@@ -131,7 +132,7 @@ GSI-Protocol 遵循結構化的 4 階段流程：
 | `/sdd-arch` | 從規格設計架構 | 2 |
 | `/sdd-impl` | 基於架構實作程式碼 | 3 |
 | `/sdd-verify` | 驗證實作是否符合規格 | 4 |
-| `/sdd-unit-test` | 產生單元測試空殼，包含測試策略分析 | 選用 |
+| `/sdd-unit-test` | 篩選業務情境並產生單元測試方法框架 | 選用 |
 | `/sdd-integration-test` | 生成 BDD 整合測試 | 選用 |
 
 ## 輸出結構

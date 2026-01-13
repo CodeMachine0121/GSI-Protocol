@@ -1,39 +1,36 @@
 ---
-description: 從 feature file 和架構文件生成單元測試空殼，並分析測試策略
+description: 從 feature file 篩選適合單元測試的業務情境，建立測試方法框架
 ---
 
-# SDD-UNIT-TEST: 單元測試空殼生成器
+# SDD-UNIT-TEST: 單元測試框架生成器
 
 **輸入：** **PROMPT** (格式：`<feature_file_path>`)
 
 **目標：**
 
 1. 讀取 feature file 和對應的 architecture.md
-2. 分析每個 Scenario 的測試策略（Unit Test vs Integration Test）
-3. 生成單元測試空殼（Test Case structure without implementation）
+2. 從所有 Scenario 中篩選出**適合撰寫單元測試防護**的業務情境
+3. 為篩選出的情境建立測試方法框架（只開好 test case method，內容為空或 TODO 註解）
 
 ## 核心原則
 
-- **測試金字塔**：優先單元測試（快速、隔離），必要時使用整合測試
-- **單元測試適用**：邏輯運算、資料轉換、商業規則、邊界條件、錯誤處理
-- **整合測試適用**：跨服務互動、資料庫操作、外部 API、檔案系統、端對端流程
-- **測試空殼**：只產生測試結構與 TODO 標記，不含實作邏輯
+### 1. 篩選適合單元測試的業務情境
 
-## 測試風格約束
+- **單元測試適用**：純邏輯運算、資料轉換、商業規則、邊界條件、錯誤處理
+- **單元測試不適用**：跨服務互動、資料庫操作、外部 API、檔案系統、端對端流程
+- **篩選標準**：不涉及外部依賴的情境才建立單元測試框架
 
-### 1. 行為測試 vs 狀態測試
+### 2. 固定測試原則：只測行為，不測狀態
 
-- **只測試行為**：驗證方法呼叫、回傳值、拋出的異常
-- **不測試狀態**：不直接檢查物件內部狀態或私有欄位
-- 焦點：「做了什麼」而非「是什麼」
+- ✅ **測試行為**：驗證方法呼叫、回傳值、拋出的異常
+- ❌ **不測狀態**：不直接檢查物件內部狀態或私有欄位
+- **焦點**：「做了什麼」而非「是什麼」
 
-### 2. Given 方法抽取規則
+### 3. 測試方法框架要求
 
-- **Mock Return Value**：抽成 `Given...()` 方法
-  - 例：`GivenUserRepositoryReturnsVipUser()`
-- **建立測試實例**：使用 `new` 建立的物件抽成 `Given...()` 方法
-  - 例：`GivenVipUser()`, `GivenInvalidAmount()`
-- 目的：提升測試可讀性，重用測試資料
+- **只建立 test case method**：方法簽名正確，但內容為空或只有 TODO 註解
+- **不實作測試邏輯**：不寫任何實作內容
+- **結構清晰**：方法命名反映測試情境，易於後續填充
 
 ## 執行步驟
 
@@ -53,40 +50,42 @@ find . -name "*test*" -o -name "*spec*" | head -5
 
 **框架優先順序：** architecture.md 指定 > 專案既有 > 預設
 
-### 3. 分析測試策略
+### 3. 篩選適合單元測試的業務情境
 
-對每個 Scenario 判斷測試層級：
+對每個 Scenario 判斷是否適合單元測試：
 
-#### ✅ 適合單元測試
+#### ✅ 篩選標準：適合單元測試
 
 - 純邏輯運算、資料轉換、商業規則
 - 邊界條件、錯誤處理
-- **特徵：不涉及外部依賴**
+- **關鍵特徵：不涉及外部依賴（資料庫、外部 API、檔案系統、跨服務）**
 
-#### ⚠️ 適合整合測試
+#### ⏭️ 跳過：不適合單元測試（建議使用整合測試）
 
-- 跨服務互動、資料庫、外部 API、檔案系統
+- 跨服務互動、資料庫操作、外部 API、檔案系統
 - **特徵：需要真實或模擬的外部依賴**
+- 這些情境記錄在分析報告中，但不建立單元測試框架
 
-### 4. 生成測試空殼
+### 4. 建立測試方法框架
 
-為每個**適合單元測試**的 Scenario 生成測試空殼，包含：
+為每個**篩選出的 Scenario** 建立測試方法框架，包含：
 
-- 測試策略分析註解
-- Import 語句（待填充）
-- Setup 方法（初始化受測物件）
-- Given...() 輔助方法（mock return value 和測試資料建立）
-- 測試案例（使用 Fluent 風格，Given-When-Then 結構）
-- TODO 註解標示需要實作的部分
-- **重點**：只驗證行為（方法呼叫、回傳值、異常），不驗證狀態
+- 測試篩選分析註解（說明為何適合單元測試）
+- Import 語句（基本測試框架）
+- 測試類別宣告
+- 測試方法（test case method）（只有方法簽名，內容為空或只有 TODO 註解）
+- **重點**：
+  - 方法命名清楚反映測試情境
+  - 內容為空或只有 `// TODO: implement` 註解
+  - 註解說明測試重點：「只測行為，不測狀態」
 
-### 5. 產出分析報告
+### 5. 產出篩選分析報告
 
-在測試檔案開頭加入：
+在測試檔案開頭加入註解說明：
 
-- 單元測試覆蓋的 Scenarios（含原因）
-- 建議使用整合測試的 Scenarios（含原因，建議使用 `/sdd-integration-test`）
-- 測試優先順序
+- **已篩選進單元測試的 Scenarios**（含原因：為何適合單元測試）
+- **未篩選進單元測試的 Scenarios**（含原因：為何不適合，建議使用整合測試）
+- **測試原則提醒**：「本測試只測行為，不測狀態」
 
 ## 測試檔案輸出
 
@@ -98,22 +97,54 @@ find . -name "*test*" -o -name "*spec*" | head -5
 
 ## 品質檢查
 
-- [ ] 已分析所有 Scenarios 的測試策略
-- [ ] 為適合單元測試的 Scenario 生成測試空殼
-- [ ] 測試空殼包含 Given-When-Then 結構和 TODO 標記
-- [ ] 包含測試策略分析註解
+- [ ] 已掃描所有 Scenarios 並完成篩選
+- [ ] 只為適合單元測試的 Scenario 建立測試方法框架
+- [ ] 測試方法框架內容為空或只有 TODO 註解
+- [ ] 方法命名清晰反映測試情境
+- [ ] 包含篩選分析報告（已篩選 vs 未篩選的 Scenarios）
 - [ ] 測試檔案可編譯（無語法錯誤）
-- [ ] 建議使用整合測試的 Scenario 有明確說明
-- [ ] 遵循行為測試原則（不測試狀態）
+- [ ] 明確標示「只測行為，不測狀態」原則
+- [ ] 未篩選的 Scenario 有明確說明不適合單元測試的原因
 
 ## 使用範例
 
 ```bash
 /sdd-spec Create a VIP discount system
 /sdd-arch features/vip_discount.feature
-/sdd-unit-test features/vip_discount.feature  # 產生單元測試空殼
-# 開發者填充測試空殼並執行測試
+/sdd-unit-test features/vip_discount.feature  # 篩選業務情境並建立測試方法框架
+# 開發者填充測試方法內容並執行測試
 /sdd-impl features/vip_discount.feature
 ```
 
-開始讀取檔案並生成單元測試空殼。
+## 輸出範例結構
+
+```java
+/**
+ * 篩選分析報告：
+ * 
+ * 已篩選進單元測試的 Scenarios：
+ * - "VIP user gets 10% discount"（純商業邏輯計算，無外部依賴）
+ * - "Invalid amount throws exception"（邊界條件錯誤處理）
+ * 
+ * 未篩選進單元測試的 Scenarios：
+ * - "Save order to database"（需要資料庫操作，建議使用整合測試）
+ * 
+ * 測試原則：本測試只測行為，不測狀態
+ */
+
+public class VipDiscountServiceTest {
+    // TODO: Add imports
+    
+    @Test
+    public void testVipUserGets10PercentDiscount() {
+        // TODO: implement
+    }
+    
+    @Test
+    public void testInvalidAmountThrowsException() {
+        // TODO: implement
+    }
+}
+```
+
+開始讀取檔案、篩選業務情境並建立測試方法框架。

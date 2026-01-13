@@ -113,6 +113,13 @@ Claude Code / Codex 用法：
 
 輸出：`docs/features/user_authentication/conclusion.md`
 
+**選用：生成單元測試空殼**
+```bash
+/sdd-unit-test features/user_authentication.feature
+```
+
+輸出：測試方法框架（只有 TODO 註解的空方法）
+
 **選用：生成整合測試**
 ```bash
 /sdd-integration-test features/user_authentication.feature
@@ -205,16 +212,20 @@ Feature: 使用者認證
 
 如果階段 4 驗證失敗，審查結論報告並使用修正重新執行階段 3。
 
-### 4. 使用整合測試進行 TDD
+### 4. 使用單元測試和整合測試進行 TDD
 
 對於測試驅動開發，使用此工作流程：
 ```bash
 /sdd-spec <需求>
 /sdd-arch features/your_feature.feature
-/sdd-integration-test features/your_feature.feature
+/sdd-unit-test features/your_feature.feature  # 建立單元測試空殼
+# 填充單元測試實作
+/sdd-integration-test features/your_feature.feature  # 建立整合測試
 /sdd-impl features/your_feature.feature
 /sdd-verify features/your_feature.feature
 ```
+
+注意：`/sdd-unit-test` 會篩選適合單元測試的情境並建立測試方法框架。您需要自行實作測試邏輯。
 
 ### 5. 專案感知開發
 
@@ -237,6 +248,8 @@ GSI-Protocol 自動偵測：
 ```bash
 /sdd-spec 新增產品搜尋與篩選功能
 /sdd-arch features/product_search.feature
+/sdd-unit-test features/product_search.feature  # 建立單元測試空殼
+# 填充單元測試
 /sdd-integration-test features/product_search.feature
 # 先寫測試，再實作
 /sdd-impl features/product_search.feature
