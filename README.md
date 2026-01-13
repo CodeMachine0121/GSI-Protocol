@@ -90,7 +90,12 @@ For more control over each phase:
    /sdd-verify <feature_file_path>
    ```
 
-5. **Generate Integration Tests** (Optional)
+5. **Generate Unit Test Scaffolds** (Optional)
+   ```bash
+   /sdd-unit-test <feature_file_path>
+   ```
+
+6. **Generate Integration Tests** (Optional)
    ```bash
    /sdd-integration-test <feature_file_path>
    ```
@@ -126,6 +131,7 @@ User Requirement
 | `/sdd-arch` | Design architecture from specification | 2 |
 | `/sdd-impl` | Implement code based on architecture | 3 |
 | `/sdd-verify` | Verify implementation against spec | 4 |
+| `/sdd-unit-test` | Generate unit test scaffolds with test strategy analysis | Optional |
 | `/sdd-integration-test` | Generate BDD integration tests | Optional |
 
 ## Output Structure

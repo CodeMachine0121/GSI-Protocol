@@ -90,7 +90,12 @@ pipx run gsi-protocol-installer
    /sdd-verify <feature_file_path>
    ```
 
-5. **生成整合測試**（選用）
+5. **產生單元測試空殼**（選用）
+   ```bash
+   /sdd-unit-test <feature_file_path>
+   ```
+
+6. **產生整合測試**（選用）
    ```bash
    /sdd-integration-test <feature_file_path>
    ```
@@ -126,6 +131,7 @@ GSI-Protocol 遵循結構化的 4 階段流程：
 | `/sdd-arch` | 從規格設計架構 | 2 |
 | `/sdd-impl` | 基於架構實作程式碼 | 3 |
 | `/sdd-verify` | 驗證實作是否符合規格 | 4 |
+| `/sdd-unit-test` | 產生單元測試空殼，包含測試策略分析 | 選用 |
 | `/sdd-integration-test` | 生成 BDD 整合測試 | 選用 |
 
 ## 輸出結構

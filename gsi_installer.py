@@ -424,8 +424,10 @@ def main():
         print("  /sdd-arch <feature.feature>")
         print("  /sdd-impl <feature.feature>")
         print("  /sdd-verify <feature.feature>")
+        print("  /sdd-unit-test <feature.feature> (optional)")
+        print("  /sdd-integration-test <feature.feature> (optional)")
         print()
-    
+
     if "copilot" in platforms:
         print("GitHub Copilot usage:")
         print("  @workspace /sdd-auto <requirement>")
@@ -433,6 +435,8 @@ def main():
         print("  @workspace /sdd-arch <feature.feature>")
         print("  @workspace /sdd-impl <feature.feature>")
         print("  @workspace /sdd-verify <feature.feature>")
+        print("  @workspace /sdd-unit-test <feature.feature> (optional)")
+        print("  @workspace /sdd-integration-test <feature.feature> (optional)")
         print()
     
     print(f"📖 Documentation: {Colors.OKCYAN}https://github.com/CodeMachine0121/GSI-Protocol{Colors.ENDC}")
