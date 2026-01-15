@@ -207,6 +207,7 @@ project_root/
 
 ## 連結
 
+- [專案網站](https://coding-afternoon.com/gsi-protocol/)
 - [首頁](https://github.com/CodeMachine0121/GSI-Protocol)
 - [問題追蹤](https://github.com/CodeMachine0121/GSI-Protocol/issues)
 - [程式碼庫](https://github.com/CodeMachine0121/GSI-Protocol)

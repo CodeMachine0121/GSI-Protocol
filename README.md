@@ -207,6 +207,7 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 
 ## Links
 
+- [Landing Page](https://coding-afternoon.com/gsi-protocol/)
 - [Homepage](https://github.com/CodeMachine0121/GSI-Protocol)
 - [Issues](https://github.com/CodeMachine0121/GSI-Protocol/issues)
 - [Repository](https://github.com/CodeMachine0121/GSI-Protocol)
