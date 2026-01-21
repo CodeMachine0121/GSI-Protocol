@@ -200,7 +200,34 @@ if not user:
    - 運行相關測試：`npm test` 或 `pytest`
    - 確保所有情境都能通過
    - 如失敗，修整程式碼並重複此步驟
-8. 回報已建立的檔案清單與驗證結果
+8. **歸檔功能發想**：如果此功能來自 `ideate/` 資料夾，將對應檔案移至已完成區
+9. 回報已建立的檔案清單與驗證結果
+
+## 歸檔功能發想
+
+實作完成且所有檢查通過後，檢查是否有對應的功能發想檔案需要歸檔：
+
+```bash
+# 檢查各優先級資料夾是否存在對應的 ideate 檔案
+ls ideate/p0/{feature_name}.md 2>/dev/null || \
+ls ideate/p1/{feature_name}.md 2>/dev/null || \
+ls ideate/p2/{feature_name}.md 2>/dev/null
+
+# 如存在，移動到已完成資料夾
+mkdir -p ideate/done
+mv ideate/p0/{feature_name}.md ideate/done/ 2>/dev/null || \
+mv ideate/p1/{feature_name}.md ideate/done/ 2>/dev/null || \
+mv ideate/p2/{feature_name}.md ideate/done/ 2>/dev/null
+
+# 更新檔案中的 status
+# 將 status: pending 改為 status: completed
+```
+
+**注意事項：**
+- 只有在所有品質檢查通過後才進行歸檔
+- 依序檢查 `ideate/p0/`、`ideate/p1/`、`ideate/p2/` 資料夾
+- 如果檔案不存在於任何優先級資料夾，跳過此步驟
+- 移動後更新檔案 frontmatter 中的 `status: pending` 為 `status: completed`
 
 ## 下一步
 
@@ -208,3 +235,4 @@ if not user:
 - 執行專案既有測試框架驗證
 - 進入 Phase 4：測試驗證（如有定義）
 - 整合至專案主要程式碼
+- 檢視 `ideate/` 資料夾中的下一個待實作功能

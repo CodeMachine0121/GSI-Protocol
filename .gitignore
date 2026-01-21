@@ -78,3 +78,6 @@ test_env/
 # .codex/prompts/sdd-*.md
 # .github/prompts/sdd-*.prompt.md
 
+.codex/
+.claude/
+.github/

@@ -23,6 +23,10 @@ find . -type d -maxdepth 3 | grep -E "src|models|services" | head -10
 
 # 程式碼樣本
 find . -name "*.ts" -o -name "*.py" -o -name "*.go" | head -5
+
+# 功能發想清單（如有）
+echo "=== 待實作功能 ==="
+ls ideate/p0/*.md ideate/p1/*.md ideate/p2/*.md 2>/dev/null || echo "無待處理的功能發想"
 ```
 
 **判斷優先順序：** Prompt 指定 > 專案上下文 > 詢問使用者 > 預設 TypeScript
@@ -135,6 +139,7 @@ Feature: {功能名稱}
 4. **Phase 3** → 實作檔案（依 architecture.md）
 5. **Phase 4** → `docs/features/{feature}/conclusion.md`
 6. 失敗時返回 Phase 3 重試
+7. **歸檔功能發想**（如有對應的 ideate 檔案）
 
 **選用階段（不包含在自動模式）：**
 - **Integration Tests**：如需測試先行開發，請使用手動工作流程
@@ -143,19 +148,41 @@ Feature: {功能名稱}
 **輸出結構：**
 ```
 project_root/
-├── features/{feature}.feature          # Phase 1
+├── ideate/                              # 功能發想
+│   ├── p0/                              # 緊急優先級
+│   ├── p1/                              # 重要優先級
+│   ├── p2/                              # 一般優先級
+│   └── done/                            # 已完成實作
+│       └── {feature}.md                 # 歸檔的功能發想
+├── features/{feature}.feature           # Phase 1
 ├── docs/features/{feature}/
-│   ├── architecture.md                 # Phase 2
-│   └── conclusion.md                   # Phase 4
+│   ├── architecture.md                  # Phase 2
+│   └── conclusion.md                    # Phase 4
 └── {專案目錄}/
-    ├── {模型檔案}                      # Phase 3
-    └── {服務檔案}                      # Phase 3
+    ├── {模型檔案}                       # Phase 3
+    └── {服務檔案}                       # Phase 3
 ```
 
-**重要：** 
+## 歸檔功能發想
+
+Phase 4 驗證通過後，檢查是否有對應的功能發想檔案需要歸檔：
+
+```bash
+# 檢查各優先級資料夾
+ls ideate/p0/{feature}.md ideate/p1/{feature}.md ideate/p2/{feature}.md 2>/dev/null
+
+# 如存在，移動到已完成資料夾並更新狀態
+mkdir -p ideate/done
+mv ideate/p0/{feature}.md ideate/done/ 2>/dev/null || \
+mv ideate/p1/{feature}.md ideate/done/ 2>/dev/null || \
+mv ideate/p2/{feature}.md ideate/done/ 2>/dev/null
+```
+
+**重要：**
 - Phase 2 輸出繁體中文 Markdown（語言無關）
 - Phase 3 遵循專案技術棧與架構
 - 每個 Phase 必須完成才進入下一個
 - Integration tests 為選用功能，不包含在自動模式中
+- 完成後自動歸檔對應的 ideate 檔案（如有）
 
 開始執行 Phase 1。
