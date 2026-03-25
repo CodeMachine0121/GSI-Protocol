@@ -70,9 +70,7 @@ find . -name "*test*" -o -name "*spec*" | head -5
 
 ## 測試檔案輸出
 
-- 依據 architecture.md 指定的測試目錄
-- 或依專案既有測試結構
-- 預設：`tests/unit/<feature_name>.test.<ext>`
+依專案既有測試框架與目錄結構決定輸出位置
 
 ## 品質檢查
 
