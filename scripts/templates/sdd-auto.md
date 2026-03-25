@@ -77,13 +77,14 @@ find . -type d -maxdepth 3 | grep -E "src|models|services" | head -10
 
 ## Phase 4: 驗證（QA）
 
-**角色：** QA - 驗證架構與情境符合性，只報告不修改
-**輸出：** `docs/features/{feature_name}/conclusion.md`
+**角色：** QA - 驗證架構、情境符合性，並執行單元測試，只報告不修改
+**輸出：** `docs/features/{feature_name}/conclusion.md`（全部通過才產生）
 
 1. 讀取 Gherkin + architecture.md + 實作程式碼
 2. 驗證架構符合性（資料模型、服務介面、檔案位置、命名慣例）
 3. 逐一驗證每個 Gherkin 情境（Given→When→Then）
-4. 輸出結論報告，標示通過/失敗狀態
+4. 依專案現有設定（README、Makefile、package.json scripts 等）找出測試指令並執行所有單元測試
+5. 架構、情境、單元測試**全部通過**才輸出結論報告；若任一失敗，列出錯誤並停止
 
 若 Phase 4 發現失敗 → 返回 Phase 3 修正，再重新執行 Phase 4
 
