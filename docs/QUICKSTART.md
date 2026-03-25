@@ -120,13 +120,6 @@ Output: `docs/features/user_authentication/conclusion.md`
 
 Output: Test method shells (methods with TODO comments only)
 
-**Optional: Generate Integration Tests**
-```bash
-/sdd-integration-test features/user_authentication.feature
-```
-
-Output: Test files in your project's test directory
-
 ## Understanding the Output
 
 After running the workflow, you'll have:
@@ -212,7 +205,7 @@ When using manual mode, review the generated architecture document before procee
 
 If Phase 4 verification fails, review the conclusion report and re-run Phase 3 with corrections.
 
-### 4. Use Unit and Integration Tests for TDD
+### 4. Use Unit Tests for TDD
 
 For test-driven development, use this workflow:
 ```bash
@@ -220,7 +213,6 @@ For test-driven development, use this workflow:
 /sdd-arch features/your_feature.feature
 /sdd-unit-test features/your_feature.feature  # Create unit test shells
 # Fill in unit test implementations
-/sdd-integration-test features/your_feature.feature  # Create integration tests
 /sdd-impl features/your_feature.feature
 /sdd-verify features/your_feature.feature
 ```
@@ -250,8 +242,6 @@ GSI-Protocol automatically detects:
 /sdd-arch features/product_search.feature
 /sdd-unit-test features/product_search.feature  # Create unit test shells
 # Fill in unit tests
-/sdd-integration-test features/product_search.feature
-# Write tests first, then implement
 /sdd-impl features/product_search.feature
 /sdd-verify features/product_search.feature
 ```

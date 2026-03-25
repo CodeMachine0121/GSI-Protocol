@@ -15,7 +15,7 @@ GSI-Protocol is an automated Specification-Driven Development (SDD) workflow sys
 - **Multi-Platform Support**: Works with Claude Code, Codex (OpenAI), and GitHub Copilot
 - **Language Agnostic**: Architecture design independent of programming language
 - **Automated Workflow**: Execute complete development cycle with a single command
-- **BDD Integration**: Built-in support for Gherkin specifications and integration tests
+- **BDD Integration**: Built-in support for Gherkin specifications
 - **Project-Aware**: Automatically detects and adapts to your project's tech stack
 - **Role-Based Phases**: PM → Architect → Engineer → QA workflow
 
@@ -96,11 +96,6 @@ For more control over each phase:
    ```
    Filters scenarios suitable for unit testing and creates test method shells (methods with TODO comments only).
 
-6. **Generate Integration Tests** (Optional)
-   ```bash
-   /sdd-integration-test <feature_file_path>
-   ```
-
 ## Workflow Overview
 
 The GSI-Protocol follows a structured 4-phase process:
@@ -133,7 +128,6 @@ User Requirement
 | `/sdd-impl` | Implement code based on architecture | 3 |
 | `/sdd-verify` | Verify implementation against spec | 4 |
 | `/sdd-unit-test` | Filter business scenarios and generate unit test method shells | Optional |
-| `/sdd-integration-test` | Generate BDD integration tests | Optional |
 
 ## Output Structure
 

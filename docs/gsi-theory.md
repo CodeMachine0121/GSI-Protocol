@@ -321,93 +321,6 @@ The QA verifies:
 
 ---
 
-## Optional: Integration Tests
-
-### BDD Integration Testing (Optional Phase)
-
-**Command**: `/sdd-integration-test`
-**When to Use**: Test-Driven Development (TDD) workflow
-
-Integration tests are **optional** but highly recommended for:
-
-- Critical business logic
-- Complex scenarios
-- Test-driven development
-- Continuous integration pipelines
-
-#### Test-First Workflow
-
-```
-/sdd-spec <requirement>
-   ↓
-/sdd-arch features/feature.feature
-   ↓
-/sdd-integration-test features/feature.feature  ← Optional but recommended
-   ↓
-/sdd-impl features/feature.feature
-   ↓
-/sdd-verify features/feature.feature
-```
-
-#### Generated Tests
-
-Integration tests are generated directly from Gherkin scenarios:
-
-```typescript
-describe("User Authentication", () => {
-  describe("Scenario: Successful login", () => {
-    it("should authenticate user and generate token", async () => {
-      // Given: registered user
-      const user = await createTestUser({
-        email: "user@example.com",
-        password: "SecurePass123",
-      });
-
-      // When: submit login credentials
-      const result = await authService.login(
-        "user@example.com",
-        "SecurePass123",
-      );
-
-      // Then: authenticated with token
-      expect(result.token).toBeDefined();
-      expect(result.userId).toBe(user.id);
-    });
-  });
-
-  describe("Scenario: Invalid password", () => {
-    it("should fail authentication", async () => {
-      // Given: registered user
-      await createTestUser({
-        email: "user@example.com",
-        password: "SecurePass123",
-      });
-
-      // When: submit wrong password
-      const promise = authService.login("user@example.com", "WrongPassword");
-
-      // Then: authentication fails
-      await expect(promise).rejects.toThrow("Invalid password");
-    });
-  });
-});
-```
-
-#### Benefits of Integration Tests
-
-1. **Executable Specifications**: Gherkin becomes runnable tests
-2. **Regression Prevention**: Detect breaking changes
-3. **Documentation**: Tests serve as usage examples
-4. **Confidence**: Verify system behavior end-to-end
-
-#### When to Skip Integration Tests
-
-- Simple CRUD operations
-- Proof of concept projects
-- Rapid prototyping
-- Time-constrained situations
-
----
 
 ## Key Benefits of GSI-Protocol
 
@@ -449,7 +362,6 @@ The same Gherkin and architecture can be implemented in:
 
 ### 6. **Flexibility**
 
-- Optional integration tests for TDD
 - Manual or automatic workflow
 - Project-aware adaptation
 
@@ -474,7 +386,7 @@ The same Gherkin and architecture can be implemented in:
 | Gherkin        | Yes            | Yes (G)                      |
 | Architecture   | Not emphasized | Core pillar (S)              |
 | Implementation | Test-driven    | Architecture-driven          |
-| Tests          | Required       | Optional (integration tests) |
+| Tests          | Required       | Optional (unit tests) |
 
 GSI-Protocol can be seen as **BDD + Architecture-First Design**, where the architecture phase bridges requirements and implementation.
 
@@ -502,9 +414,6 @@ Ensure all Given-When-Then paths are covered in code.
 
 If verification fails, fix and re-verify until all scenarios pass.
 
-### 6. Use Integration Tests Wisely
-
-Add them for critical features, but don't over-test simple operations.
 
 ### 7. Keep Documentation Updated
 
@@ -520,8 +429,6 @@ GSI-Protocol provides a structured, repeatable process for building software tha
 - Designs thoughtful architecture (Structure)
 - Implements with precision (Implement)
 - Verifies completeness (Verification)
-- Optionally includes integration tests (TDD)
+
 
 By following the **G-S-I** pillars, teams can build high-quality software with clear traceability from requirements to code, while maintaining flexibility to adapt to any technology stack.
-
-The optional integration test phase enhances the workflow for teams practicing test-driven development, but the core 4-phase process remains the foundation of GSI-Protocol.

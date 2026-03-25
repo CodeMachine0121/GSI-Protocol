@@ -174,8 +174,6 @@ def transform_template_for_codex(content: str, filename: str) -> str:
                 hint = 'argument-hint: <feature_file_path>\n'
             elif 'verify' in filename:
                 hint = 'argument-hint: <feature_file_path>\n'
-            elif 'integration-test' in filename:
-                hint = 'argument-hint: <feature_file_path>\n'
 
             parts[1] = hint + parts[1]
             result = '---\n'.join(parts)
@@ -425,7 +423,6 @@ def main():
         print("  /sdd-impl <feature.feature>")
         print("  /sdd-verify <feature.feature>")
         print("  /sdd-unit-test <feature.feature> (optional)")
-        print("  /sdd-integration-test <feature.feature> (optional)")
         print()
 
     if "copilot" in platforms:
@@ -436,7 +433,6 @@ def main():
         print("  @workspace /sdd-impl <feature.feature>")
         print("  @workspace /sdd-verify <feature.feature>")
         print("  @workspace /sdd-unit-test <feature.feature> (optional)")
-        print("  @workspace /sdd-integration-test <feature.feature> (optional)")
         print()
     
     print(f"📖 Documentation: {Colors.OKCYAN}https://github.com/CodeMachine0121/GSI-Protocol{Colors.ENDC}")
