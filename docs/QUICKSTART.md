@@ -115,7 +115,7 @@ Output: `docs/features/user_authentication/conclusion.md`
 
 **Optional: Generate Unit Test Shells**
 ```bash
-/sdd-unit-test features/user_authentication.feature
+/sdd-test features/user_authentication.feature
 ```
 
 Output: Test method shells (methods with TODO comments only)
@@ -211,13 +211,13 @@ For test-driven development, use this workflow:
 ```bash
 /sdd-spec <requirement>
 /sdd-arch features/your_feature.feature
-/sdd-unit-test features/your_feature.feature  # Create unit test shells
+/sdd-test features/your_feature.feature  # Create unit test shells
 # Fill in unit test implementations
 /sdd-impl features/your_feature.feature
 /sdd-verify features/your_feature.feature
 ```
 
-Note: `/sdd-unit-test` filters scenarios suitable for unit testing and creates test method shells. You need to implement the test logic yourself.
+Note: `/sdd-test` filters scenarios suitable for unit testing and creates test method shells. You need to implement the test logic yourself.
 
 ### 5. Project-Aware Development
 
@@ -240,7 +240,7 @@ GSI-Protocol automatically detects:
 ```bash
 /sdd-spec Add product search with filters
 /sdd-arch features/product_search.feature
-/sdd-unit-test features/product_search.feature  # Create unit test shells
+/sdd-test features/product_search.feature  # Create unit test shells
 # Fill in unit tests
 /sdd-impl features/product_search.feature
 /sdd-verify features/product_search.feature

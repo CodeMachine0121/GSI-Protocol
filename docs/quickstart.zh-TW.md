@@ -115,7 +115,7 @@ Claude Code / Codex 用法：
 
 **選用：生成單元測試空殼**
 ```bash
-/sdd-unit-test features/user_authentication.feature
+/sdd-test features/user_authentication.feature
 ```
 
 輸出：測試方法框架（只有 TODO 註解的空方法）
@@ -211,13 +211,13 @@ Feature: 使用者認證
 ```bash
 /sdd-spec <需求>
 /sdd-arch features/your_feature.feature
-/sdd-unit-test features/your_feature.feature  # 建立單元測試空殼
+/sdd-test features/your_feature.feature  # 建立單元測試空殼
 # 填充單元測試實作
 /sdd-impl features/your_feature.feature
 /sdd-verify features/your_feature.feature
 ```
 
-注意：`/sdd-unit-test` 會篩選適合單元測試的情境並建立測試方法框架。您需要自行實作測試邏輯。
+注意：`/sdd-test` 會篩選適合單元測試的情境並建立測試方法框架。您需要自行實作測試邏輯。
 
 ### 5. 專案感知開發
 
@@ -240,7 +240,7 @@ GSI-Protocol 自動偵測：
 ```bash
 /sdd-spec 新增產品搜尋與篩選功能
 /sdd-arch features/product_search.feature
-/sdd-unit-test features/product_search.feature  # 建立單元測試空殼
+/sdd-test features/product_search.feature  # 建立單元測試空殼
 # 填充單元測試
 /sdd-impl features/product_search.feature
 /sdd-verify features/product_search.feature

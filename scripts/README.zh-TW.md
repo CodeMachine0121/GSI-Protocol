@@ -19,7 +19,7 @@ scripts/
   │   ├── sdd-arch.md
   │   ├── sdd-impl.md
   │   ├── sdd-verify.md
-  │   ├── sdd-unit-test.md
+  │   ├── sdd-test.md
   │   └── sdd-auto.md
   ├── dev_sync.py       # 🔧 本地開發測試工具（開發者專用）
   └── README.md         # 📖 本文件
