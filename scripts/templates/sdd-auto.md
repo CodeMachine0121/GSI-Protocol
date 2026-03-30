@@ -29,6 +29,7 @@ find . -type d -maxdepth 3 | grep -E "src|models|services" | head -10
 1. 檢查 `features/` 目錄是否有與新需求衝突的既有規格，若有則停止並向使用者確認
 2. 分析需求，找出業務規則、邊界條件、錯誤處理
 3. 撰寫 Gherkin 情境（Given-When-Then），必須涵蓋正常路徑、邊界、錯誤處理
+4. 每個 Scenario 前加上 `@S-{順序}` tag（從 1 開始，依 feature 內的順序編號）
 
 ---
 
@@ -55,9 +56,15 @@ find . -type d -maxdepth 3 | grep -E "src|models|services" | head -10
 3. 篩選適合單元測試的 Scenario（純邏輯、商業規則、邊界條件、可 mock 的外部依賴）
 4. 為篩選出的情境建立測試方法框架（只開方法，內容為 TODO，不實作）：
    - 測試類別宣告、mock 物件宣告
-   - test case method 框架（3A 結構標注）
-   - `given...()` private method 框架
-   - `create...()` private method 框架
+   - test case method 框架，遵循以下風格規範：
+     - **只測行為**：驗證方法呼叫、回傳值、拋出的異常；不檢查物件內部狀態
+     - **Fluent 風格**：test code 盡量以 method chaining 方式撰寫
+     - **3A 結構**：每個 test case 以空行清楚區隔 Arrange / Act / Assert，並加上對應行內註解
+     - **單一 Assertion**：每個 test case 只做一個 Assertion；一個 Scenario 有多個 Then 時，每個 assertion 對應一個獨立 test case
+     - **編號注記**：每個 test case 方法上方以註解標注 `S-{scenario 順序}-{assertion 順序}`（例如 `S-1-1`、`S-1-2`）
+   - `given<描述情境>()` private method 框架（mock 回傳值設定必須抽出）
+   - `create<物件描述>()` private method 框架（SUT 以外的物件建立必須抽出）
+   - 同一測試類別中，相同的 Given / Create 方法共用，不重複定義
 5. 輸出篩選分析報告（已篩選 vs 未篩選的 Scenario 及原因）
 
 ---
