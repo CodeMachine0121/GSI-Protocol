@@ -8,7 +8,7 @@ description: 自動執行完整 SDD 工作流程 (核心 4 階段)
 
 **目標：** 依序執行完整流程，從需求到驗證完成，無需手動介入
 
-**核心理念：** 規格 → 架構 → Contract Tests → 實作（TDD）→ 驗證
+**核心理念：** 規格 → 架構 → 實作（TDD）→ 驗證（SpecBridge）
 
 ---
 
@@ -32,12 +32,6 @@ find . -type d -maxdepth 3 | grep -E "src|models|services" | head -10
 ## Phase 2: 架構（sdd-arch）
 
 依照 `sdd-arch` skill 執行，輸出 `.gsi/{feature_name}/architecture.md`
-
----
-
-## Phase 2.5: Contract Tests（sdd-test）
-
-依照 `sdd-test` skill 執行，輸出 `{FeatureName}ContractTests.{ext}`
 
 ---
 
