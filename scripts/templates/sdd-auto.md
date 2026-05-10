@@ -60,10 +60,10 @@ find . -type d -maxdepth 3 | grep -E "src|models|services" | head -10
 ```
 project_root/
 ├── .gsi/{feature}/
-│   ├── {feature}.feature                         # Phase 1
+│   ├── PRD.md                                    # Phase 1 (業務行為規格)
+│   ├── {feature}.feature                         # Phase 1 (SpecBridge HTTP contract)
 │   ├── architecture.md                           # Phase 2
 │   └── conclusion.md                             # Phase 4
-├── {專案測試目錄}/{feature}ContractTests.{ext}   # Phase 2.5
 └── {專案目錄}/
     ├── {模型檔案}                                # Phase 3
     ├── {服務檔案}                                # Phase 3

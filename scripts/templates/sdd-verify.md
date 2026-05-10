@@ -6,20 +6,30 @@ description: Phase 4 - 驗證實作（QA 角色）
 
 **輸入：** __PROMPT__ (Gherkin 檔案路徑)
 
-**角色：** QA - 執行 contract tests 與 unit tests，確認全數通過，只報告不修改
+**角色：** QA - 使用 specbridge 執行 contract 驗證與 unit tests，確認全數通過，只報告不修改
 
 **自動讀取：**
 - `.gsi/{feature_name}/{feature_name}.feature`
 - `.gsi/{feature_name}/architecture.md`
-- Contract test 檔案（`{FeatureName}ContractTests.{ext}`）
+- `.gsi/{feature_name}/PRD.md`
 
 ## 執行步驟
 
-1. **找出測試指令**：查看 README、Makefile、package.json scripts 等，確認執行方式
-2. **執行 Contract Tests**：執行 contract test 檔案，記錄每個 S-{scenario}-{assertion} 的結果
-3. **執行 Unit Tests**：執行所有 unit tests，記錄結果
-4. **驗證架構符合性**：比對 architecture.md 定義的資料模型、服務介面、檔案位置與實作
-5. **判斷結果**：
+1. **找出服務啟動方式與 base URL**：查看 README、package.json scripts、環境變數等，確認服務是否已啟動及 base URL（預設嘗試 `http://localhost:3000`）
+
+2. **執行 Contract 驗證（specbridge）**：
+   ```bash
+   specbridge verify -f .gsi/{feature_name}/{feature_name}.feature -u <base_url>
+   ```
+   記錄每個 Scenario 的通過/失敗結果
+
+3. **找出 Unit Test 指令**：查看 README、Makefile、package.json scripts 等
+
+4. **執行 Unit Tests**：執行所有 unit tests，記錄結果
+
+5. **驗證架構符合性**：比對 `architecture.md` 定義的資料模型、服務介面、檔案位置與實作
+
+6. **判斷結果**：
    - 全部通過 → 生成 `.gsi/{feature_name}/conclusion.md`
    - 任何失敗 → 不產生 conclusion.md，直接告知錯誤，請修復後重新執行
 
@@ -35,13 +45,13 @@ description: Phase 4 - 驗證實作（QA 角色）
 |---|---|---|---|
 | {名稱} | architecture.md:{行} | {路徑} | ✅/❌ |
 
-## 2. Contract Tests
-| 編號 | 情境 | 狀態 |
-|---|---|---|
-| S-1-1 | {情境名稱} - {assertion} | ✅/❌ |
-
-- 執行指令：`{command}`
+## 2. Contract 驗證（specbridge）
+- 執行指令：`specbridge verify -f .gsi/{feature_name}/{feature_name}.feature -u <base_url>`
 - 結果：{通過數}/{總數} 通過
+
+| Scenario | 狀態 |
+|---|---|
+| {情境名稱} | ✅/❌ |
 
 ## 3. Unit Tests
 - 執行指令：`{command}`
@@ -49,7 +59,7 @@ description: Phase 4 - 驗證實作（QA 角色）
 
 ## 4. 摘要
 - 架構符合性：{通過}/{總數}
-- Contract Tests：{通過}/{總數}
+- Contract 驗證：{通過}/{總數}
 - Unit Tests：{通過}/{總數}
 - **狀態：** ✅ 完成
 
@@ -63,7 +73,7 @@ description: Phase 4 - 驗證實作（QA 角色）
 ❌ sdd-verify 未通過
 
 失敗項目：
-- {測試名稱}：{錯誤訊息}
+- {Scenario 名稱}：{錯誤訊息}
 - ...
 
 請修復後重新執行 sdd-verify。
