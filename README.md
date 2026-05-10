@@ -4,7 +4,7 @@
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 [![Python Version](https://img.shields.io/badge/python-3.10%2B-blue)](https://www.python.org/)
-[![Version](https://img.shields.io/badge/version-1.0.14-green)](https://github.com/CodeMachine0121/GSI-Protocol)
+[![Version](https://img.shields.io/badge/version-1.4.0-green)](https://github.com/CodeMachine0121/GSI-Protocol)
 
 **Language**: English | [繁體中文](./README.zh-TW.md)
 
@@ -90,12 +90,6 @@ For more control over each phase:
    /sdd-verify <feature_file_path>
    ```
 
-5. **Generate Unit Test Shells** (Optional)
-   ```bash
-   /sdd-test <feature_file_path>
-   ```
-   Filters scenarios suitable for unit testing and creates test method shells (methods with TODO comments only).
-
 ## Workflow Overview
 
 The GSI-Protocol follows a structured 4-phase process:
@@ -104,16 +98,18 @@ The GSI-Protocol follows a structured 4-phase process:
 User Requirement
       ↓
 [Phase 1: Specification (PM)]
-   → features/{feature}.feature (Gherkin)
+   → .gsi/{feature}/PRD.md (business behaviour)
+   → .gsi/{feature}/{feature}.feature (SpecBridge HTTP contract)
       ↓
 [Phase 2: Architecture (Architect)]
-   → docs/features/{feature}/architecture.md
+   → .gsi/{feature}/architecture.md
       ↓
 [Phase 3: Implementation (Engineer)]
-   → Source code files
+   → Source code + unit tests (TDD)
       ↓
 [Phase 4: Verification (QA)]
-   → docs/features/{feature}/conclusion.md
+   → specbridge verify + unit tests
+   → .gsi/{feature}/conclusion.md
 ```
 
 > **Learn the methodology**: Read our [GSI Theory & Methodology guide](./docs/gsi-theory.md) to understand how **Gherkin** (specification), **Structure** (architecture), and **Implement** (code) work together.
@@ -123,11 +119,10 @@ User Requirement
 | Command | Description | Phase |
 |---------|-------------|-------|
 | `/sdd-auto` | Execute complete workflow automatically | All |
-| `/sdd-spec` | Generate Gherkin specification from requirements | 1 |
+| `/sdd-spec` | Generate PRD + SpecBridge contract from requirements | 1 |
 | `/sdd-arch` | Design architecture from specification | 2 |
-| `/sdd-impl` | Implement code based on architecture | 3 |
-| `/sdd-verify` | Verify implementation against spec | 4 |
-| `/sdd-test` | Filter business scenarios and generate unit test method shells | Optional |
+| `/sdd-impl` | Implement code + unit tests (TDD) | 3 |
+| `/sdd-verify` | Verify via specbridge + unit tests | 4 |
 
 ## Output Structure
 
@@ -135,16 +130,15 @@ After running the workflow, your project will have:
 
 ```
 project_root/
-├── features/
-│   └── {feature_name}.feature          # Gherkin specifications
-├── docs/
-│   └── features/
-│       └── {feature_name}/
-│           ├── architecture.md         # Architecture design
-│           └── conclusion.md           # Verification report
+├── .gsi/{feature_name}/
+│   ├── PRD.md                          # Business behaviour spec
+│   ├── {feature_name}.feature          # SpecBridge HTTP contract
+│   ├── architecture.md                 # Architecture design
+│   └── conclusion.md                   # Verification report
 └── {your_project_structure}/
     ├── {model_files}                   # Generated models
-    └── {service_files}                 # Generated services
+    ├── {service_files}                 # Generated services
+    └── {unit_test_files}               # TDD-produced tests
 ```
 
 ## Platform-Specific Usage

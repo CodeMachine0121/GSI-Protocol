@@ -4,7 +4,7 @@
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 [![Python Version](https://img.shields.io/badge/python-3.10%2B-blue)](https://www.python.org/)
-[![Version](https://img.shields.io/badge/version-1.0.14-green)](https://github.com/CodeMachine0121/GSI-Protocol)
+[![Version](https://img.shields.io/badge/version-1.4.0-green)](https://github.com/CodeMachine0121/GSI-Protocol)
 
 **語言**: [English](./README.md) | **繁體中文**
 
@@ -90,12 +90,6 @@ pipx run gsi-protocol-installer
    /sdd-verify <feature_file_path>
    ```
 
-5. **產生單元測試空殼**（選用）
-   ```bash
-   /sdd-test <feature_file_path>
-   ```
-   從 feature file 篩選適合單元測試的業務情境，建立測試方法框架（只有 TODO 註解的空方法）。
-
 ## 工作流程概覽
 
 GSI-Protocol 遵循結構化的 4 階段流程：
@@ -104,16 +98,18 @@ GSI-Protocol 遵循結構化的 4 階段流程：
 使用者需求
       ↓
 [階段 1: 規格（PM）]
-   → features/{feature}.feature (Gherkin)
+   → .gsi/{feature}/PRD.md（業務行為規格）
+   → .gsi/{feature}/{feature}.feature（SpecBridge HTTP contract）
       ↓
 [階段 2: 架構（架構師）]
-   → docs/features/{feature}/architecture.md
+   → .gsi/{feature}/architecture.md
       ↓
 [階段 3: 實作（工程師）]
-   → 原始碼檔案
+   → 原始碼 + unit tests（TDD）
       ↓
 [階段 4: 驗證（QA）]
-   → docs/features/{feature}/conclusion.md
+   → specbridge verify + unit tests
+   → .gsi/{feature}/conclusion.md
 ```
 
 > **了解方法論**：閱讀我們的 [GSI 理論與方法論指南](./docs/gsi-theory.zh-TW.md) 來理解 **Gherkin**（規格）、**Structure**（架構）和 **Implement**（實作）如何協同運作。
@@ -123,11 +119,10 @@ GSI-Protocol 遵循結構化的 4 階段流程：
 | 指令 | 說明 | 階段 |
 |---------|-------------|-------|
 | `/sdd-auto` | 自動執行完整工作流程 | 全部 |
-| `/sdd-spec` | 從需求生成 Gherkin 規格 | 1 |
+| `/sdd-spec` | 從需求生成 PRD + SpecBridge contract | 1 |
 | `/sdd-arch` | 從規格設計架構 | 2 |
-| `/sdd-impl` | 基於架構實作程式碼 | 3 |
-| `/sdd-verify` | 驗證實作是否符合規格 | 4 |
-| `/sdd-test` | 篩選業務情境並產生單元測試方法框架 | 選用 |
+| `/sdd-impl` | 實作程式碼 + unit tests（TDD） | 3 |
+| `/sdd-verify` | 以 specbridge + unit tests 驗證 | 4 |
 
 ## 輸出結構
 
@@ -135,16 +130,15 @@ GSI-Protocol 遵循結構化的 4 階段流程：
 
 ```
 project_root/
-├── features/
-│   └── {feature_name}.feature          # Gherkin 規格
-├── docs/
-│   └── features/
-│       └── {feature_name}/
-│           ├── architecture.md         # 架構設計
-│           └── conclusion.md           # 驗證報告
+├── .gsi/{feature_name}/
+│   ├── PRD.md                          # 業務行為規格
+│   ├── {feature_name}.feature          # SpecBridge HTTP contract
+│   ├── architecture.md                 # 架構設計
+│   └── conclusion.md                   # 驗證報告
 └── {your_project_structure}/
     ├── {model_files}                   # 生成的模型
-    └── {service_files}                 # 生成的服務
+    ├── {service_files}                 # 生成的服務
+    └── {unit_test_files}               # TDD 產出的測試
 ```
 
 ## 平台特定用法
