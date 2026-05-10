@@ -31,7 +31,7 @@ find . -type d -maxdepth 3 | grep -E "src|models|services" | head -10
 
 ## Phase 2: 架構（sdd-arch）
 
-依照 `sdd-arch` skill 執行，輸出 `docs/features/{feature_name}/architecture.md`
+依照 `sdd-arch` skill 執行，輸出 `.gsi/{feature_name}/architecture.md`
 
 ---
 
@@ -49,7 +49,7 @@ find . -type d -maxdepth 3 | grep -E "src|models|services" | head -10
 
 ## Phase 4: 驗證（sdd-verify）
 
-依照 `sdd-verify` skill 執行，輸出 `docs/features/{feature_name}/conclusion.md`
+依照 `sdd-verify` skill 執行，輸出 `.gsi/{feature_name}/conclusion.md`
 
 若 Phase 4 有失敗 → 返回 Phase 3 修正，再重新執行 Phase 4
 
