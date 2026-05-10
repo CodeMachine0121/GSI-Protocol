@@ -9,8 +9,8 @@ description: Phase 4 - 驗證實作（QA 角色）
 **角色：** QA - 執行 contract tests 與 unit tests，確認全數通過，只報告不修改
 
 **自動讀取：**
-- `features/{feature}.feature`
-- `docs/features/{feature}/architecture.md`
+- `.gsi/{feature_name}/{feature_name}.feature`
+- `.gsi/{feature_name}/architecture.md`
 - Contract test 檔案（`{FeatureName}ContractTests.{ext}`）
 
 ## 執行步驟
@@ -20,12 +20,12 @@ description: Phase 4 - 驗證實作（QA 角色）
 3. **執行 Unit Tests**：執行所有 unit tests，記錄結果
 4. **驗證架構符合性**：比對 architecture.md 定義的資料模型、服務介面、檔案位置與實作
 5. **判斷結果**：
-   - 全部通過 → 生成 `docs/features/{feature_name}/conclusion.md`
+   - 全部通過 → 生成 `.gsi/{feature_name}/conclusion.md`
    - 任何失敗 → 不產生 conclusion.md，直接告知錯誤，請修復後重新執行
 
 ## 輸出規則
 
-**若全部通過：** 生成 `docs/features/{feature_name}/conclusion.md`
+**若全部通過：** 生成 `.gsi/{feature_name}/conclusion.md`
 
 ```markdown
 # {功能名稱} - 驗證結論

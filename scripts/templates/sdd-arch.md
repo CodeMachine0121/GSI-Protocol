@@ -6,7 +6,7 @@ description: Phase 2 - 分析 Gherkin 規格，設計高階架構（資料模型
 
 **角色：** 系統架構師  
 **輸入：** Gherkin 規格檔案 __PROMPT__  
-**輸出：** `docs/features/{feature_name}/architecture.md`
+**輸出：** `.gsi/{feature_name}/architecture.md`
 
 ## 核心原則
 
@@ -41,7 +41,7 @@ description: Phase 2 - 分析 Gherkin 規格，設計高階架構（資料模型
 ```markdown
 # {功能名稱} - 架構設計
 
-> 來源：features/{feature_name}.feature  
+> 來源：.gsi/{feature_name}/{feature_name}.feature  
 > 建立日期：{日期}
 
 ## 1. 專案上下文
@@ -127,7 +127,7 @@ src/
 - [ ] 每個元素註明 Gherkin 來源行數
 - [ ] 包含架構決策說明
 - [ ] 全文使用繁體中文
-- [ ] 檔案儲存至 `docs/features/{feature_name}/architecture.md`
+- [ ] 檔案儲存至 `.gsi/{feature_name}/architecture.md`
 
 ## 執行流程
 

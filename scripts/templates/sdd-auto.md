@@ -59,8 +59,8 @@ find . -type d -maxdepth 3 | grep -E "src|models|services" | head -10
 
 ```
 project_root/
-├── features/{feature}.feature                    # Phase 1
-├── docs/features/{feature}/
+├── .gsi/{feature}/
+│   ├── {feature}.feature                         # Phase 1
 │   ├── architecture.md                           # Phase 2
 │   └── conclusion.md                             # Phase 4
 ├── {專案測試目錄}/{feature}ContractTests.{ext}   # Phase 2.5

@@ -24,7 +24,7 @@ description: Phase 3 - 根據架構設計實作程式碼，滿足 Gherkin 規格
 ### 1. 讀取輸入
 
 ```bash
-cat docs/features/<feature_name>/architecture.md
+cat .gsi/<feature_name>/architecture.md
 cat <feature_file_path>
 ```
 
@@ -87,7 +87,7 @@ find . -name "*ContractTest*" -o -name "*contract_test*" | grep -v node_modules 
 
 ## 品質檢查
 
-- [ ] 已讀取 architecture.md 與 contract test 檔案
+- [ ] 已讀取 `.gsi/{feature_name}/architecture.md` 與 contract test 檔案
 - [ ] 所有 contract tests 通過（green）
 - [ ] 所有 unit tests 通過（green）
 - [ ] 所有資料模型已實作（依 architecture.md §3）
