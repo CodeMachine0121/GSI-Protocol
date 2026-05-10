@@ -175,11 +175,28 @@ Prefix commands with `@workspace`:
 ## Requirements
 
 - Python 3.10 or higher
+- Node.js 18 or higher
 - Git
 - One of the supported AI platforms:
   - Claude Code CLI
   - Codex (OpenAI)
   - GitHub Copilot
+
+### SpecBridge (Required)
+
+GSI-Protocol integrates [SpecBridge](https://github.com/CodeMachine0121/SpecBridge) in the **Specification** (`/sdd-spec`) and **Verification** (`/sdd-verify`) phases. SpecBridge is a contract testing CLI that validates live HTTP API behavior against Gherkin feature files.
+
+Install it globally before using GSI-Protocol:
+
+```bash
+npm install -g @ksz54213/specbridge
+```
+
+Verify installation:
+
+```bash
+specbridge --version
+```
 
 ## Documentation
 

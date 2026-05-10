@@ -175,11 +175,28 @@ project_root/
 ## 系統需求
 
 - Python 3.10 或更高版本
+- Node.js 18 或更高版本
 - Git
 - 以下其中一個支援的 AI 平台：
   - Claude Code CLI
   - Codex (OpenAI)
   - GitHub Copilot
+
+### SpecBridge（必要）
+
+GSI-Protocol 在**規格**（`/sdd-spec`）與**驗證**（`/sdd-verify`）階段整合了 [SpecBridge](https://github.com/CodeMachine0121/SpecBridge)。SpecBridge 是一個合約測試 CLI 工具，能根據 Gherkin feature 檔案驗證實際 HTTP API 的行為是否符合規格。
+
+使用 GSI-Protocol 前，請先全域安裝：
+
+```bash
+npm install -g @ksz54213/specbridge
+```
+
+驗證安裝：
+
+```bash
+specbridge --version
+```
 
 ## 文件
 
