@@ -2,89 +2,79 @@
 description: 從 feature file 篩選適合單元測試的業務情境，建立測試方法框架
 ---
 
-# SDD-TEST: 單元測試框架生成器
+# SDD-TEST: Contract Test 生成器
 
-**輸入：** **PROMPT** (格式：`<feature_file_path>`)
-
-**目標：**
-
-1. 讀取 feature file 和對應的 architecture.md
-2. 從所有 Scenario 中篩選出**適合撰寫單元測試防護**的業務情境
-3. 為篩選出的情境建立測試方法框架（只開好 test case method，內容為空或 TODO 註解）
+**角色：** QA 工程師  
+**輸入：** **PROMPT** (格式：`<feature_file_path>`)  
+**自動讀取：** `docs/features/{feature_name}/architecture.md`  
+**輸出：** Contract Test 檔案（所有 Scenario 填充具體數值，可直接執行）
 
 ## 核心原則
 
-### 1. 篩選適合單元測試的業務情境
+### 1. 所有 Scenario 皆轉為 Contract Test
 
-- **單元測試適用**：純邏輯運算、資料轉換、商業規則、邊界條件、錯誤處理、有外部依賴但可透過介面 mock 的業務邏輯
-- **單元測試不適用**：端對端流程、複雜的跨服務協作流程
+不做篩選。每個 Scenario = 一組 contract tests，一個 Then = 一個 test case。  
+Contract tests 驗證**行為**（Gherkin 定義的 Given/When/Then），不測試內部實作。
 
-### 2. 只測行為，不測狀態
+### 2. 數值直接來自 Gherkin
 
-- 驗證方法呼叫、回傳值、拋出的異常
-- 不直接檢查物件內部狀態或私有欄位
+- `Given` → Arrange 的具體輸入值
+- `When` → Act 的服務方法呼叫（依 architecture.md 的介面定義）
+- `Then` → Assert 的具體預期值
+
+所有數值皆填充完畢，**無任何 TODO**，可直接執行。
 
 ### 3. 測試撰寫風格
 
-- **Fluent 風格**：test code 盡量以 method chaining 方式撰寫
-- **3A 結構**：每個 test case 以空行清楚區隔 Arrange / Act / Assert 三段，並加上對應的行內註解
-- **單一 Assertion**：每個 test case 只做一個 Assertion。由於一個 Scenario 可能有多個 Then（即多個 assertion），每個 assertion 需對應一個獨立的 test case
-- **Test Case 編號注記**：每個 test case 必須在方法上方以註解標注對應的 Scenario 編號，格式為 `S-{scenario 順序}-{assertion 順序}`（例如：`S-1-1`、`S-1-2`）。若 Scenario 只有一個 assertion，仍需標注（如 `S-2-1`）
-- **Given... 方法**：mock 回傳值的設定必須抽出為 private method，命名以 `given` 開頭，命名格式 `given<描述情境>()`
-- **Create... 方法**：受測物件（SUT）以外的物件建立必須抽出為 private method，命名以 `create` 開頭，命名格式 `create<物件描述>()`
-- **重用**：同一測試類別中，相同的 Given / Create 方法不重複定義，盡量共用
-
-### 4. 測試方法框架要求
-
-- 只建立 test case method 框架，內容為空或只有 TODO 註解
-- 預留 Given / Create private method 框架（含 TODO），讓開發者填充
-- 方法命名清楚反映測試情境
+- **S-{scenario}-{assertion} 編號**：每個 test case 方法上方標注（如 `S-1-1`、`S-1-2`）
+- **3A 結構**：Arrange / Act / Assert 以空行區隔並加上行內註解
+- **單一 Assertion**：每個 test case 只有一個 Assert
+- **Fluent 風格**：method chaining
 
 ## 執行步驟
 
-### 1. 讀取輸入檔案
+### 1. 讀取輸入
 
 ```bash
 cat <feature_file_path>
 cat docs/features/<feature_name>/architecture.md
 ```
 
-### 2. 掃描專案與框架偵測
+確認：
+- 所有 Scenario 與 Given/When/Then 內容
+- 服務介面（方法簽名、參數型別、回傳型別）
+- 資料模型（列舉值、實體欄位）
+
+### 2. 掃描測試框架
 
 ```bash
 ls -la | grep -E "package.json|requirements.txt|go.mod|pom.xml"
-find . -name "*test*" -o -name "*spec*" | head -5
+find . -name "*test*" -o -name "*spec*" | grep -v node_modules | head -5
 ```
 
-**框架優先順序：** architecture.md 指定 > 專案既有 > 預設
+框架優先順序：architecture.md 指定 > 專案既有 > 語言預設
 
-### 3. 篩選業務情境並建立框架
+### 3. 對每個 Scenario 生成 Contract Tests
 
-對每個 Scenario 判斷是否適合單元測試，並為適合的情境建立：
+對每個 Scenario 的 Given/When/Then：
 
-- 篩選分析報告（已篩選 / 未篩選的 Scenarios 及原因）
-- Import 語句、測試類別宣告、Mock 物件宣告
-- test case method 框架（內容空白或 TODO）
-- Given / Create private method 框架（含 TODO）
+1. **解析 Given** → 具體輸入值，對應 architecture.md 的型別定義
+2. **解析 When** → 對應的服務方法呼叫（依 architecture.md 介面）
+3. **解析 Then** → 具體預期輸出值
+4. **每個 Then 獨立一個 test case**，編號 `S-{scenario}-{assertion}`
 
-未篩選的 Scenario 記錄在報告中，不建立測試框架，並說明建議改用整合測試。
+### 4. 輸出 Contract Test 檔案
 
-## 測試檔案輸出
-
-依專案既有測試框架與目錄結構決定輸出位置
+依專案既有測試目錄輸出，命名：`{FeatureName}ContractTests.{ext}`
 
 ## 品質檢查
 
-- [ ] 已掃描所有 Scenarios 並完成篩選
-- [ ] 只為適合單元測試的 Scenario 建立測試方法框架
-- [ ] 包含篩選分析報告（已篩選 vs 未篩選的 Scenarios 及原因）
-- [ ] 每個 test case 只有一個 Assertion（一個 Scenario 的多個 Then 拆分為多個 test case）
-- [ ] 每個 test case 方法上方有正確的 `S-{scenario}-{assertion}` 編號註解
-- [ ] 3A 結構清晰，以空行區隔並加上對應行內註解
-- [ ] test code 採用 fluent / method chaining 風格
-- [ ] Mock 設定已抽出為 `Given...` private method 框架
-- [ ] 測試物件建立已抽出為 `Create...` private method 框架
-- [ ] 相同的 Given / Create 方法有被重用，無重複定義
-- [ ] 測試檔案可編譯（無語法錯誤）
+- [ ] 所有 Scenario 皆已轉為 contract tests（無篩選、無遺漏）
+- [ ] 所有 test case 皆填充具體數值（無 TODO）
+- [ ] 每個 test case 有正確的 `S-{scenario}-{assertion}` 編號
+- [ ] 方法呼叫對應 architecture.md 定義的服務介面與參數型別
+- [ ] 每個 test case 只有一個 Assert
+- [ ] 3A 結構清晰，以空行區隔並加上行內註解
+- [ ] 測試檔案可直接執行（無編譯錯誤）
 
-開始讀取檔案、篩選業務情境並建立測試方法框架。
+開始讀取檔案並生成 contract tests。
